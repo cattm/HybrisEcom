@@ -18,26 +18,35 @@ import gratetech.bdd.steps.QuoteSteps;
 
 public class UserQuoteSteps {
 	public static Logger log = Logger.getLogger(UserQuoteSteps.class);
-	PandOHomePage homePage;
-	PandOLogin login;
-	LoggedIn liMessage;
-	QuoteForm qForm;
-	QuoteResponseInfo quoteTable;
+	protected PandOHomePage homePage;
+	protected PandOLogin login;
+	protected LoggedIn liMessage;
+	protected QuoteForm qForm;
+	protected QuoteResponseInfo quoteTable;
+	protected boolean vehicleIsVan = false;
 	
 	@Step
-	public void hasLoggedIn() {
+	public void hasLoggedIn(String user, String password, String greeting) {
 		homePage.open();
-		homePage.handleCookieMessage();
-		homePage.clickMyAccount();
-		login.setUserName("marcus.catt58@googlemail.com");
-		login.setPassword("Dogfight789");
-		login.clickSubmit();
-		//assertThat(liMessage.getConfirmMessage(),equalToIgnoringCase("Hello marcus.catt58@googlemail...."));
-		assertThat(liMessage.getConfirmMessage(),equalToIgnoringCase("Hello marcus"));
+		log.info("user " + user + " pw " + password);
+		
+		if (liMessage.getConfirmMessage().contentEquals("")) {
+			log.info("not already logged in");
+			homePage.handleCookieMessage();
+			homePage.clickMyAccount();
+			login.setUserName(user);
+			login.setPassword(password);
+			login.clickSubmit();
+		} else {
+			homePage.clickMyAccount();
+		}
+		log.info("logged in");
+		assertThat(liMessage.getConfirmMessage(),equalToIgnoringCase(greeting));
+	
 	}
 	
 	@Step
-	public void hasFilledInQuote(String from, String back, String dateout, String dateback, String vehicle, String len, String height, String adults) {
+	public void hasFilledInQuote(String from, String back, String dateout, String dateback, String vehicle, String len, String height, String adults, String promocode) {
 		qForm.setImplicitTimeout(10, TimeUnit.SECONDS);
 		//qForm.elementIsPresent();
 		qForm.setDeparturePort(from);
@@ -45,15 +54,19 @@ public class UserQuoteSteps {
 		qForm.setDepartureDate(dateout);
 		qForm.setReturnDate(dateback);
 		qForm.setVehicleType(vehicle);
-		qForm.setVehicleLength(len);
-		qForm.setVehicleHeight(height);
+		if (vehicle.contentEquals("van")) { vehicleIsVan=true;}
+		if (vehicleIsVan) {
+			qForm.setVehicleLength(len);
+			qForm.setVehicleHeight(height);
+		}
 		qForm.setNumberOfAdults(adults);
 		qForm.resetImplicitTimeout();
+		qForm.setPromoCode(promocode);
 	}
 	
 	@Step
 	public void askForQuote() {
-		Log.info("submitting quote form");
+		log.info("submitting quote form");
 		qForm.getAQuote();
 	}
 	

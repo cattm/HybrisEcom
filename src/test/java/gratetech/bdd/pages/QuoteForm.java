@@ -42,6 +42,9 @@ public class QuoteForm extends PageObject {
 	@FindBy(id="ou_AD_pass_comboBox")
 	private WebElementFacade selectNumberAdultPassengers;
 	
+	@FindBy(id="discountCodeTextBox")
+	private WebElementFacade promoCode;
+	
 	@FindBy(id="fareFindersubmitButton")
 	private WebElementFacade submitGetAQuote;
 	
@@ -79,16 +82,19 @@ public class QuoteForm extends PageObject {
 	}
 	
 	public void setDepartureDate(String when) {
+		log.info(when);
 		selectGoingOutDate.clear();
 		selectGoingOutDate.type(when);	  
 	}
 	
 	public void setReturnDate(String when) {
+		log.info(when);
 		selectReturnDate.clear();
 		selectReturnDate.type(when);		  
 	}
 	
 	public void setVehicleType(String type) {
+		log.info(type);
 		WebDriver dr = this.getDriver();
 		JavascriptExecutor executor = (JavascriptExecutor)dr;
 		executor.executeScript("document.getElementById('vehicleTypeOutboundComboBox').style.display='block';");
@@ -97,22 +103,33 @@ public class QuoteForm extends PageObject {
 	}
 	
 	public void setVehicleLength(String length) {
+		log.info(length);
 		selectVehicleLength.clear();
 		selectVehicleLength.type(length);
 	}
 	
 	public void setVehicleHeight(String height) {
+		log.info(height);
 		selectVehicleHeight.clear();
 		selectVehicleHeight.type(height);
 	}
 
 	public void setNumberOfAdults(String number) {
+		log.info(number);
 		WebDriver dr = this.getDriver();
 		JavascriptExecutor executor = (JavascriptExecutor)dr;
 		executor.executeScript("document.getElementById('ou_AD_pass_comboBox').style.display='block';");	
 		Select dropdown = new Select(selectNumberAdultPassengers);
 		dropdown.selectByValue(number);
 	}
+	
+	public void setPromoCode(String code) {
+		log.info(code);
+		promoCode.clear();
+		promoCode.type(code);
+		
+	}
+	
 	
 	public void getAQuote() {
 		submitGetAQuote.submit(); 

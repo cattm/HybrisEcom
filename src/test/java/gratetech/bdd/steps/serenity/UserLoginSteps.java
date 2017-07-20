@@ -23,10 +23,10 @@ public class UserLoginSteps {
 	}
 	
 	@Step
-	public void attemptsToLogin() {		
+	public void attemptsToLogin(String username, String password) {		
 		homePage.clickMyAccount();
-		login.setUserName("marcus.catt58@googlemail.com");
-		login.setPassword("Dogfight789");
+		login.setUserName(username);
+		login.setPassword(password);
 		login.clickSubmit();
 	}
 	

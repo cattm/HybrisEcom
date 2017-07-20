@@ -11,6 +11,9 @@ public class LoggedIn extends PageObject {
 	private WebElementFacade confirmMessage;
 	
 	public String getConfirmMessage() {
-		return confirmMessage.getText();
+		if (confirmMessage.isPresent()) {
+			return confirmMessage.getText();
+		}
+		return "";
 	}
 }

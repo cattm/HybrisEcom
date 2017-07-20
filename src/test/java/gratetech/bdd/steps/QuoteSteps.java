@@ -20,10 +20,16 @@ public class QuoteSteps {
 	@Steps
 	UserQuoteSteps Marcus;
 		
-	@Given("^user has logged in$")
-	public void userLoggedIn() throws Throwable {
-		Marcus.hasLoggedIn();
-	    log.info("logged in");
+	@Given("^user has logged in:$")
+	public void userLoggedIn(DataTable logindata) throws Throwable {
+		
+		List<Map<String, String>> data = logindata.asMaps(String.class, String.class);
+		for (Map map : data) { 
+			Marcus.hasLoggedIn(
+					map.get("username").toString(),
+					map.get("pw").toString(),
+					map.get("greeting").toString());
+		}
 	}
 
 	@Given("^the user has selected:$")
@@ -39,7 +45,8 @@ public class QuoteSteps {
 					map.get("vehicle").toString(),
 					map.get("length").toString(),
 					map.get("height").toString(),
-					map.get("adults").toString()
+					map.get("adults").toString(),
+					map.get("promo code").toString()
 					);
 		}
 		 

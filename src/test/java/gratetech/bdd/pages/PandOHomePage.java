@@ -11,7 +11,8 @@ import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.pages.PageObject;
 
-@DefaultUrl("http://www.poferries.com/en/portal")
+//@DefaultUrl("http://www.poferries.com/en/portal")
+@DefaultUrl("http://qa1.poferries.com/en/portal")
 public class PandOHomePage extends PageObject{
 	public static Logger log = Logger.getLogger(PandOHomePage.class);
 	
