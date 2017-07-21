@@ -58,9 +58,12 @@ public class QuoteSteps {
 		Marcus.askForQuote();
 	}
 
-	@Then("^they should see a quote page$")
-	public void shouldSeeQuotePage() throws Throwable {
+	@Then("^they should see a quote page:$")
+	public void shouldSeeQuotePage(DataTable checkdata) throws Throwable {
 		log.info("Should See a Quote");
-		Marcus.getQuoteTitle("PICK YOUR CROSSING AND TICKET TYPE");
+		List<Map<String, String>> data = checkdata.asMaps(String.class, String.class);
+		for (Map map : data) { 
+			Marcus.getQuoteTitle(map.get("greeting").toString());
+		}
 	}
 }

@@ -12,6 +12,9 @@ public class QuoteResponseInfo extends PageObject  {
 	private WebElementFacade intro;
 	
 	public String getIntro() {
-		return intro.getText();
+		if (intro.isVisible()) {
+			return intro.getText();
+		}
+		return "";
 	}
 }

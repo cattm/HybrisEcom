@@ -72,6 +72,8 @@ public class UserQuoteSteps {
 	
 	@Step
 	public void getQuoteTitle(String toverify) {
+		// TODO: if the promo code is used and is not valid for sailings then this will display an error message instead
+		// of PICK YOUR ......
 		log.info("get the quote Title  " + quoteTable.getIntro());
 		log.info("And we want it to be " + toverify);
 		assertThat(quoteTable.getIntro(), equalToIgnoringCase(toverify));
