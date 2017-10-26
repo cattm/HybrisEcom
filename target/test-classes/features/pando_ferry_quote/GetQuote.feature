@@ -1,3 +1,4 @@
+@quote
 Feature: Get A Quote
   To get a Quote for a ferry
   I will login and fill in the basic quote form

@@ -1,3 +1,4 @@
+@purchase
 Feature: User Login and Purchase a Ticket
   I will login and fill in the basic quote form
   I will then retrieve the Quote, make a purchase, check the purchase
@@ -10,7 +11,7 @@ Feature: User Login and Purchase a Ticket
   Scenario: From Quote to Purchase
     Given I have obtained a quote for:
       | from            | return          | on date    | coming back | vehicle | length | height | adults | promo code |
-      | Dover to Calais | Calais to Dover | 20/08/2017 | 25/08/2017  | van     | 2      | 1.8    | 2      | EXPRESS    |
+      | Dover to Calais | Calais to Dover | 29/09/2017 | 03/10/2017  | van     | 2      | 1.8    | 2      | EXPRESS    |
     When I select a quote:
       | time  | ship              | offer |
       | 13:55 | Spririt of France | gold  |
