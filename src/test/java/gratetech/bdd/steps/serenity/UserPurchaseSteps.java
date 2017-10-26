@@ -43,7 +43,12 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		quote.resetImplicitTimeout();
 	}
 	
-		
+	@Step
+	public void selectReturnQuote(String time, String ship, String offer) {
+		log.info("Not implemented");
+	}	
+	
+	
 	@Step 
 	public void handleExtras() {
 		extras.continueToNextPage();
@@ -153,4 +158,9 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	public String getBookingID() {
 		return booking;
 	}
+	
+	// Tests are:
+	// 
+	//
+	//
 }

@@ -70,7 +70,14 @@ public class TheQuotePage extends PageObject  {
 				break;
 			}
 			log.info(selectfarecss);
-			this.getDriver().findElement(By.cssSelector(selectfarecss)).click();
+			// TODO: there is an occasional issue finding this - this is just a hack for now
+			try {
+				this.getDriver().findElement(By.cssSelector(selectfarecss)).click();
+			} 
+			catch (Exception e ) {
+				log.error("OUCH We did not find the fare");
+				return false;
+			}
 			return true;
 		}
 

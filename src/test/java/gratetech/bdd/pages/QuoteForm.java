@@ -39,14 +39,17 @@ public class QuoteForm extends PageObject {
 	@FindBy(id="ou_height")
 	private WebElementFacade selectVehicleHeight;
 	
-	@FindBy(id="ou_AD_pass_comboBox")
-	private WebElementFacade selectNumberAdultPassengers;
+	//@FindBy(id="ou_AD_pass_comboBox")
+	//@FindBy(id="ou_AD1_pass_comboBox")
+	private WebElement selectNumberAdultPassengers;
 	
 	@FindBy(id="discountCodeTextBox")
 	private WebElementFacade promoCode;
 	
 	@FindBy(id="fareFindersubmitButton")
 	private WebElementFacade submitGetAQuote;
+	
+	private String fromRoute = "";
 	
 	// this is a DEBUG method
 	public void elementIsPresent() {
@@ -64,6 +67,7 @@ public class QuoteForm extends PageObject {
 	}
 	public void setDeparturePort(String from) {
 		log.info(from);		
+		fromRoute = from;
 		WebDriver dr = this.getDriver();
 		JavascriptExecutor executor = (JavascriptExecutor)dr;
 		executor.executeScript("document.getElementById('singleJourneyComboBox').style.display='block';");
@@ -118,7 +122,19 @@ public class QuoteForm extends PageObject {
 		log.info(number);
 		WebDriver dr = this.getDriver();
 		JavascriptExecutor executor = (JavascriptExecutor)dr;
-		executor.executeScript("document.getElementById('ou_AD_pass_comboBox').style.display='block';");	
+		// TODO: this is ou_AD1 on Larne route just to be brilliant!
+		// this is HACK will tidy once proven
+		if (fromRoute.contains("Dover") || fromRoute.contains("Hull")) {
+			executor.executeScript("document.getElementById('ou_AD_pass_comboBox').style.display='block';");
+			selectNumberAdultPassengers = this.getDriver().findElement(By.id("ou_AD_pass_comboBox"));
+		} else if (fromRoute.contains("Larne")) {
+			executor.executeScript("document.getElementById('ou_AD1_pass_comboBox').style.display='block';");
+			selectNumberAdultPassengers = this.getDriver().findElement(By.id("ou_AD1_pass_comboBox"));
+			
+		} else {
+			log.info("Route not implemented");
+			return;
+		}
 		Select dropdown = new Select(selectNumberAdultPassengers);
 		dropdown.selectByValue(number);
 	}

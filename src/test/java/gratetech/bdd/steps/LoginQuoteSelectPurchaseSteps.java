@@ -23,8 +23,10 @@ public class LoginQuoteSelectPurchaseSteps {
 	private String length;
 	private String height;
 	private String adults;
-	private String ship;
+	private String outShip;
+	private String returnShip;
 	private String time;
+	private String returnTime;
 	private String offer;
 	private String promoCode;
 	private String passenger;
@@ -46,19 +48,21 @@ public class LoginQuoteSelectPurchaseSteps {
 	    this.length = length;
 	    this.height = height;
 	    this.adults = adults;
-	    this.ship = ship;
+	    this.outShip = ship;
 	    this.time = time;
 	    this.offer = offer;
 	
 		
 	}
-
-	@And("^They are ([^\"]*) on ([^\"]*)$")
-	public void theAreComingBack(String returnport, String comingback) throws Throwable {
+	//They are <return> on <back date> using <back ship> sailing at <back time>
+	@And("^They are ([^\"]*) on ([^\"]*) using ([^\"]*) sailing at ([^\"]*)$")
+	public void theyAreComingBack(String returnport, String comingback, String retship, String sailtime) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		  log.info("And Coming Back");
 		  this.returnPort = returnport;
 		  this.returnDate = comingback;
+		  this.returnShip = retship;
+		  this.returnTime = sailtime;
 	}
 
 	@And("^Have ([^\"]*) and passenger details ([^\"]*) and car details ([^\"]*) and ([^\"]*)$")
@@ -104,7 +108,7 @@ public class LoginQuoteSelectPurchaseSteps {
 					this.adults,
 					this.promoCode);
 		  clive.askForQuote();
-		  clive.selectTheQuote(this.time, this.ship, this.offer);
+		  clive.selectTheQuote(this.time, this.outShip, this.offer);
 		  clive.handleExtras();
 		  clive.selectPassengersAndCar(this.passenger, this.reg);
 		  clive.checkBookingSummary();

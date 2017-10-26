@@ -54,16 +54,19 @@ public class UserQuoteSteps {
 		qForm.setDepartureDate(dateout);
 		qForm.setReturnDate(dateback);
 		qForm.setVehicleType(vehicle);
-		if (vehicle.contentEquals("van")) { vehicleIsVan=true;}
+		if (vehicle.contentEquals("van") || vehicle.contentEquals("motorhome")) { vehicleIsVan=true;}
 		if (vehicleIsVan) {
 			qForm.setVehicleLength(len);
 			qForm.setVehicleHeight(height);
 		}
+		
 		qForm.setNumberOfAdults(adults);
 		qForm.resetImplicitTimeout();
 		qForm.setPromoCode(promocode);
 	}
 	
+
+
 	@Step
 	public void askForQuote() {
 		log.info("submitting quote form");
