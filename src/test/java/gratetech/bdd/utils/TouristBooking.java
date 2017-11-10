@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class TouristBooking {
 
-	private TravelLeg outboundJ = new TravelLeg();
-	private TravelLeg returnJ   = new TravelLeg();
-	private TouristPayment payment = new TouristPayment();
-	private Passengers obPassengers = new Passengers();
-	private Passengers rtPassengers = new Passengers();
+	public TravelLeg outboundJ = new TravelLeg();
+	public TravelLeg returnJ   = new TravelLeg();
+	public TouristPayment payment = new TouristPayment();
+	public Passengers obPassengers = new Passengers();
+	public Passengers rtPassengers = new Passengers();
 	private String voucher = null;
 	private String promo = null;
 	
@@ -124,5 +124,13 @@ public class TouristBooking {
 	
 	public void setPromo(String p) {
 		promo = p;
+	}
+	
+	public String getVoucher() {
+		return voucher;
+	}
+	
+	public String getPromo() {
+		return promo;
 	}
 }

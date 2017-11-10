@@ -3,8 +3,11 @@ package gratetech.bdd.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TravelLeg {
+import org.apache.log4j.Logger;
 
+public class TravelLeg {
+	public static Logger log = Logger.getLogger(TravelLeg.class);
+	
 	/*
 	 * Day
 	 * Time
@@ -68,6 +71,51 @@ public class TravelLeg {
 		leg.put("cabin", cabin);
 	}
 	
+	// individual setters
+	public void setUpDay (String p) {
+		leg.put("day", p);
+	}	
+	public void setUpSailTime(String p) {
+		leg.put("time", p);
+	}
+	public void setUpFrom(String p) {
+		leg.put("from", p);
+	}
+	public void setUpTo(String p) {
+		leg.put("to", p);
+	}
+	public void setUpShip(String p) {
+		leg.put("ship", p);
+	}
+	public void setUpOffer(String p) {
+		leg.put("offer", p);
+	}
+	public void setUpVehicleType(String p) {
+		leg.put("vehicle", p);
+	}
+	public void setUpVehicleLength(String p) {
+		leg.put("length", p);
+	}
+	public void setUpVehicleHeight(String p) {
+		leg.put("height", p);
+	}
+	public void setUpVehicleRegistration(String p) {
+		leg.put("registration", p);
+	}
+	public void setUpNumberOfPassengers(String p) {
+		leg.put("passengers", p);
+	}
+	public void setUpRAC(String p) {
+		leg.put("rac", p);
+	}
+	public void setUpWIFI(String p) {
+		leg.put("wifi", p);
+	}
+	public void setUpCabin(String p) {
+		leg.put("cabin", p);
+	}
+	
+	// individual getters
 	public String getDayOfTravel () {
 		return leg.get("day");
 	}
@@ -112,4 +160,12 @@ public class TravelLeg {
 	}
 	
 	
+	public void dumpLeg() {
+		log.info("Travel Leg information is : ");
+		for (String key : leg.keySet()) {
+		    String value = leg.get(key);
+		    log.info("Key = " + key + ", Value = " + value);
+		}
+		log.info("Travel Leg Dumped ");
+	}
 }

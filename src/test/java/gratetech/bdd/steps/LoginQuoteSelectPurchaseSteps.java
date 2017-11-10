@@ -1,6 +1,11 @@
 package gratetech.bdd.steps;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import gratetech.bdd.steps.serenity.UserPurchaseSteps;
+import gratetech.bdd.utils.TouristBooking;
+import gratetech.bdd.utils.TouristBooking.PassengerType;
 import net.thucydides.core.annotations.Steps;
 
 import org.apache.log4j.Logger;
@@ -38,6 +43,8 @@ public class LoginQuoteSelectPurchaseSteps {
 	private String purchaseAccount;
 	private String purchaseCVV;
 	
+	private TouristBooking booking = new TouristBooking();
+	
 	@Given("^([^\"]*) are able to select an outbound ferry ([^\"]*) ([^\"]*) with a ([^\"]*) of ([^\"]*) and ([^\"]*) with a ([^\"]*) sailing ([^\"]*) and ([^\"]*)$")
 	public void ableToSelectOutbound(String adults, String from, String ondate, String vehicle, String length, String height, String ship, String time, String offer) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
@@ -51,8 +58,7 @@ public class LoginQuoteSelectPurchaseSteps {
 	    this.outShip = ship;
 	    this.time = time;
 	    this.offer = offer;
-	
-		
+	   
 	}
 	//They are <return> on <back date> using <back ship> sailing at <back time>
 	@And("^They are ([^\"]*) on ([^\"]*) using ([^\"]*) sailing at ([^\"]*)$")
@@ -63,6 +69,8 @@ public class LoginQuoteSelectPurchaseSteps {
 		  this.returnDate = comingback;
 		  this.returnShip = retship;
 		  this.returnTime = sailtime;
+		  
+		 
 	}
 
 	@And("^Have ([^\"]*) and passenger details ([^\"]*) and car details ([^\"]*) and ([^\"]*)$")
@@ -73,6 +81,29 @@ public class LoginQuoteSelectPurchaseSteps {
 		  this.passenger = passenger;
 		  this.reg = registration;
 		  this.voucher = voucher;
+		  
+		  // start building the booking
+		  // missing destination port and reg number of vehicle
+		  booking.setOBSailing(this.outDate, this.time, this.fromPort, this.returnPort, this.outShip, this.offer);
+		  booking.setOBVehicle(this.vehicle, this.length, this.height, this.reg);
+		  //missing destination port
+		  booking.setRTSailing(this.returnDate, this.returnTime, this.returnPort, this.fromPort, this.returnShip, this.returnTime);
+		  
+		  
+		  booking.setPromo(promo);
+		  booking.setVoucher(voucher);
+		  
+		  // currently assumes we are only taking adults
+		  booking.setOBNumberOfPassengers(this.adults);		  
+		  Map<String, PassengerType> pp = new HashMap<String, PassengerType>();
+		  String mp = this.passenger;
+		  pp.put(mp, TouristBooking.PassengerType.ADULT);		  
+		  booking.setObPassengers(TouristBooking.onJourney.OUTBOUND, Integer.parseInt(this.adults), pp);
+		  
+		  // currently assumes those who leave will return
+		  // and that all journeys are return
+		  booking.setRTNumberOfPassengers(this.adults);
+		  booking.setRtPassengers(TouristBooking.onJourney.RETURN, Integer.parseInt(this.adults), pp);
 	}
 
 	@And("^Have Added Extras ([^\"]*) ([^\"]*) ([^\"]*)$")
@@ -83,6 +114,8 @@ public class LoginQuoteSelectPurchaseSteps {
 		    this.extraWifi = wifi;
 		    this.clubLounge = clublounge;
 		   
+		  booking.setOBExtras(rac, wifi, clublounge);
+		  booking.setRTExtras(rac, wifi, clublounge);
 	}
 
 	@And("^Have Card Details ([^\"]*) ([^\"]*) ([^\"]*)$")
@@ -92,30 +125,49 @@ public class LoginQuoteSelectPurchaseSteps {
 		  this.purchaseCard = card;
 		  this.purchaseAccount = account;
 		  this.purchaseCVV = cvv;
+		  booking.setPayment(card, account, cvv, "12-30");
 	}
 
 	@Then("^My Purchase will succeed$")
 	public void purchaseWillSucceed() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		  log.info("Attempting to purchase Ticket");
-		  clive.hasFilledInQuote(this.fromPort,
-					this.returnPort,
-					this.outDate,
-					this.returnDate,
-					this.vehicle,
-					this.length,
-					this.height,
-					this.adults,
-					this.promoCode);
+		 
+		  log.info("Outbound Journey Data");
+		  booking.outboundJ.dumpLeg();
+		  booking.obPassengers.dumpPassenger();
+		  log.info("Return Journey Data");
+		  booking.returnJ.dumpLeg();
+		  booking.rtPassengers.dumpPassenger();
+		  log.info("Payment Data");
+		  booking.payment.dumpPayment();
+		  
+		  clive.hasFilledInQuote(booking.outboundJ.getDeparturePort(),
+				  booking.returnJ.getDeparturePort(),
+				  booking.outboundJ.getDayOfTravel(),
+				  booking.returnJ.getDayOfTravel(),
+				  booking.outboundJ.getVehicleType(),
+				  booking.outboundJ.getVehicleLength(),
+				  booking.outboundJ.getVehicleHeight(),
+				  // this will need to change
+				  booking.outboundJ.getNumberOfPassgengers(),
+				  booking.getPromo());
 		  clive.askForQuote();
-		  clive.selectTheQuote(this.time, this.outShip, this.offer);
+		  clive.selectTheQuote(booking.outboundJ.getTimeOfTravel(), 
+				  booking.outboundJ.getShip(), 
+				  booking.outboundJ.getOffer());
 		  clive.handleExtras();
-		  clive.selectPassengersAndCar(this.passenger, this.reg);
+		  clive.selectPassengersAndCar(booking.obPassengers.getPassengerName(0), 
+				  booking.outboundJ.getVehicleReg());
+		  log.info("Vehicle is " + booking.outboundJ.getVehicleReg());
 		  clive.checkBookingSummary();
 		  clive.tickTnc();
-		  clive.selectEVoucher(this.voucher);
+		  clive.selectEVoucher(booking.getVoucher());
 		  clive.selectPurchase();
-		  clive.completePurchase(this.purchaseCard, this.purchaseAccount, this.purchaseCVV);
+		  clive.completePurchase(booking.payment.getPaymentType(), 
+				  booking.payment.getAccount(), 
+				  booking.payment.getCVV());
+		  
 	}
 
 }

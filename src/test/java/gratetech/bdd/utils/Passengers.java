@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 
 public class Passengers {
+	public static Logger log = Logger.getLogger(Passengers.class);
 	/* Leg
 	 * number of passengers
 	 * Passenger types - adult, child, baby, pensioner, student, pet - there are loads of them
@@ -57,6 +60,18 @@ public class Passengers {
 	
 	public int getPassengerListSize() {
 		return passengers.size();
+	}
+	
+	public void dumpPassenger() {
+		log.info("Passenger information for this booking : ");
+		log.info("number of Passengers is " + numPassengers);
+		log.info("leg is " + leg.toString());
+		for (Passenger p : passengers) {
+			String v = p.getName();
+			PassengerType pt = p.getPassengerType();
+			log.info( "Name of Passenger " + v + ", Type is " + pt.toString());
+		}
+		log.info("Passenger information Dumped ");
 	}
 
 }

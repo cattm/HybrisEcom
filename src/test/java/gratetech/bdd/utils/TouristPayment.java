@@ -3,7 +3,10 @@ package gratetech.bdd.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 public class TouristPayment {
+	public static Logger log = Logger.getLogger(TouristPayment.class);
 	/*
 	 * Payment type
 	 * account
@@ -21,7 +24,7 @@ public class TouristPayment {
 	}
 	
 	public String getPaymentType () {
-		return payment.get("type");
+		return payment.get("payment type");
 	}
 	
 	public String getAccount () {
@@ -35,4 +38,14 @@ public class TouristPayment {
 	public String getExpiry () {
 		return payment.get("expiry");
 	}
+	
+	public void dumpPayment() {
+		log.info("Payment information is : ");
+		for (String key : payment.keySet()) {
+		    String value = payment.get(key);
+		    log.info("Key = " + key + ", Value = " + value);
+		}
+		log.info("Payment Dumped ");
+	}
+
 }
