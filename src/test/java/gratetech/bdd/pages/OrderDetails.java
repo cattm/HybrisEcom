@@ -2,13 +2,9 @@ package gratetech.bdd.pages;
 
 import java.util.List;
 
-import gratetech.bdd.steps.serenity.UserPurchaseSteps;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBys;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
@@ -33,10 +29,15 @@ public class OrderDetails extends PageObject {
 	@FindBy(id="paymentMethod:0")
 	private WebElementFacade card;
 	
+	@FindBy(id="paymentMethod:1")
+	private WebElementFacade payPal;
+	
 	@FindBy(id="paypageHeading")
 	private WebElementFacade heading;
+	
+	@FindBy(id="btnSubmit")
+	private WebElementFacade payNow;
 
-	private WebElementFacade stuff;
 	
 	public String getHeading() {
 		String ret = "";
@@ -52,6 +53,15 @@ public class OrderDetails extends PageObject {
 			card.click();
 			resetIframe();
 		}			
+	}
+	
+	public void selectPayPalPayment() {
+		log.info("selectPayPalPayment");		
+		if (findIframe()) {
+			payPal.click();
+			payNow.click();
+			resetIframe();
+		}	
 	}
 	
 	public String getProduct() {

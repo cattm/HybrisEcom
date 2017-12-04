@@ -19,84 +19,55 @@ public class LoginQuoteSelectPurchaseSteps {
 	
 	@Steps
 	private UserPurchaseSteps clive;
-	private String fromPort;
-	private String returnPort;
-	private String outDate;
-	private String returnDate;
-	private String vehicle;
-	private String reg;
-	private String length;
-	private String height;
-	private String adults;
-	private String outShip;
-	private String returnShip;
-	private String time;
-	private String returnTime;
-	private String offer;
-	private String promoCode;
-	private String passenger;
-	private String voucher;
-	private String extraRAC;
-	private String extraWifi;
-	private String clubLounge;
-	private String purchaseCard;
-	private String purchaseAccount;
-	private String purchaseCVV;
-	
+	private String adults;	
 	private TouristBooking booking = new TouristBooking();
 	
 	@Given("^([^\"]*) are able to select an outbound ferry ([^\"]*) ([^\"]*) with a ([^\"]*) of ([^\"]*) and ([^\"]*) with a ([^\"]*) sailing ([^\"]*) and ([^\"]*)$")
 	public void ableToSelectOutbound(String adults, String from, String ondate, String vehicle, String length, String height, String ship, String time, String offer) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-	    log.info("SelectOutbound");
-	    this.fromPort = from;	    
-	    this.outDate = ondate;	   
-	    this.vehicle = vehicle;
-	    this.length = length;
-	    this.height = height;
+	    log.info("SelectOutbound");     
 	    this.adults = adults;
-	    this.outShip = ship;
-	    this.time = time;
-	    this.offer = offer;
 	   
+	    booking.outboundJ.setUpFrom(from);
+	    booking.outboundJ.setUpDay(ondate);
+	    booking.outboundJ.setUpVehicleType(vehicle);
+	    booking.outboundJ.setUpVehicleHeight(height);
+	    booking.outboundJ.setUpVehicleLength(length);
+	    booking.outboundJ.setUpShip(ship);
+	    booking.outboundJ.setUpSailTime(time);
+	    booking.outboundJ.setUpOffer(offer);
+	    
+	 
 	}
 	//They are <return> on <back date> using <back ship> sailing at <back time>
 	@And("^They are ([^\"]*) on ([^\"]*) using ([^\"]*) sailing at ([^\"]*)$")
 	public void theyAreComingBack(String returnport, String comingback, String retship, String sailtime) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-		  log.info("And Coming Back");
-		  this.returnPort = returnport;
-		  this.returnDate = comingback;
-		  this.returnShip = retship;
-		  this.returnTime = sailtime;
-		  
+		  log.info("And Coming Back");	  
+		  booking.outboundJ.setUpTo(returnport);
 		 
+		  //missing destination port
+		  booking.setRTSailing(comingback, 
+				  sailtime, 
+				  returnport, 
+				  booking.outboundJ.getDeparturePort(), 
+				  retship, 
+				  booking.outboundJ.getOffer());
+		
 	}
 
 	@And("^Have ([^\"]*) and passenger details ([^\"]*) and car details ([^\"]*) and ([^\"]*)$")
 	public void havePaassengerDetails(String promo, String passenger, String registration, String voucher) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-		  log.info("Passenger and promo");
-		  this.promoCode = promo;
-		  this.passenger = passenger;
-		  this.reg = registration;
-		  this.voucher = voucher;
-		  
-		  // start building the booking
-		  // missing destination port and reg number of vehicle
-		  booking.setOBSailing(this.outDate, this.time, this.fromPort, this.returnPort, this.outShip, this.offer);
-		  booking.setOBVehicle(this.vehicle, this.length, this.height, this.reg);
-		  //missing destination port
-		  booking.setRTSailing(this.returnDate, this.returnTime, this.returnPort, this.fromPort, this.returnShip, this.returnTime);
-		  
-		  
+		  log.info("Passenger and promo");	  
+		  booking.outboundJ.setUpVehicleRegistration(registration);
 		  booking.setPromo(promo);
 		  booking.setVoucher(voucher);
-		  
+	  
 		  // currently assumes we are only taking adults
 		  booking.setOBNumberOfPassengers(this.adults);		  
 		  Map<String, PassengerType> pp = new HashMap<String, PassengerType>();
-		  String mp = this.passenger;
+		  String mp = passenger;
 		  pp.put(mp, TouristBooking.PassengerType.ADULT);		  
 		  booking.setObPassengers(TouristBooking.onJourney.OUTBOUND, Integer.parseInt(this.adults), pp);
 		  
@@ -109,11 +80,7 @@ public class LoginQuoteSelectPurchaseSteps {
 	@And("^Have Added Extras ([^\"]*) ([^\"]*) ([^\"]*)$")
 	public void haveAddedExtras(String rac, String wifi, String clublounge) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-		  log.info("Extras");
-		    this.extraRAC = rac;
-		    this.extraWifi = wifi;
-		    this.clubLounge = clublounge;
-		   
+		  log.info("Extras");		   
 		  booking.setOBExtras(rac, wifi, clublounge);
 		  booking.setRTExtras(rac, wifi, clublounge);
 	}
@@ -122,9 +89,6 @@ public class LoginQuoteSelectPurchaseSteps {
 	public void haveCardDetails(String card, String account, String cvv) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		  log.info("Card Details loaded");
-		  this.purchaseCard = card;
-		  this.purchaseAccount = account;
-		  this.purchaseCVV = cvv;
 		  booking.setPayment(card, account, cvv, "12-30");
 	}
 
@@ -151,6 +115,7 @@ public class LoginQuoteSelectPurchaseSteps {
 				  booking.outboundJ.getVehicleHeight(),
 				  // this will need to change
 				  booking.outboundJ.getNumberOfPassgengers(),
+				  booking.outboundJ.getTimeOfTravel(),
 				  booking.getPromo());
 		  clive.askForQuote();
 		  clive.selectTheQuote(booking.outboundJ.getTimeOfTravel(), 
@@ -163,10 +128,11 @@ public class LoginQuoteSelectPurchaseSteps {
 		  clive.checkBookingSummary();
 		  clive.tickTnc();
 		  clive.selectEVoucher(booking.getVoucher());
-		  clive.selectPurchase();
+		  clive.selectPurchaseNow();
 		  clive.completePurchase(booking.payment.getPaymentType(), 
 				  booking.payment.getAccount(), 
 				  booking.payment.getCVV());
+		  clive.verifyPurchase(); 
 		  
 	}
 

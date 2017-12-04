@@ -4,12 +4,16 @@ package gratetech.bdd.steps.serenity;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.Matchers.containsString;
+
 import java.util.concurrent.TimeUnit;
+
 import gratetech.bdd.pages.BookingConfirm;
 import gratetech.bdd.pages.BookingSummary;
 import gratetech.bdd.pages.OrderDetails;
 import gratetech.bdd.pages.PassengerAndCar;
 import gratetech.bdd.pages.PayNowForm;
+import gratetech.bdd.pages.PayPalLogin;
+import gratetech.bdd.pages.PayPalPurchaseConfirm;
 import gratetech.bdd.pages.TheExtras;
 import gratetech.bdd.pages.TheQuotePage;
 import gratetech.bdd.pages.VisaForm;
@@ -27,7 +31,9 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	private PayNowForm paynow;
 	private OrderDetails order;
 	private VisaForm visa;
+	private PayPalLogin ppLogin;
 	private BookingConfirm confirmationPage;
+	private PayPalPurchaseConfirm ppConfirm;
 	
 	private String checkRef = "";
 	private String product = "";
@@ -93,7 +99,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	}
 
 	@Step
-	public void selectPurchase () {
+	public void selectPurchaseNow () {
 		log.info("do a purchase and check it");
 		paynow.purchaseNow();
 		paynow.resetImplicitTimeout();
@@ -102,7 +108,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	
 	@Step 
 	public void completePurchase (String card, String account, String cvv) {
-			
+		// TBD remove these horrible wait loops
 		// get some data for verification
 		order.setImplicitTimeout(10, TimeUnit.SECONDS);
 		try {
@@ -117,7 +123,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		offerPrice = order.getAmount();
 		log.info( "Product is " + product);
 		log.info("Price offered is " + offerPrice);
-		log.info(order.getAddress());
+		log.info(" Address is " + order.getAddress());
 		
 		if (card.contains("visa")) {			
 			order.selectVisaPayment();
@@ -129,7 +135,26 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 			visa.selectYear("30");
 			visa.setCSC(cvv);
 			visa.submitPayment();
-		} // else paypal
+		} else if (card.contains(("paypal"))) {
+			// assume Paypal
+			// the data is marcus.catt@poferries.com/Password1
+			// need to select paypal
+			order.selectPayPalPayment();
+			order.resetImplicitTimeout();
+			
+			// log in to paypal
+			ppLogin.setImplicitTimeout(10, TimeUnit.SECONDS);
+			ppLogin.setEmail("marcus.catt@poferries.com");
+			ppLogin.setPassword("Password1");
+			ppLogin.submit();
+			//log.info("SUBMIT PRESSED");
+			
+			ppConfirm.setImplicitTimeout(10, TimeUnit.SECONDS);
+			ppConfirm.confirmPurchase();
+			ppLogin.resetImplicitTimeout();
+			ppConfirm.resetImplicitTimeout();
+			
+		} // else ?
 		
 	}
 
@@ -144,8 +169,10 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		}
 			
 		confirmationPage.setImplicitTimeout(10, TimeUnit.SECONDS);
-		booking = confirmationPage.getBooking();
+		String tmp = confirmationPage.getBooking();
+		booking = tmp.replaceAll("[^0-9]", "");
 		log.info(booking);
+		
 		log.info(confirmationPage.getTotalCost());
 		finalPrice = confirmationPage.getTotalCostCharged();
 		log.info(finalPrice);
@@ -153,14 +180,27 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		assertThat(finalPrice,equalToIgnoringCase(offerPrice));
 		confirmationPage.resetImplicitTimeout();
 	}
-	
-	@Step 
+	 
 	public String getBookingID() {
 		return booking;
 	}
 	
-	// Tests are:
-	// 
-	//
-	//
+	public String getCheckRef() {
+		return checkRef;
+	}
+	
+	public String getfinalPrice() {
+		return finalPrice;
+	}
+	
+	public String getProduct() {
+		return product;
+	}
+	
+	public String getOfferPrice() {
+		return offerPrice;
+	}
+	
+	
+
 }

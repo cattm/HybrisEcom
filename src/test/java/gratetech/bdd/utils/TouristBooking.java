@@ -13,6 +13,11 @@ public class TouristBooking {
 	private String voucher = null;
 	private String promo = null;
 	
+	private String bookingSummary = null;
+	private String product = null;
+	private String price = null;
+	private String referencePrice = null;
+	
 	public enum onJourney {
 		BOTH, OUTBOUND, RETURN
 	}
@@ -132,5 +137,37 @@ public class TouristBooking {
 	
 	public String getPromo() {
 		return promo;
+	}
+	
+	public void setBookingSummary(String p) {
+		bookingSummary = p;
+	}
+	
+	public String getBookingSummary() {
+		return bookingSummary;
+	}
+	
+	public void setProduct(String p) {
+		product = p;
+	}
+	
+	public String getProduct() {
+		return product;
+	}
+	
+	public void setPrice(String p) {
+		price = p;
+	}
+	
+	public String getPrice() {
+		return price;
+	}
+	
+	public void setReferencePrice(String p) {
+		referencePrice = p;
+	}
+	
+	public String getReferencePrice() {
+		return referencePrice;
 	}
 }

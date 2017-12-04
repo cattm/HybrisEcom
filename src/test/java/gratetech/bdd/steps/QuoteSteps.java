@@ -46,6 +46,7 @@ public class QuoteSteps {
 					map.get("length").toString(),
 					map.get("height").toString(),
 					map.get("adults").toString(),
+					"", // no time set for quote
 					map.get("promo code").toString()
 					);
 		}

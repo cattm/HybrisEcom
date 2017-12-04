@@ -46,14 +46,19 @@ public class UserQuoteSteps {
 	}
 	
 	@Step
-	public void hasFilledInQuote(String from, String back, String dateout, String dateback, String vehicle, String len, String height, String adults, String promocode) {
+	public void hasFilledInQuote(String from, String back, String dateout, String dateback, String vehicle, String len, String height, String adults, String outtime, String promocode) {
 		qForm.setImplicitTimeout(10, TimeUnit.SECONDS);
 		//qForm.elementIsPresent();
 		qForm.setDeparturePort(from);
 		qForm.setReturnPort(back);
 		qForm.setDepartureDate(dateout);
+
 		qForm.setReturnDate(dateback);
+		
+		qForm.setDepartureTime(outtime);
+		
 		qForm.setVehicleType(vehicle);
+	
 		if (vehicle.contentEquals("van") || vehicle.contentEquals("motorhome")) { vehicleIsVan=true;}
 		if (vehicleIsVan) {
 			qForm.setVehicleLength(len);
@@ -61,8 +66,10 @@ public class UserQuoteSteps {
 		}
 		
 		qForm.setNumberOfAdults(adults);
-		qForm.resetImplicitTimeout();
+		
 		qForm.setPromoCode(promocode);
+		
+		qForm.resetImplicitTimeout();
 	}
 	
 
