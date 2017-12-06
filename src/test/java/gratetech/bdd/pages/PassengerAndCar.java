@@ -45,17 +45,15 @@ public class PassengerAndCar extends PageObject {
 	public void selectPassenger1(String select) {
 		// need to use our custom find the js version of the box
 		log.info("selecting " + select);
-		WebDriver dr = this.getDriver();
 		if (makeVisible) {
-			JavascriptExecutor executor = (JavascriptExecutor)dr;
-			executor.executeScript("document.getElementById('oldPassengers1').style.display='block';");
+			evaluateJavascript("document.getElementById('oldPassengers1').style.display='block';");
 			Select dropdown = new Select(selectPassenger1);  
 			dropdown.selectByVisibleText(select);
 		} else {
 			pageIsReady(CommonConstants.FAST);
 			oldPassengerEnable.click();	
 			pageIsReady(CommonConstants.FAST);
-			List<WebElement> wel = dr.findElements(By.cssSelector("#oldPassengers1SelectBoxItOptions li"));
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#oldPassengers1SelectBoxItOptions li"));
 			for(WebElement e : wel) {				
 				if (e.getText().equalsIgnoreCase(select)) {
 					log.info("selecting passenger " + select);
@@ -71,11 +69,9 @@ public class PassengerAndCar extends PageObject {
 		// note also that if you save it and come back sometimes you cannot proceed
 		// get stuck on travel essentials
 		log.info("selecting " + carreg); 	
-		WebDriver dr = this.getDriver();
 		
 		if (makeVisible) {
-			JavascriptExecutor executor = (JavascriptExecutor)dr;
-			executor.executeScript("document.getElementById('vehiclesData0.existingCode').style.display='block';");
+			evaluateJavascript("document.getElementById('vehiclesData0.existingCode').style.display='block';");
 			Select dropdown = new Select(selectVehicleDropSelect);    
 			dropdown.selectByVisibleText(carreg);
 		} else {
@@ -84,10 +80,9 @@ public class PassengerAndCar extends PageObject {
 			existingVehicleEnable.click();	
 			pageIsReady(CommonConstants.FAST);
 			// TBD little bit of js debug script trying to find out whats happening - this code is not 100% reliable
-			JavascriptExecutor executor = (JavascriptExecutor)dr;
-			String res = (String) executor.executeScript("return document.querySelector(\"span [id='vehiclesData0.existingCodeSelectBoxItOptions'] li\").innerHTML;"); 
+			String res = (String) evaluateJavascript("return document.querySelector(\"span [id='vehiclesData0.existingCodeSelectBoxItOptions'] li\").innerHTML;"); 
 			log.info(res);
-			List<WebElement> wel = dr.findElements(By.cssSelector("span [id='vehiclesData0.existingCodeSelectBoxItOptions'] li"));
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("span [id='vehiclesData0.existingCodeSelectBoxItOptions'] li"));
 			for(WebElement e : wel) {
 				log.info(e.getText());
 				if (e.getText().equalsIgnoreCase(carreg)) {
@@ -120,6 +115,7 @@ public class PassengerAndCar extends PageObject {
 		continueToNextPage.click();
 	}
 	
+	// TBD - this is duplicated code
 	private void pageIsReady(long slow) {
 		final int limit = 5;
 		int count = 0;
@@ -143,6 +139,5 @@ public class PassengerAndCar extends PageObject {
 				+ "return loadingStatus;};"
 				+ "return pageLoaded()";
 		return (Boolean) evaluateJavascript(jsQuery);
-	}
-	
+	}	
 }

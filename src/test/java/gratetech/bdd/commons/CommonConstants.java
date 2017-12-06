@@ -2,6 +2,7 @@ package gratetech.bdd.commons;
 
 public class CommonConstants {
 	// milliseconds
+	public static final long VSLOW  = 8000;
 	public static final long SLOW   = 5000;
 	public static final long MEDIUM = 3000;
 	public static final long FAST   = 1000;

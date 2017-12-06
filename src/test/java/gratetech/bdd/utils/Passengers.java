@@ -74,4 +74,41 @@ public class Passengers {
 		log.info("Passenger information Dumped ");
 	}
 
+	public String passengerKeyList (String sep, String ret) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("onJourney");
+		builder.append(sep);
+		builder.append("Number of Passengers on this leg");
+		builder.append(sep);
+		for (int i = 0; i< passengers.size(); i++) {
+		    builder.append("passenger Type " + String.valueOf(i));
+		    builder.append(sep);
+		    builder.append("passenger Name " + String.valueOf(i));
+		    builder.append(sep);
+		}
+		if (ret != null) {
+			builder.append(ret);
+		}
+		String content = builder.toString().trim();
+		return content;
+	}
+	
+	public String passengerValList(String sep, String ret) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(leg.toString());
+		builder.append(sep);
+		builder.append(String.valueOf(numPassengers));
+		builder.append(sep);
+		for (Passenger p : passengers) {
+		    builder.append(p.getPassengerType().toString());
+		    builder.append(sep);
+		    builder.append(p.getName());
+		    builder.append(sep);
+		}
+		if (ret != null) {
+			builder.append(ret);
+		}
+		String content = builder.toString().trim();
+		return content;
+	}
 }

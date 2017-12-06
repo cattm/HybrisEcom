@@ -168,4 +168,30 @@ public class TravelLeg {
 		}
 		log.info("Travel Leg Dumped ");
 	}
+	
+	public String legKeyList (String sep, String ret) {
+		StringBuilder builder = new StringBuilder();
+		for (Map.Entry<String, String> kvp : leg.entrySet()) {
+		    builder.append(kvp.getKey());
+		    builder.append(sep);	    
+		}
+		if (ret != null) {
+			builder.append(ret);
+		}
+		String content = builder.toString().trim();
+		return content;
+	}
+	
+	public String legValList(String sep, String ret) {
+		StringBuilder builder = new StringBuilder();
+		for (Map.Entry<String, String> kvp : leg.entrySet()) {	    
+		    builder.append(kvp.getValue());
+		    builder.append(sep);
+		}
+		if (ret != null) {
+			builder.append(ret);
+		}
+		String content = builder.toString().trim();
+		return content;
+	}
 }

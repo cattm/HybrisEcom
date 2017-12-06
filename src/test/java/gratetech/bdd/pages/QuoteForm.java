@@ -108,10 +108,9 @@ public class QuoteForm extends PageObject {
 	public void setDeparturePort(String from) {
 		log.info(from);		
 		fromRoute = from;
-		WebDriver dr = this.getDriver();
 		if (makeVisible) {
-			JavascriptExecutor executor = (JavascriptExecutor)dr;
-			executor.executeScript("document.getElementById('singleJourneyComboBox').style.display='block';");
+			
+			evaluateJavascript("document.getElementById('singleJourneyComboBox').style.display='block';");
 			Select dropdown = new Select(selectOutJourney);  
 			dropdown.selectByVisibleText(from);
 		} else {
@@ -121,7 +120,7 @@ public class QuoteForm extends PageObject {
 			singleJourneyListEnable.click();
 			pageIsReady(CommonConstants.FAST);
 			// find the option that matches the search criteria and select it
-			List<WebElement> wel = dr.findElements(By.cssSelector("#singleJourneyComboBoxSelectBoxItOptions li"));
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#singleJourneyComboBoxSelectBoxItOptions li"));
 			for(WebElement e : wel) {
 				if (e.getText().equalsIgnoreCase(from)) {
 					log.info("Setting Outbound port " + from);
@@ -135,10 +134,8 @@ public class QuoteForm extends PageObject {
 	
 	public void setReturnPort(String from) {
 		log.info(from);
-		WebDriver dr = this.getDriver();
 		if (makeVisible) {		
-			JavascriptExecutor executor = (JavascriptExecutor)dr;
-			executor.executeScript("document.getElementById('returnJourneyComboBox').style.display='block';");
+			evaluateJavascript("document.getElementById('returnJourneyComboBox').style.display='block';");
 			Select dropdown = new Select(selectReturnJourney);
 			dropdown.selectByVisibleText(from);
 		} else {
@@ -147,7 +144,7 @@ public class QuoteForm extends PageObject {
 			returnJourneyListEnable.click();
 			pageIsReady(CommonConstants.FAST);
 			// find the option that matches the search criteria and select it
-			List<WebElement> wel = dr.findElements(By.cssSelector("#returnJourneyComboBoxSelectBoxItOptions li"));
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#returnJourneyComboBoxSelectBoxItOptions li"));
 			for(WebElement e : wel) {
 				if (e.getText().equalsIgnoreCase(from)) {
 					log.info("Setting Return port " + from);
@@ -164,7 +161,7 @@ public class QuoteForm extends PageObject {
 		if (true) {
 			pageIsReady(CommonConstants.FAST);
 			selectGoingOutDate.clear();
-			selectGoingOutDate.typeAndTab(when);	
+			selectGoingOutDate.type(when);	
 		}
 	}
 	
@@ -181,11 +178,8 @@ public class QuoteForm extends PageObject {
 	// TBD need methods to set the TIME also
 	public void setDepartureTime(String t) {
 		log.info(t);
-		WebDriver dr = this.getDriver();
 		if (makeVisible) {
-
-			JavascriptExecutor executor = (JavascriptExecutor)dr;
-			executor.executeScript("document.getElementById('singleJourneyTimeComboBox').style.display='block';");
+			evaluateJavascript("document.getElementById('singleJourneyTimeComboBox').style.display='block';");
 			Select dropdown = new Select(selectOutTime);
 			dropdown.selectByValue(t);
 		} else {
@@ -197,28 +191,26 @@ public class QuoteForm extends PageObject {
 			pageIsReady(CommonConstants.FAST);
 			singleJourneyTimeEnable.click();
 			pageIsReady(CommonConstants.FAST);
-			List<WebElement> wel = dr.findElements(By.cssSelector("#singleJourneyTimeComboBoxSelectBoxItOptions li"));
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#singleJourneyTimeComboBoxSelectBoxItOptions li"));
 			for(WebElement e : wel) {
 				if (e.getText().equalsIgnoreCase(t)) {
 					log.info("Setting Time to " + t);
 					e.click();
 					break;
 				}
-			}		
-			
+			}					
 		}
 	}
 	
 	public void setReturnTime(String t) {
 		log.info(t);
-		WebDriver dr = this.getDriver();
 		if (makeVisible) {
 			
 		} else {
 			pageIsReady(CommonConstants.FAST);
 			returnJourneyTimeEnable.click();
 			pageIsReady(CommonConstants.FAST);
-			List<WebElement> wel = dr.findElements(By.cssSelector("#returnJourneyTimeComboBoxSelectBoxItOptions li"));
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#returnJourneyTimeComboBoxSelectBoxItOptions li"));
 			for(WebElement e : wel) {
 				if (e.getText().equalsIgnoreCase(t)) {
 					log.info("Setting Time to " + t);
@@ -231,17 +223,15 @@ public class QuoteForm extends PageObject {
 		
 	public void setVehicleType(String type) {
 		log.info(type);
-		WebDriver dr = this.getDriver();
 		if (makeVisible) {
-			JavascriptExecutor executor = (JavascriptExecutor)dr;
-			executor.executeScript("document.getElementById('vehicleTypeOutboundComboBox').style.display='block';");
+			evaluateJavascript("document.getElementById('vehicleTypeOutboundComboBox').style.display='block';");
 			Select dropdown = new Select(selectVehicleType);
 			dropdown.selectByValue(type);
 		} else {
 			pageIsReady(CommonConstants.FAST);
 			outboundJourneyVehicleEnable.click();
 			pageIsReady(CommonConstants.FAST);
-			List<WebElement> wel = dr.findElements(By.cssSelector("#vehicleTypeOutboundComboBoxSelectBoxItOptions li"));
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#vehicleTypeOutboundComboBoxSelectBoxItOptions li"));
 			for(WebElement e : wel) {				
 				if (e.getText().equalsIgnoreCase(type)) {
 					log.info("Setting vehicle to " + type);
@@ -268,16 +258,14 @@ public class QuoteForm extends PageObject {
 
 	public void setNumberOfAdults(String number) {
 		log.info(number);
-		WebDriver dr = this.getDriver();
 		if (makeVisible) {
-			JavascriptExecutor executor = (JavascriptExecutor)dr;
 			// TODO: this is ou_AD1 on Larne route just to be brilliant!
 			// this is HACK will tidy once proven
 			if (fromRoute.contains("Dover") || fromRoute.contains("Hull")) {
-				executor.executeScript("document.getElementById('ou_AD_pass_comboBox').style.display='block';");
+				evaluateJavascript("document.getElementById('ou_AD_pass_comboBox').style.display='block';");
 				selectNumberAdultPassengers = this.getDriver().findElement(By.id("ou_AD_pass_comboBox"));
 			} else if (fromRoute.contains("Larne")) {
-				executor.executeScript("document.getElementById('ou_AD1_pass_comboBox').style.display='block';");
+				evaluateJavascript("document.getElementById('ou_AD1_pass_comboBox').style.display='block';");
 				selectNumberAdultPassengers = this.getDriver().findElement(By.id("ou_AD1_pass_comboBox"));
 			
 			} else {
@@ -301,7 +289,7 @@ public class QuoteForm extends PageObject {
 				return;
 			}
 			pageIsReady(CommonConstants.FAST);		
-			List<WebElement> wel = dr.findElements(By.cssSelector(selector));
+			List<WebElement> wel = getDriver().findElements(By.cssSelector(selector));
 			for(WebElement e : wel) {
 				if (e.getText().equalsIgnoreCase(number)) {
 					log.info("Setting Adults to " + number);
@@ -325,6 +313,9 @@ public class QuoteForm extends PageObject {
 		log.info("Getting Quote:");
 	}
 	
+	
+	// TBD This code is duplicated in another page object
+	// We will need to extract and refactor
 	private void pageIsReady(long slow) {
 		final int limit = 5;
 		int count = 0;
@@ -354,7 +345,7 @@ public class QuoteForm extends PageObject {
 
 /* 
  * This is a very interesting challenge - to control the farefinder quote form
- * This is because there are a number of controls using the JQuery based libary - selectboxit
+ * This is because there are a number of controls using the JQuery based libary - selectBoxIt
  * This is particularly interesting with regards List boxes because there are all hidden and replaced by JS code
  * you can attempt to handle this in one of 3 ways
  * 1) interact with the element directly

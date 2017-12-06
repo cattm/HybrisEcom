@@ -132,7 +132,24 @@ public class LoginQuoteSelectPurchaseSteps {
 		  clive.completePurchase(booking.payment.getPaymentType(), 
 				  booking.payment.getAccount(), 
 				  booking.payment.getCVV());
+		  // TBD verify purchase should do some assert checking
 		  clive.verifyPurchase(); 
+		  
+		  // little bit of storing
+		  booking.setPrice(clive.getfinalPrice());
+		  booking.setReferencePrice(clive.getOfferPrice());
+		  booking.setBookingSummary(clive.getBookingID());
+		  booking.setProduct(clive.getProduct());
+		  
+		  // we want to build or append the "booking" to a csv file
+		  // we will param this off test instance and properties later
+		  // we may need to create a new file or append a row to existing and close if last row
+		  Boolean newfile = booking.buildCSV("/Users/marcus/Documents/edge2016/pando/target/scenario/interim/testscenario.csv");
+		  if (newfile) {
+			  booking.writeBookingHeaders();
+		  }
+		  booking.writeBookingContent();
+		  booking.closeCSV();
 		  
 	}
 

@@ -1,10 +1,16 @@
 package gratetech.bdd.utils;
+// model of a Tourist Booking - with options to read and write to CSV file
+import gratetech.bdd.interfaces.IWriteCSV;
 
+import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TouristBooking {
 
+	private static Boolean fileOpen = false;
 	public TravelLeg outboundJ = new TravelLeg();
 	public TravelLeg returnJ   = new TravelLeg();
 	public TouristPayment payment = new TouristPayment();
@@ -17,6 +23,7 @@ public class TouristBooking {
 	private String product = null;
 	private String price = null;
 	private String referencePrice = null;
+	
 	
 	public enum onJourney {
 		BOTH, OUTBOUND, RETURN
@@ -33,6 +40,7 @@ public class TouristBooking {
 	public enum PassengerType {
 		ADULT, CHILD, BABY, PENSIONER, STUDENT
 	}
+
 
 
 	public void setOutBoundJourney (String day, String time, String from, String to, String ship, String offer,
@@ -169,5 +177,75 @@ public class TouristBooking {
 	
 	public String getReferencePrice() {
 		return referencePrice;
+	}
+	
+
+	public boolean buildCSV(String tofile) {
+		if (!fileOpen) {
+			WriteCsv.configureWriter(tofile);
+			return true;
+		}
+		return false;
+	}
+	
+	public void writeBookingHeaders() {
+		
+		WriteCsv.writeRawString("OBJ H,");
+		String v1 = outboundJ.legKeyList(",", null);
+		WriteCsv.writeRawString(v1);
+		WriteCsv.writeRawString("RTJ H,");
+		String v2 = returnJ.legKeyList(",", null);
+		WriteCsv.writeRawString(v2);
+		WriteCsv.writeRawString("OBP H,");
+		String v3 = obPassengers.passengerKeyList(",", null);
+		WriteCsv.writeRawString(v3);
+		WriteCsv.writeRawString("RTP H,");
+		String v4 = rtPassengers.passengerKeyList(",", null);
+		WriteCsv.writeRawString(v4);
+		
+		WriteCsv.writeRawString("PAY H,");
+		String v5 = payment.paymentKeyList(",", null);
+		WriteCsv.writeRawString(v5);
+		
+		WriteCsv.writeRawString("Summary H,");
+		
+		WriteCsv.writeRawString("voucher,");
+		WriteCsv.writeRawString("promo,");		
+		WriteCsv.writeRawString("bookingSummary,");
+		WriteCsv.writeRawString("product,");
+		WriteCsv.writeRawString("price,");
+		WriteCsv.writeRawLine("referencePrice");
+	}
+	
+	public void writeBookingContent() {
+		WriteCsv.writeRawString("OBJ V,");
+		String v1 = outboundJ.legValList(",", null);
+		WriteCsv.writeRawString(v1);
+		WriteCsv.writeRawString("RTJ V,");
+		String v2 = returnJ.legValList(",", null);
+		WriteCsv.writeRawString(v2);	
+		WriteCsv.writeRawString("OBP V,");
+		String v3 = obPassengers.passengerValList(",", null);
+		WriteCsv.writeRawString(v3);
+		WriteCsv.writeRawString("RTP V,");
+		String v4 = rtPassengers.passengerValList(",", null);
+		WriteCsv.writeRawString(v4);
+		
+		WriteCsv.writeRawString("PAY V,");
+		String v5 = payment.paymentValList(",", null);
+		WriteCsv.writeRawString(v5);
+		
+		WriteCsv.writeRawString("Summary V,");
+		
+		WriteCsv.writeRawString(voucher + ",");
+		WriteCsv.writeRawString(promo + ",");		
+		WriteCsv.writeRawString(bookingSummary + ",");
+		WriteCsv.writeRawString(product + ",");
+		WriteCsv.writeRawString(price + ",");
+		WriteCsv.writeRawLine(referencePrice);
+	}
+	
+	public void closeCSV() {
+		WriteCsv.closeWriter();
 	}
 }

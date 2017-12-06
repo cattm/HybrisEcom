@@ -120,7 +120,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		}
 		log.info(order.getHeading());
 		product = order.getProduct();
-		offerPrice = order.getAmount();
+		offerPrice = cleanNumericalString(order.getAmount());
 		log.info( "Product is " + product);
 		log.info("Price offered is " + offerPrice);
 		log.info(" Address is " + order.getAddress());
@@ -169,18 +169,18 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		}
 			
 		confirmationPage.setImplicitTimeout(10, TimeUnit.SECONDS);
-		String tmp = confirmationPage.getBooking();
-		booking = tmp.replaceAll("[^0-9]", "");
+		booking = cleanTheBooking();
 		log.info(booking);
 		
 		log.info(confirmationPage.getTotalCost());
-		finalPrice = confirmationPage.getTotalCostCharged();
+		finalPrice = cleanNumericalString(confirmationPage.getTotalCostCharged());
 		log.info(finalPrice);
 		// assertThat(booking, containsString(checkRef));
 		assertThat(finalPrice,equalToIgnoringCase(offerPrice));
 		confirmationPage.resetImplicitTimeout();
 	}
 	 
+	// Getters and little utils
 	public String getBookingID() {
 		return booking;
 	}
@@ -201,6 +201,14 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		return offerPrice;
 	}
 	
+	private String cleanNumericalString(String toclean) {
+		String result = toclean.replaceAll("[^0-9.]", "");
+		return result;
+	}
 	
+	private String cleanTheBooking() {
+		String tmp = confirmationPage.getBooking();
+		return tmp.replaceAll("[^0-9]", "");
+	}
 
 }

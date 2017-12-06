@@ -47,5 +47,31 @@ public class TouristPayment {
 		}
 		log.info("Payment Dumped ");
 	}
+	
+	public String paymentKeyList (String sep, String ret) {
+		StringBuilder builder = new StringBuilder();
+		for (Map.Entry<String, String> kvp : payment.entrySet()) {
+		    builder.append(kvp.getKey());
+		    builder.append(sep);	    
+		}
+		if (ret != null) {
+			builder.append(ret);
+		}
+		String content = builder.toString().trim();
+		return content;
+	}
+	
+	public String paymentValList(String sep, String ret) {
+		StringBuilder builder = new StringBuilder();
+		for (Map.Entry<String, String> kvp : payment.entrySet()) {	    
+		    builder.append(kvp.getValue());
+		    builder.append(sep);
+		}
+		if (ret != null) {
+			builder.append(ret);
+		}
+		String content = builder.toString().trim();
+		return content;
+	}
 
 }

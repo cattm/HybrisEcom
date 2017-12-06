@@ -11,16 +11,18 @@ public class WriteCsv {
     
      	static FileWriter writer = null;
 
-     	public static void configureWriter(String file) {  
-     		try {
-				writer =  new FileWriter(file);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}  		
+     	public static void configureWriter(String file) { 
+     		if (writer == null) {
+     			try {
+     				writer =  new FileWriter(file);
+     			} catch (IOException e) {
+     				// TODO Auto-generated catch block
+     				e.printStackTrace();
+     			} 
+     		}
      	}
      	
-     	public void closeWriter() {
+     	public static void closeWriter() {
      		 try {
 				writer.flush();
 				writer.close();
@@ -30,6 +32,36 @@ public class WriteCsv {
 			}
              
      	}
+     	
+     	public static void writeRawLine(String value) {
+     		try {
+				writer.append(value);
+				writer.append("\r\n");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+     		
+     	}
+     	
+     	public static void writeRawString(String value) {
+     		try {
+				writer.append(value);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+     		
+     	}
+     	public static void writeLine(List<String> values)  {
+	        try {
+				writeLine(writer, values, DEFAULT_SEPARATOR, ' ');
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+     	
 	    public static void writeLine(Writer w, List<String> values)  {
 	        try {
 				writeLine(w, values, DEFAULT_SEPARATOR, ' ');
@@ -84,8 +116,5 @@ public class WriteCsv {
 	        }
 	        sb.append("\n");
 	        w.append(sb.toString());
-
-
-	    }
-	    
+	    }	    
 }
