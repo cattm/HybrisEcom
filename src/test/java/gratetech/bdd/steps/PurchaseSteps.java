@@ -62,6 +62,7 @@ public static Logger log = Logger.getLogger(PurchaseSteps.class);
 					map.get("height").toString(),
 					map.get("adults").toString(),
 					"", // no time set yet 
+					map.get("cabin").toString(),
 					map.get("promo code").toString()
 					);
 			David.askForQuote();

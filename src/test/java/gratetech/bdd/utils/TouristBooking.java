@@ -45,7 +45,7 @@ public class TouristBooking {
 
 	public void setOutBoundJourney (String day, String time, String from, String to, String ship, String offer,
             String vehicle, String length, String height, String registration, String passengers,
-            String rac, String wifi, String cabin) {
+            String rac, String wifi, String club) {
 		outboundJ.setUpLeg(day, 
 				time, 
 				from, 
@@ -59,7 +59,7 @@ public class TouristBooking {
 				passengers, 
 				rac, 
 				wifi, 
-				cabin);
+				club);
 	}
 	
 	public void setOBSailing(String day, String time, String from, String to, String ship, String offer) {
@@ -70,8 +70,8 @@ public class TouristBooking {
 		outboundJ.setUpLegVehicle(vehicle, length, height, registration);
 	}
 	
-	public void setOBExtras(String rac, String wifi, String cabin) {
-		outboundJ.setUpLegExtras(rac, wifi, cabin);	
+	public void setOBExtras(String rac, String wifi, String club) {
+		outboundJ.setUpLegExtras(rac, wifi, club);	
 	}
 	
 	public void setOBNumberOfPassengers(String passengers) {
@@ -80,7 +80,7 @@ public class TouristBooking {
 	
 	public void setReturnJourney (String day, String time, String from, String to, String ship, String offer,
             String vehicle, String length, String height, String registration, String passengers,
-            String rac, String wifi, String cabin) {
+            String rac, String wifi, String club) {
 		returnJ.setUpLeg(day, 
 				time, 
 				from, 
@@ -94,7 +94,7 @@ public class TouristBooking {
 				passengers, 
 				rac, 
 				wifi, 
-				cabin);
+				club);
 		
 	}
 	
@@ -106,8 +106,8 @@ public class TouristBooking {
 		returnJ.setUpLegVehicle(vehicle, length, height, registration);
 	}
 	
-	public void setRTExtras(String rac, String wifi, String cabin) {
-		returnJ.setUpLegExtras(rac, wifi, cabin);	
+	public void setRTExtras(String rac, String wifi, String club) {
+		returnJ.setUpLegExtras(rac, wifi, club);	
 	}
 	
 	public void setRTNumberOfPassengers(String passengers) {
@@ -193,22 +193,24 @@ public class TouristBooking {
 		WriteCsv.writeRawString("OBJ H,");
 		String v1 = outboundJ.legKeyList(",", null);
 		WriteCsv.writeRawString(v1);
+
 		WriteCsv.writeRawString("RTJ H,");
 		String v2 = returnJ.legKeyList(",", null);
 		WriteCsv.writeRawString(v2);
+
 		WriteCsv.writeRawString("OBP H,");
 		String v3 = obPassengers.passengerKeyList(",", null);
 		WriteCsv.writeRawString(v3);
+
 		WriteCsv.writeRawString("RTP H,");
 		String v4 = rtPassengers.passengerKeyList(",", null);
 		WriteCsv.writeRawString(v4);
-		
+
 		WriteCsv.writeRawString("PAY H,");
 		String v5 = payment.paymentKeyList(",", null);
-		WriteCsv.writeRawString(v5);
-		
-		WriteCsv.writeRawString("Summary H,");
-		
+		WriteCsv.writeRawString(v5);	
+
+		WriteCsv.writeRawString("Summary H,");	
 		WriteCsv.writeRawString("voucher,");
 		WriteCsv.writeRawString("promo,");		
 		WriteCsv.writeRawString("bookingSummary,");
@@ -221,12 +223,15 @@ public class TouristBooking {
 		WriteCsv.writeRawString("OBJ V,");
 		String v1 = outboundJ.legValList(",", null);
 		WriteCsv.writeRawString(v1);
+
 		WriteCsv.writeRawString("RTJ V,");
 		String v2 = returnJ.legValList(",", null);
 		WriteCsv.writeRawString(v2);	
+
 		WriteCsv.writeRawString("OBP V,");
 		String v3 = obPassengers.passengerValList(",", null);
 		WriteCsv.writeRawString(v3);
+
 		WriteCsv.writeRawString("RTP V,");
 		String v4 = rtPassengers.passengerValList(",", null);
 		WriteCsv.writeRawString(v4);
@@ -236,7 +241,6 @@ public class TouristBooking {
 		WriteCsv.writeRawString(v5);
 		
 		WriteCsv.writeRawString("Summary V,");
-		
 		WriteCsv.writeRawString(voucher + ",");
 		WriteCsv.writeRawString(promo + ",");		
 		WriteCsv.writeRawString(bookingSummary + ",");

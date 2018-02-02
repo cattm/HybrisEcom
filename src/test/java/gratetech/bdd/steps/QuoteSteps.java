@@ -3,7 +3,6 @@ package gratetech.bdd.steps;
 import java.util.List;
 import java.util.Map;
 
-import gratetech.bdd.steps.serenity.UserLoginSteps;
 import gratetech.bdd.steps.serenity.UserQuoteSteps;
 
 import org.apache.log4j.Logger;
@@ -37,6 +36,8 @@ public class QuoteSteps {
 		log.info("Select for Quote");
 		List<Map<String, String>> data = quotefeeddata.asMaps(String.class, String.class);
 		for (Map map : data) { 
+			String cabin = map.get("cabins").toString();
+			if (cabin == null) { cabin = "";}
 			Marcus.hasFilledInQuote(
 					map.get("from").toString(),
 					map.get("return").toString(),
@@ -47,6 +48,7 @@ public class QuoteSteps {
 					map.get("height").toString(),
 					map.get("adults").toString(),
 					"", // no time set for quote
+					cabin,//map.get("cabins").toString(),
 					map.get("promo code").toString()
 					);
 		}

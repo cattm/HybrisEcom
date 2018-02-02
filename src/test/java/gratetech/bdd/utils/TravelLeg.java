@@ -28,7 +28,7 @@ public class TravelLeg {
 	
 	public void setUpLeg(String day, String time, String from, String to, String ship, String offer,
 			              String vehicle, String length, String height, String registration, String passengers,
-			              String rac, String wifi, String cabin) {
+			              String rac, String wifi, String club) {
 		leg.put("day", day);
 		leg.put("time", time);
 		leg.put("from", from);
@@ -42,7 +42,7 @@ public class TravelLeg {
 		leg.put("passengers", passengers);
 		leg.put("rac", rac);
 		leg.put("wifi", wifi);
-		leg.put("cabin", cabin);
+		leg.put("club", club);
 	}
 	
 	public void setUpLegSailing(String day, String time, String from, String to, String ship, String offer) {
@@ -65,10 +65,10 @@ public class TravelLeg {
 		leg.put("passengers", passengers);
 	}
 	
-	public void setUpLegExtras(String rac, String wifi, String cabin) {
+	public void setUpLegExtras(String rac, String wifi, String club) {
 		leg.put("rac", rac);
 		leg.put("wifi", wifi);
-		leg.put("cabin", cabin);
+		leg.put("club", club);
 	}
 	
 	// individual setters
@@ -110,6 +110,9 @@ public class TravelLeg {
 	}
 	public void setUpWIFI(String p) {
 		leg.put("wifi", p);
+	}
+	public void setUpClub(String p) {
+		leg.put("club", p);
 	}
 	public void setUpCabin(String p) {
 		leg.put("cabin", p);
@@ -155,10 +158,13 @@ public class TravelLeg {
 	public String getWIFIExtra() {
 		return leg.get("wifi");
 	}
-	public String getCabinExtras() {
-		return leg.get("cabin");
+	public String getClubExtras() {
+		return leg.get("club");
 	}
 	
+	public String getCabin() {
+		return leg.get("cabin");
+	}
 	
 	public void dumpLeg() {
 		log.info("Travel Leg information is : ");

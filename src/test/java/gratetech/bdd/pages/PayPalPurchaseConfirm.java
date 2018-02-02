@@ -1,5 +1,7 @@
 package gratetech.bdd.pages;
 
+import gratetech.bdd.commons.CommonConstants;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 
@@ -15,20 +17,24 @@ public class PayPalPurchaseConfirm extends PageObject {
 	
 	public void confirmPurchase() {
 		switchToWindow();
+		// do I need to pause here?
+		log.info("Before Click");
 		confirm.click();
+		log.info("Before Click");
 	}
 	
 	private void switchToWindow() {
 		// check title of window perhaps - Review your payment	
 		int check = 0;
-		while (check < 3) {
+		while (check < 4) {
 			if (this.getTitle().contains("Checkout - Review your payment")) {
 				// get out of here we are on the right page
 				log.info(this.getTitle());
-				check = 3;
+				break;
+				
 			} else {
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(CommonConstants.VSLOW);
 					log.info(this.getTitle());
 					log.info("not on correct window - checking again");
 				} catch (InterruptedException e) {
@@ -37,7 +43,14 @@ public class PayPalPurchaseConfirm extends PageObject {
 				}
 				check++;
 			}
-		}		
+		}
+		// more delays to wait for slow web page
+		try {
+			Thread.sleep(CommonConstants.SLOW);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		WebDriver wd = this.getDriver();
 		String last = "";
 		for (String handle1 : wd.getWindowHandles()) {		 

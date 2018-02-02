@@ -3,6 +3,7 @@ package gratetech.bdd.steps;
 import java.util.HashMap;
 import java.util.Map;
 
+import gratetech.bdd.commons.DateStamp;
 import gratetech.bdd.steps.serenity.UserPurchaseSteps;
 import gratetech.bdd.utils.TouristBooking;
 import gratetech.bdd.utils.TouristBooking.PassengerType;
@@ -36,6 +37,8 @@ public class LoginQuoteSelectPurchaseSteps {
 	    booking.outboundJ.setUpShip(ship);
 	    booking.outboundJ.setUpSailTime(time);
 	    booking.outboundJ.setUpOffer(offer);
+	    //TODO: blank for now
+	    booking.outboundJ.setUpCabin("");
 	    
 	 
 	}
@@ -116,6 +119,7 @@ public class LoginQuoteSelectPurchaseSteps {
 				  // this will need to change
 				  booking.outboundJ.getNumberOfPassgengers(),
 				  booking.outboundJ.getTimeOfTravel(),
+				  booking.outboundJ.getCabin(),
 				  booking.getPromo());
 		  clive.askForQuote();
 		  clive.selectTheQuote(booking.outboundJ.getTimeOfTravel(), 
@@ -125,9 +129,11 @@ public class LoginQuoteSelectPurchaseSteps {
 		  clive.selectPassengersAndCar(booking.obPassengers.getPassengerName(0), 
 				  booking.outboundJ.getVehicleReg());
 		  log.info("Vehicle is " + booking.outboundJ.getVehicleReg());
-		  clive.checkBookingSummary();
+		 
 		  clive.tickTnc();
 		  clive.selectEVoucher(booking.getVoucher());
+		  clive.checkBookingSummary();
+		  
 		  clive.selectPurchaseNow();
 		  clive.completePurchase(booking.payment.getPaymentType(), 
 				  booking.payment.getAccount(), 
@@ -141,10 +147,13 @@ public class LoginQuoteSelectPurchaseSteps {
 		  booking.setBookingSummary(clive.getBookingID());
 		  booking.setProduct(clive.getProduct());
 		  
-		  // we want to build or append the "booking" to a csv file
+		  // TODO: we want to build or append the "booking" to a csv file
 		  // we will param this off test instance and properties later
 		  // we may need to create a new file or append a row to existing and close if last row
-		  Boolean newfile = booking.buildCSV("/Users/marcus/Documents/edge2016/pando/target/scenario/interim/testscenario.csv");
+		  DateStamp myfiledate = new DateStamp();
+		  String stmp = myfiledate.getFileDateFormat();
+		  String fl = "/Users/marcus/Documents/edge2016/pando/target/scenario/interim/" + stmp +"_scenario.csv";
+		  Boolean newfile = booking.buildCSV(fl);
 		  if (newfile) {
 			  booking.writeBookingHeaders();
 		  }

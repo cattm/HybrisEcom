@@ -7,21 +7,29 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
-import jline.internal.Log;
 import net.thucydides.core.annotations.Step;
 import gratetech.bdd.pages.LoggedIn;
 import gratetech.bdd.pages.PandOHomePage;
 import gratetech.bdd.pages.PandOLogin;
 import gratetech.bdd.pages.QuoteForm;
+import gratetech.bdd.pages.QuoteHow;
 import gratetech.bdd.pages.QuoteResponseInfo;
-import gratetech.bdd.steps.QuoteSteps;
+import gratetech.bdd.pages.QuoteWhen;
+import gratetech.bdd.pages.QuoteWhere;
+import gratetech.bdd.pages.QuoteWho;
+
 
 public class UserQuoteSteps {
 	public static Logger log = Logger.getLogger(UserQuoteSteps.class);
 	protected PandOHomePage homePage;
 	protected PandOLogin login;
 	protected LoggedIn liMessage;
+	// TODO: replace qForm with simpler models
 	protected QuoteForm qForm;
+	protected QuoteWhere qWhere;
+	protected QuoteWhen qWhen;
+	protected QuoteHow qHow;
+	protected QuoteWho qWho;
 	protected QuoteResponseInfo quoteTable;
 	protected boolean vehicleIsVan = false;
 	
@@ -46,27 +54,34 @@ public class UserQuoteSteps {
 	}
 	
 	@Step
-	public void hasFilledInQuote(String from, String back, String dateout, String dateback, String vehicle, String len, String height, String adults, String outtime, String promocode) {
+	public void hasFilledInQuote(String from, String back, String dateout, String dateback, String vehicle, String len, String height, String adults, String outtime, String cabins, String promocode) {
 		qForm.setImplicitTimeout(10, TimeUnit.SECONDS);
-		//qForm.elementIsPresent();
-		qForm.setDeparturePort(from);
-		qForm.setReturnPort(back);
-		qForm.setDepartureDate(dateout);
 
-		qForm.setReturnDate(dateback);
+		qWhere.setDeparturePort(from);
+		qWhere.setReturnPort(back);
 		
-		qForm.setDepartureTime(outtime);
+		qWho.setFromRoute(qWhere.getFromRoute());
 		
-		qForm.setVehicleType(vehicle);
+		qWhen.setDepartureDate(dateout);
+
+		qWhen.setReturnDate(dateback);
+		
+		qWhen.setDepartureTime(outtime);
+		
+		qHow.setVehicleType(vehicle);
 	
 		if (vehicle.contentEquals("van") || vehicle.contentEquals("motorhome")) { vehicleIsVan=true;}
 		if (vehicleIsVan) {
-			qForm.setVehicleLength(len);
-			qForm.setVehicleHeight(height);
+			qHow.setVehicleLength(len);
+			qHow.setVehicleHeight(height);
 		}
 		
-		qForm.setNumberOfAdults(adults);
-		
+		// TODO: not dealing with Trailer/Caravan currently
+		// TODO: Or anybody apart from Adults
+		qWho.setNumberOfAdults(adults);
+		if (!cabins.contentEquals("")) {
+			qForm.setNumberOfCabins(cabins);
+		}
 		qForm.setPromoCode(promocode);
 		
 		qForm.resetImplicitTimeout();

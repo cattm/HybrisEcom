@@ -43,6 +43,9 @@ public class QuoteForm extends PageObject {
 	@FindBy(id="vehicleTypeOutboundComboBoxSelectBoxIt")
 	private WebElementFacade outboundJourneyVehicleEnable;
 	
+	@FindBy(id="ou_petsSelect_0SelectBoxIt")
+	private WebElementFacade selectNumberOfPetsEnable;
+	
 	@FindBy(id="trailerOutboundComboBoxSelectBoxIt")
 	private WebElementFacade outboundJourneyTrailerEnable;
 	
@@ -51,6 +54,21 @@ public class QuoteForm extends PageObject {
 	
 	@FindBy(id="ou_AD1_pass_comboBoxSelectBoxIt")
 	private WebElement selectAltNumberAdultPassengersEnable;
+	
+	@FindBy(id="ou_IN_pass_comboBoxSelectBoxIt")
+	private WebElement selectNumberInfantPassengersEnable;
+	
+	@FindBy(id="ou_IN1_pass_comboBoxSelectBoxIt")
+	private WebElement selectNumberInfant1PassengersEnable;
+	
+	@FindBy(id="ou_IN2_pass_comboBoxSelectBoxIt")
+	private WebElement selectNumberInfant2PassengersEnable;
+	
+	@FindBy(id="ou_CH_pass_comboBoxSelectBoxIt")
+	private WebElementFacade selectNumberChildrenEnable;
+	
+	@FindBy(id="cabinsOutboundSelectBoxIt")
+	private WebElementFacade outboundCabinEnable;
 	
 // end of new objects
 	
@@ -105,6 +123,9 @@ public class QuoteForm extends PageObject {
 			if(item.getTagName().equals("select")) {log.info("SELECT FOUND ");}
 		}
 	}
+	
+	public void setFromRoute(String from) {this.fromRoute = from;}
+	
 	public void setDeparturePort(String from) {
 		log.info(from);		
 		fromRoute = from;
@@ -178,6 +199,9 @@ public class QuoteForm extends PageObject {
 	// TBD need methods to set the TIME also
 	public void setDepartureTime(String t) {
 		log.info(t);
+		// TODO: fix this horrible check
+		if (t.isEmpty()) return;
+		
 		if (makeVisible) {
 			evaluateJavascript("document.getElementById('singleJourneyTimeComboBox').style.display='block';");
 			Select dropdown = new Select(selectOutTime);
@@ -204,8 +228,10 @@ public class QuoteForm extends PageObject {
 	
 	public void setReturnTime(String t) {
 		log.info(t);
+		// TODO: fix this horrible check
+		if (t.isEmpty()) return;
 		if (makeVisible) {
-			
+			log.info("makeVisible not coded yet");
 		} else {
 			pageIsReady(CommonConstants.FAST);
 			returnJourneyTimeEnable.click();
@@ -235,6 +261,26 @@ public class QuoteForm extends PageObject {
 			for(WebElement e : wel) {				
 				if (e.getText().equalsIgnoreCase(type)) {
 					log.info("Setting vehicle to " + type);
+					e.click();
+					break;
+				}
+			}
+		}
+	}
+	
+	public void setTrailer(String trailer) {
+		
+		log.info(trailer);
+		if (makeVisible) {
+			log.info("makeVisible not coded yet");
+		} else {
+			pageIsReady(CommonConstants.FAST);
+			outboundJourneyTrailerEnable.click();
+			pageIsReady(CommonConstants.FAST);
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#cabinsOutboundSelectBoxItOptions li"));
+			for(WebElement e : wel) {				
+				if (e.getText().equalsIgnoreCase(trailer)) {
+					log.info("Setting vehicle to " + trailer);
 					e.click();
 					break;
 				}
@@ -300,6 +346,132 @@ public class QuoteForm extends PageObject {
 		}
 	}
 	
+	public void setNumberOfChildren(String number) {
+		log.info(number);
+		if (makeVisible) {
+			log.info("makeVisible not coded yet");
+		} else {
+			pageIsReady(CommonConstants.FAST);
+			selectNumberChildrenEnable.click();
+			pageIsReady(CommonConstants.FAST);
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#ou_CH_pass_comboBoxSelectBoxItOptions li"));
+			for(WebElement e : wel) {				
+				if (e.getText().equalsIgnoreCase(number)) {
+					log.info("Setting children to " + number);
+					e.click();
+					break;
+				}
+			}
+		}
+	}
+	
+	public void setNumberOfInfants(String number) {
+		log.info(number);
+		if (makeVisible) {
+			log.info("makeVisible not coded yet");
+		} else {
+			pageIsReady(CommonConstants.FAST);
+			selectNumberInfantPassengersEnable.click();
+			pageIsReady(CommonConstants.FAST);
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#ou_IN_pass_comboBoxSelectBoxItOptions li"));
+			for(WebElement e : wel) {				
+				if (e.getText().equalsIgnoreCase(number)) {
+					log.info("Setting infants to " + number);
+					e.click();
+					break;
+				}
+			}
+		}
+	}
+	
+	public void setNumberOfInfants1(String number) {
+		log.info(number);
+		if (makeVisible) {
+			log.info("makeVisible not coded yet");
+		} else {
+			pageIsReady(CommonConstants.FAST);
+			selectNumberInfant1PassengersEnable.click();
+			pageIsReady(CommonConstants.FAST);
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#ou_IN1_pass_comboBoxSelectBoxItOptions li"));
+			for(WebElement e : wel) {				
+				if (e.getText().equalsIgnoreCase(number)) {
+					log.info("Setting infants 1 to " + number);
+					e.click();
+					break;
+				}
+			}
+		}
+	}
+	
+	public void setNumberOfInfants2(String number) {
+		log.info(number);
+		if (makeVisible) {
+			log.info("makeVisible not coded yet");
+		} else {
+			pageIsReady(CommonConstants.FAST);
+			selectNumberInfant2PassengersEnable.click();
+			pageIsReady(CommonConstants.FAST);
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#ou_IN2_pass_comboBoxSelectBoxItOptions li"));
+			for(WebElement e : wel) {				
+				if (e.getText().equalsIgnoreCase(number)) {
+					log.info("Setting infants 2 to " + number);
+					e.click();
+					break;
+				}
+			}
+		}
+	}
+	
+	public void setNumberOfStudents(String number) {
+		log.info(number);
+	}
+	
+	public void setNumberOfOldPeople(String number) {
+		log.info(number);
+	}
+	
+	public void setNumberOfPets(String number) {
+		log.info(number);
+		if (makeVisible) {
+			log.info("makeVisible not coded yet");
+		} else {
+		pageIsReady(CommonConstants.FAST);
+		selectNumberOfPetsEnable.click();
+		pageIsReady(CommonConstants.FAST);
+		List<WebElement> wel = getDriver().findElements(By.cssSelector("#ou_petsSelect_0SelectBoxItOptions li"));
+			for(WebElement e : wel) {				
+				if (e.getText().equalsIgnoreCase(number)) {
+					log.info("Setting Pets to " + number);
+					e.click();
+					break;
+				}
+			}
+		}
+	}
+	
+	public void setNumberOfCabins(String number) {
+		log.info(number);
+		if (makeVisible) {
+			log.info("makeVisible not coded yet");
+		} else {
+			pageIsReady(CommonConstants.FAST);
+			outboundCabinEnable.click();
+			pageIsReady(CommonConstants.FAST);
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#cabinsOutboundSelectBoxItOptions li"));
+			for(WebElement e : wel) {				
+				if (e.getText().equalsIgnoreCase(number)) {
+					log.info("Setting cabins to " + number);
+					e.click();
+					break;
+				}
+			}
+		}
+	}
+	
+	public void tickSameOnReturn() {
+		
+	}
+	
 	public void setPromoCode(String code) {
 		log.info(code);
 		pageIsReady(CommonConstants.FAST);
@@ -340,9 +512,19 @@ public class QuoteForm extends PageObject {
 				+ "return pageLoaded()";
 		return (Boolean) evaluateJavascript(jsQuery);
 	}
-}
+	
+	public void jsListSelect(String selector, String setting) {
+		List<WebElement> wel = getDriver().findElements(By.cssSelector(selector));
+		for(WebElement e : wel) {				
+			if (e.getText().equalsIgnoreCase(setting)) {
+				log.info("Setting selector to " + setting);
+				e.click();
+				break;		
+			}
+		}
+	}
 
-
+} // End Class
 /* 
  * This is a very interesting challenge - to control the farefinder quote form
  * This is because there are a number of controls using the JQuery based libary - selectBoxIt
