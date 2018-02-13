@@ -56,18 +56,20 @@ public class UserQuoteSteps {
 	@Step
 	public void hasFilledInQuote(String from, String back, String dateout, String dateback, String vehicle, String len, String height, String adults, String outtime, String cabins, String promocode) {
 		qForm.setImplicitTimeout(10, TimeUnit.SECONDS);
-
+		qWho.setImplicitTimeout(20, TimeUnit.SECONDS);
+		
+		// WHERE
 		qWhere.setDeparturePort(from);
 		qWhere.setReturnPort(back);
-		
+		// save for later use in working out which id to use
 		qWho.setFromRoute(qWhere.getFromRoute());
 		
+		// WHEN
 		qWhen.setDepartureDate(dateout);
-
-		qWhen.setReturnDate(dateback);
-		
+		qWhen.setReturnDate(dateback);		
 		qWhen.setDepartureTime(outtime);
 		
+		// HOW
 		qHow.setVehicleType(vehicle);
 	
 		if (vehicle.contentEquals("van") || vehicle.contentEquals("motorhome")) { vehicleIsVan=true;}
@@ -76,23 +78,41 @@ public class UserQuoteSteps {
 			qHow.setVehicleHeight(height);
 		}
 		
+		// WHO
 		// TODO: not dealing with Trailer/Caravan currently
 		// TODO: Or anybody apart from Adults
+		// TODO Remove this code
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		qWho.setNumberOfAdults(adults);
+
+		// ODDS
 		if (!cabins.contentEquals("")) {
 			qForm.setNumberOfCabins(cabins);
 		}
 		qForm.setPromoCode(promocode);
-		
+			
+		qWho.resetImplicitTimeout();
 		qForm.resetImplicitTimeout();
 	}
 	
 
+	@Step
+	public void addInfants1(String babies) {
+		qWho.setImplicitTimeout(20, TimeUnit.SECONDS);
+		qWho.setNumberOfInfants1(babies);
+		qWho.resetImplicitTimeout();
+	}
 
 	@Step
 	public void askForQuote() {
 		log.info("submitting quote form");
 		qForm.getAQuote();
+		qForm.continueWarningMessage();
 	}
 	
 	@Step

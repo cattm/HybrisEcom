@@ -32,17 +32,22 @@ public class TheQuotePage extends PageObject  {
 		int size = timeelements.size();
 		log.info("number of elements is " + size);
 		int offset = 0;
-		Iterator<WebElement> iter = timeelements.iterator();
-		while (iter.hasNext()) {
-			offset++;
-			WebElement item = iter.next();
-			String label = item.getText();
-			if (label.contentEquals(departime)) {
-				log.info("found departure time - offset is " + offset);
-				break;
+		if (size > 1) {
+			Iterator<WebElement> iter = timeelements.iterator();
+			while (iter.hasNext()) {
+				offset++;
+				WebElement item = iter.next();
+				String label = item.getText();
+				if (label.contentEquals(departime)) {
+					log.info("found departure time - offset is " + offset);
+					break;
+				}
+		
 			}
-	
+		} else {
+			offset = 1;
 		}
+		
 		// TBD need to put in a check here to make sure we have a sailing
 		String findboatcss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(3)";
 		log.info(findboatcss);
@@ -50,34 +55,45 @@ public class TheQuotePage extends PageObject  {
 		WebElement myboat = this.getDriver().findElement(By.cssSelector(findboatcss));
 		
 		String boatname = myboat.getText();
-		log.info(boatname);
+		log.info(boatname + " v " + boat);
 		String selectfarecss = "";
 		if (boatname.contentEquals(boat)) {
 			// click the class....bronze/silver/gold/platinum
 			switch (classoffare) {
 			case "bronze" :
-				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(4)";
+				//table[class='table outbound-results-table'] tbody tr:nth-of-type(1) input[name='outboundCrossingBundleRadio']
+				//table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(4) div"
+				// table[class='table outbound-results-table'] tbody tr:nth-of-type(1) input[value*='bronze']
+				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='bronze']";
 				break;
 			case "silver" :
-				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(5)";
+				//selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(5)";
+				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='silver']";
 				break;
 			case "gold"   :
-				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(6)";
+				//selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(6)";
+				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='gold']";
 				break;
 			case "platinum" :
-				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(7)";
+				//selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(7)";
+				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='platinum']";
 			default :
 				break;
 			}
 			log.info(selectfarecss);
 			// TODO: there is an occasional issue finding this - this is just a hack for now
 			try {
+				// TODO: ok we have another async - page ready thing going on to fix - need to check the page has reloaded!!!!
+				Thread.sleep(10000);
 				this.getDriver().findElement(By.cssSelector(selectfarecss)).click();
+				log.info("click");
+				Thread.sleep(10000);
 			} 
 			catch (Exception e ) {
-				log.error("OUCH We did not find the fare");
+				log.error("OUCH We did not Click the fare class");
 				return false;
 			}
+			log.info("Have selected " + classoffare);
 			return true;
 		}
 
@@ -112,7 +128,8 @@ public class TheQuotePage extends PageObject  {
 		log.info(boatname);
 		String selectfarecss = "";
 		if (boatname.contentEquals(boat)) {
-			// click the class....bronze/silver/gold/platinum
+			// TODO click the class....bronze/silver/gold/platinum
+			// This code is wrong - see above
 			switch (classoffare) {
 			case "bronze" :
 				selectfarecss = "table[class='table inbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(4)";

@@ -13,5 +13,7 @@ public class CommonConstants {
 	public static final long FASTSECS = 1;
 
 	public static final long STUPIDSECS = 20;
+	
+	public static final int WAITLOOPCOUNT = 10;
 
 }

@@ -20,6 +20,7 @@ import gratetech.bdd.pages.VisaForm;
 import net.thucydides.core.annotations.Step;
 
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 
 public class UserPurchaseSteps extends UserQuoteSteps {
 	public static Logger log = Logger.getLogger(UserPurchaseSteps.class);
@@ -44,7 +45,12 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	@Step
 	public void selectTheQuote(String time, String ship, String offer) {
 		quote.setImplicitTimeout(10, TimeUnit.SECONDS);
-		quote.selectOutbound(time, ship, offer);
+		boolean ok = quote.selectOutbound(time, ship, offer);
+		if (!ok) { 
+			log.error("We may not have selected the correct sailing fare class - CARRY ON"); 
+			// TODO Temp code to crash out so I can work it out
+			//Assert.fail();
+		}
 		quote.continueToNextPage();
 		quote.resetImplicitTimeout();
 	}
@@ -57,6 +63,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	
 	@Step 
 	public void handleExtras() {
+		log.info("Not processing extras yet");
 		extras.continueToNextPage();
 	}
 	
@@ -71,6 +78,27 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 			traveller.selectVehicle(vehicle);
 		}
 		traveller.continueToNextPage();	
+		traveller.resetImplicitTimeout();
+	}
+	
+	@Step
+	public void selectAdditionalPassengerN(String passenger, int n) {
+		log.info("select Passenger N " + n);
+		traveller.setImplicitTimeout(10, TimeUnit.SECONDS);
+		if (!passenger.contentEquals("")) { 
+			switch (n) {
+			case 2 : 
+				traveller.selectPassenger2(passenger);
+				break;
+			case 3 : 
+				traveller.selectPassenger3(passenger);
+				break;
+			default : 
+				traveller.selectPassenger1(passenger);
+				break;
+			}
+			traveller.selectPassenger1(passenger);	
+		}
 		traveller.resetImplicitTimeout();
 	}
 	

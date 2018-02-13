@@ -85,7 +85,7 @@ public class QuoteHow extends PageObject {
 		log.info(height);
 		pageIsReady(CommonConstants.FAST);
 		selectVehicleHeight.clear();
-		selectVehicleHeight.type(height);
+		selectVehicleHeight.typeAndTab(height);
 	}
 	
 	// TBD This code is duplicated in another page object

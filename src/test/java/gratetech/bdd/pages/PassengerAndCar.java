@@ -25,7 +25,13 @@ public class PassengerAndCar extends PageObject {
 	private boolean makeVisible = false;
 	
 	@FindBy(id="oldPassengers1SelectBoxIt")
-	private WebElementFacade oldPassengerEnable;
+	private WebElementFacade oldPassenger1Enable;
+	
+	@FindBy(id="oldPassengers2SelectBoxIt")
+	private WebElementFacade oldPassenger2Enable;
+	
+	@FindBy(id="oldPassengers3SelectBoxIt")
+	private WebElementFacade oldPassenger3Enable;
 	
 	@FindBy(id="vehiclesData0.existingCodeSelectBoxIt")
 	private WebElementFacade existingVehicleEnable;
@@ -51,7 +57,7 @@ public class PassengerAndCar extends PageObject {
 			dropdown.selectByVisibleText(select);
 		} else {
 			pageIsReady(CommonConstants.FAST);
-			oldPassengerEnable.click();	
+			oldPassenger1Enable.click();	
 			pageIsReady(CommonConstants.FAST);
 			List<WebElement> wel = getDriver().findElements(By.cssSelector("#oldPassengers1SelectBoxItOptions li"));
 			for(WebElement e : wel) {				
@@ -64,6 +70,49 @@ public class PassengerAndCar extends PageObject {
 		}
 	}
 	
+	public void selectPassenger2(String select) {
+		// need to use our custom find the js version of the box
+		log.info("selecting " + select);
+		if (makeVisible) {
+			evaluateJavascript("document.getElementById('oldPassengers2').style.display='block';");
+			Select dropdown = new Select(selectPassenger1);  
+			dropdown.selectByVisibleText(select);
+		} else {
+			pageIsReady(CommonConstants.FAST);
+			oldPassenger2Enable.click();	
+			pageIsReady(CommonConstants.FAST);
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#oldPassengers2SelectBoxItOptions li"));
+			for(WebElement e : wel) {				
+				if (e.getText().equalsIgnoreCase(select)) {
+					log.info("selecting passenger " + select);
+					e.click();
+					break;
+				}
+			}	
+		}
+	}
+	
+	public void selectPassenger3(String select) {
+		// need to use our custom find the js version of the box
+		log.info("selecting " + select);
+		if (makeVisible) {
+			evaluateJavascript("document.getElementById('oldPassengers3').style.display='block';");
+			Select dropdown = new Select(selectPassenger1);  
+			dropdown.selectByVisibleText(select);
+		} else {
+			pageIsReady(CommonConstants.FAST);
+			oldPassenger3Enable.click();	
+			pageIsReady(CommonConstants.FAST);
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#oldPassengers3SelectBoxItOptions li"));
+			for(WebElement e : wel) {				
+				if (e.getText().equalsIgnoreCase(select)) {
+					log.info("selecting passenger " + select);
+					e.click();
+					break;
+				}
+			}	
+		}
+	}
 	private void selectFromExisting(String carreg) {
 		// note the reg box is different if its a van!
 		// note also that if you save it and come back sometimes you cannot proceed

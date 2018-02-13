@@ -20,14 +20,14 @@ public class LoginQuoteSelectPurchaseSteps {
 	
 	@Steps
 	private UserPurchaseSteps clive;
-	private String adults;	
+	private String numPassengers;	
 	private TouristBooking booking = new TouristBooking();
 	
 	@Given("^([^\"]*) are able to select an outbound ferry ([^\"]*) ([^\"]*) with a ([^\"]*) of ([^\"]*) and ([^\"]*) with a ([^\"]*) sailing ([^\"]*) and ([^\"]*)$")
 	public void ableToSelectOutbound(String adults, String from, String ondate, String vehicle, String length, String height, String ship, String time, String offer) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    log.info("SelectOutbound");     
-	    this.adults = adults;
+	    numPassengers = adults;
 	   
 	    booking.outboundJ.setUpFrom(from);
 	    booking.outboundJ.setUpDay(ondate);
@@ -60,24 +60,24 @@ public class LoginQuoteSelectPurchaseSteps {
 	}
 
 	@And("^Have ([^\"]*) and passenger details ([^\"]*) and car details ([^\"]*) and ([^\"]*)$")
-	public void havePaassengerDetails(String promo, String passenger, String registration, String voucher) throws Throwable {
+	public void havePassengerDetails(String promo, String passenger, String registration, String voucher) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		  log.info("Passenger and promo");	  
 		  booking.outboundJ.setUpVehicleRegistration(registration);
 		  booking.setPromo(promo);
 		  booking.setVoucher(voucher);
 	  
-		  // currently assumes we are only taking adults
-		  booking.setOBNumberOfPassengers(this.adults);		  
+		  // TODO: currently assumes we are only taking adults
+		  booking.setOBNumberOfPassengers(numPassengers);		  
 		  Map<String, PassengerType> pp = new HashMap<String, PassengerType>();
 		  String mp = passenger;
 		  pp.put(mp, TouristBooking.PassengerType.ADULT);		  
-		  booking.setObPassengers(TouristBooking.onJourney.OUTBOUND, Integer.parseInt(this.adults), pp);
+		  booking.setObPassengers(TouristBooking.onJourney.OUTBOUND, Integer.parseInt(numPassengers), pp);
 		  
 		  // currently assumes those who leave will return
 		  // and that all journeys are return
-		  booking.setRTNumberOfPassengers(this.adults);
-		  booking.setRtPassengers(TouristBooking.onJourney.RETURN, Integer.parseInt(this.adults), pp);
+		  booking.setRTNumberOfPassengers(numPassengers);
+		  booking.setRtPassengers(TouristBooking.onJourney.RETURN, Integer.parseInt(numPassengers), pp);
 	}
 
 	@And("^Have Added Extras ([^\"]*) ([^\"]*) ([^\"]*)$")
@@ -88,6 +88,12 @@ public class LoginQuoteSelectPurchaseSteps {
 		  booking.setRTExtras(rac, wifi, clublounge);
 	}
 
+	@And("They have selected ([^\"]*)$")
+	public void haveSetupCabins( String cabins) throws Throwable {
+		booking.outboundJ.setUpCabin(cabins);
+		booking.returnJ.setUpCabin(cabins);
+	}
+	
 	@And("^Have Card Details ([^\"]*) ([^\"]*) ([^\"]*)$")
 	public void haveCardDetails(String card, String account, String cvv) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
@@ -147,10 +153,10 @@ public class LoginQuoteSelectPurchaseSteps {
 		  booking.setBookingSummary(clive.getBookingID());
 		  booking.setProduct(clive.getProduct());
 		  
-		  // TODO: we want to build or append the "booking" to a csv file
+		  // TODO: we want to build or append the "booking" to a csv file - this code is broken 
 		  // we will param this off test instance and properties later
 		  // we may need to create a new file or append a row to existing and close if last row
-		  DateStamp myfiledate = new DateStamp();
+		  /*DateStamp myfiledate = new DateStamp();
 		  String stmp = myfiledate.getFileDateFormat();
 		  String fl = "/Users/marcus/Documents/edge2016/pando/target/scenario/interim/" + stmp +"_scenario.csv";
 		  Boolean newfile = booking.buildCSV(fl);
@@ -159,7 +165,7 @@ public class LoginQuoteSelectPurchaseSteps {
 		  }
 		  booking.writeBookingContent();
 		  booking.closeCSV();
-		  
+		  */
 	}
 
 }

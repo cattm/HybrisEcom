@@ -40,6 +40,7 @@ public class QuoteWho extends PageObject {
 	@FindBy(id="ou_petsSelect_0SelectBoxIt")
 	private WebElementFacade selectNumberOfPetsEnable;
 	
+
 	
 	public void setFromRoute(String from) {this.fromRoute = from;}
 	public void setNumberOfAdults(String number) {
@@ -61,7 +62,6 @@ public class QuoteWho extends PageObject {
 			Select dropdown = new Select(selectNumberAdultPassengers);
 			dropdown.selectByValue(number);
 		} else {
-			//selectNumberAdultPassengers
 			pageIsReady(CommonConstants.FAST);
 			String selector = "";
 			if (fromRoute.contains("Dover") || fromRoute.contains("Hull")) {
@@ -191,10 +191,12 @@ public class QuoteWho extends PageObject {
 		}
 	}
 	
+
+	
 	// TBD This code is duplicated in another page object
 	// We will need to extract and refactor
 	private void pageIsReady(long slow) {
-		final int limit = 5;
+		final int limit = CommonConstants.WAITLOOPCOUNT;
 		int count = 0;
 		try {
 			Boolean isLoaded = false; 
