@@ -17,6 +17,6 @@ Feature: User Login and Purchase a Ticket for Dover Calais Route
     Then My Purchase will succeed
 
     Examples: 
-      | from            | return          | on date    | back date  | vehicle    | length | height | adults | promo code | time  | ship              | back time | back ship | offer  | RAC | WIFI | Club Lounge | person             | registration | voucher | card | account          | cvv |
-      | Dover to Calais | Calais to Dover | 29/10/2017 | 25/11/2017 | van        | 2      | 1.8    | 2      | EXPRESS    | 13:55 | Spririt of France |           |           | bronze | yes | no   | maybe       | Mr first passenger | FD61 VWO     | SGBP    | visa | 4111111111111111 | 345 |
-      | Dover to Calais | Calais to Dover | 31/10/2017 | 26/11/2017 | motorcycle |        |        | 1      |            | 13:55 | Spririt of France |           |           | bronze | yes | no   | maybe       |                    | FD61 VWO     | SGBP    | visa | 4111111111111111 | 345 |
+      | from            | return          | on date    | back date  | vehicle    | length | height | adults | promo code | time  | ship              | back time | back ship | offer  | RAC | WIFI | Club Lounge | person             | registration | voucher | card   | account          | cvv |
+      | Dover to Calais | Calais to Dover | 20/02/2018 | 28/02/2018 | van        | 2      | 1.8    | 2      | EXPRESS    | 09:25 | Spririt of France |           |           | bronze | yes | no   | maybe       | Mr first passenger | FD61 VWO     | SGBP    | paypal |                  |     |
+#      | Dover to Calais | Calais to Dover | 23/12/2017 | 24/12/2017 | motorcycle |        |        | 1      |            | 09:25 | Spririt of France |           |           | bronze | yes | no   | maybe       |                    | FD61 VWO     | SGBP    | visa   | 4111111111111111 | 345 |
