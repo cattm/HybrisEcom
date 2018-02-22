@@ -17,7 +17,7 @@ import gratetech.bdd.pages.QuoteResponseInfo;
 import gratetech.bdd.pages.QuoteWhen;
 import gratetech.bdd.pages.QuoteWhere;
 import gratetech.bdd.pages.QuoteWho;
-
+import gratetech.bdd.commons.CommonConstants;
 
 public class UserQuoteSteps {
 	public static Logger log = Logger.getLogger(UserQuoteSteps.class);
@@ -50,19 +50,21 @@ public class UserQuoteSteps {
 		}
 		log.info("logged in");
 		assertThat(liMessage.getConfirmMessage(),equalToIgnoringCase(greeting));
-	
 	}
 	
 	@Step
 	public void hasFilledInQuote(String from, String back, String dateout, String dateback, String vehicle, String len, String height, String adults, String outtime, String cabins, String promocode) {
-		qForm.setImplicitTimeout(10, TimeUnit.SECONDS);
-		qWho.setImplicitTimeout(20, TimeUnit.SECONDS);
+	// Populate different parts of the fare finder
+		
+		qForm.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
+		qWho.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
+		qWhere.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
+		qWhen.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
+		qHow.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		
 		// WHERE
 		qWhere.setDeparturePort(from);
 		qWhere.setReturnPort(back);
-		// save for later use in working out which id to use
-		qWho.setFromRoute(qWhere.getFromRoute());
 		
 		// WHEN
 		qWhen.setDepartureDate(dateout);
@@ -71,7 +73,6 @@ public class UserQuoteSteps {
 		
 		// HOW
 		qHow.setVehicleType(vehicle);
-	
 		if (vehicle.contentEquals("van") || vehicle.contentEquals("motorhome")) { vehicleIsVan=true;}
 		if (vehicleIsVan) {
 			qHow.setVehicleLength(len);
@@ -88,6 +89,9 @@ public class UserQuoteSteps {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		// save for later use in working out which id to use
+		qWho.setFromRoute(qWhere.getFromRoute());
 		qWho.setNumberOfAdults(adults);
 
 		// ODDS
@@ -96,14 +100,18 @@ public class UserQuoteSteps {
 		}
 		qForm.setPromoCode(promocode);
 			
+		qHow.resetImplicitTimeout();
+		qWhen.resetImplicitTimeout();
+		qWhere.resetImplicitTimeout();
 		qWho.resetImplicitTimeout();
 		qForm.resetImplicitTimeout();
+		
 	}
 	
 
 	@Step
 	public void addInfants1(String babies) {
-		qWho.setImplicitTimeout(20, TimeUnit.SECONDS);
+		qWho.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);	
 		qWho.setNumberOfInfants1(babies);
 		qWho.resetImplicitTimeout();
 	}
@@ -111,8 +119,10 @@ public class UserQuoteSteps {
 	@Step
 	public void askForQuote() {
 		log.info("submitting quote form");
+		qForm.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		qForm.getAQuote();
 		qForm.continueWarningMessage();
+		qForm.resetImplicitTimeout();
 	}
 	
 	@Step

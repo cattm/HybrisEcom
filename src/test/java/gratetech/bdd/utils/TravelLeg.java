@@ -19,7 +19,7 @@ public class TravelLeg {
 	 * Length
 	 * Height
 	 * Registration
-	 * Number Of Passengers
+	 * Number Of Passengers --- this is the total for the leg
 	 * RAC
 	 * WiFi
 	 * Cabin
@@ -149,7 +149,7 @@ public class TravelLeg {
 	public String getVehicleReg() {
 		return leg.get("registration");
 	}
-	public String getNumberOfPassgengers() {
+	public String getNumberOfPassengers() {
 		return leg.get("passengers");
 	}
 	public String getRACExtras() {

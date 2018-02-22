@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.containsString;
 
 import java.util.concurrent.TimeUnit;
 
+import gratetech.bdd.commons.CommonConstants;
 import gratetech.bdd.pages.BookingConfirm;
 import gratetech.bdd.pages.BookingSummary;
 import gratetech.bdd.pages.OrderDetails;
@@ -44,7 +45,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	
 	@Step
 	public void selectTheQuote(String time, String ship, String offer) {
-		quote.setImplicitTimeout(10, TimeUnit.SECONDS);
+		quote.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		boolean ok = quote.selectOutbound(time, ship, offer);
 		if (!ok) { 
 			log.error("We may not have selected the correct sailing fare class - CARRY ON"); 
@@ -67,10 +68,11 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		extras.continueToNextPage();
 	}
 	
+	//TODO - replace this very poor solution
 	@Step
 	public void selectPassengersAndCar(String passenger, String vehicle) {
 		log.info("select Passenger and Car");
-		traveller.setImplicitTimeout(10, TimeUnit.SECONDS);
+		traveller.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		if (!passenger.contentEquals("")) { 
 			traveller.selectPassenger1(passenger);	
 		}
@@ -82,11 +84,28 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	}
 	
 	@Step
+	public void selectVehicle(String vehicle) {
+		log.info("select Vehicle " + vehicle);
+		if (!vehicle.contentEquals("")) {
+			traveller.selectVehicle(vehicle);
+		}
+	}
+	
+	@Step
+	public void travellerContinue() {
+		traveller.continueToNextPage();	
+		traveller.resetImplicitTimeout();
+	}
+	
+	@Step
 	public void selectAdditionalPassengerN(String passenger, int n) {
-		log.info("select Passenger N " + n);
-		traveller.setImplicitTimeout(10, TimeUnit.SECONDS);
+		log.info("select Passenger case " + n + " name " + passenger);
+		traveller.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		if (!passenger.contentEquals("")) { 
 			switch (n) {
+			case 1 :
+				traveller.selectPassenger1(passenger);
+				break;
 			case 2 : 
 				traveller.selectPassenger2(passenger);
 				break;
@@ -97,7 +116,6 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 				traveller.selectPassenger1(passenger);
 				break;
 			}
-			traveller.selectPassenger1(passenger);	
 		}
 		traveller.resetImplicitTimeout();
 	}
@@ -113,7 +131,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	
 	@Step
 	public void tickTnc() {
-		paynow.setImplicitTimeout(10, TimeUnit.SECONDS);
+		paynow.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		log.info("tick the Terms");
 		paynow.tickTnC();
 		
@@ -138,7 +156,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	public void completePurchase (String card, String account, String cvv) {
 		// TBD remove these horrible wait loops
 		// get some data for verification
-		order.setImplicitTimeout(10, TimeUnit.SECONDS);
+		order.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		try {
 			Thread.sleep(5000);
 			log.info("waiting....");
@@ -171,13 +189,13 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 			order.resetImplicitTimeout();
 			
 			// log in to paypal
-			ppLogin.setImplicitTimeout(10, TimeUnit.SECONDS);
+			ppLogin.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 			ppLogin.setEmail("marcus.catt@poferries.com");
 			ppLogin.setPassword("Password1");
 			ppLogin.submit();
 			//log.info("SUBMIT PRESSED");
 			
-			ppConfirm.setImplicitTimeout(10, TimeUnit.SECONDS);
+			ppConfirm.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 			ppConfirm.confirmPurchase();
 			ppLogin.resetImplicitTimeout();
 			ppConfirm.resetImplicitTimeout();
@@ -189,6 +207,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	@Step
 	public void verifyPurchase() {
 		log.info("verifyPurchase");
+		// TODO: remove this code
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -196,7 +215,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 			e.printStackTrace();
 		}
 			
-		confirmationPage.setImplicitTimeout(10, TimeUnit.SECONDS);
+		confirmationPage.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		booking = cleanTheBooking();
 		log.info(booking);
 		

@@ -22,8 +22,13 @@ public class ComplexPurchaseWithCabins {
 	
 	@Steps
 	private UserPurchaseSteps david;
-	private Integer numPassengersOut;	
 	private TouristBooking booking = new TouristBooking();
+	
+	// TODO - need to factor out these two temporary variables
+	private Integer numPassengersOut;	
+	private String adults;
+	
+	
 	
 	@Given("^payment model is:$")
 	public void paymentModelIs(DataTable paymentdata) throws Throwable {
@@ -45,8 +50,9 @@ public class ComplexPurchaseWithCabins {
 	@Given("([^\"]*) are able to select an outbound ferry ([^\"]*) ([^\"]*) and ([^\"]*) on ([^\"]*)$")
 	public void adultsAreAbleToSelectAnOutboundFerryOnDate(String adults, String from, String ondate, String time, String ship) throws Throwable {
 		numPassengersOut = Integer.parseInt(adults);
+		this.adults = adults;
+		// leg
 		booking.setOBNumberOfPassengers(adults);
-	
 		
 		booking.outboundJ.setUpFrom(from);
 		booking.outboundJ.setUpDay(ondate);
@@ -58,7 +64,7 @@ public class ComplexPurchaseWithCabins {
 	//And <adults> are able to <return> on <back date> using <back ship> sailing at <back time>
 	@And("([^\"]*) are able to ([^\"]*) on ([^\"]*) using ([^\"]*) sailing at ([^\"]*)$")
 	public void adultsAreAbletoReturnOnDate(String adults, String returnport, String backdate, String backship, String backtime) throws Throwable {
-		//numPassengers += Integer.parseInt(adults);
+		// currently assumes we are using same number on both
 		booking.setRTNumberOfPassengers(adults);
 
 		booking.returnJ.setUpFrom(returnport);
@@ -79,10 +85,11 @@ public class ComplexPurchaseWithCabins {
 		for (String mp : adults) {
 			pp.put(mp, TouristBooking.PassengerType.ADULT);	
 		}
-				  
+		
+		// passengers
 		booking.setObPassengers(TouristBooking.onJourney.OUTBOUND, numPassengersOut, pp);
 		booking.setRtPassengers(TouristBooking.onJourney.RETURN, numPassengersOut, pp);
-		log.info("The Adults are......");
+		log.info("The Adults are......SET UP");
 	}
 
 	
@@ -90,13 +97,23 @@ public class ComplexPurchaseWithCabins {
 	public void alsoHavePassengersOfType(String names, String type) throws Throwable {
 	    // parse the names and the type - which we will need to convert to an ENUM
 		// need to add to the number of passengers and store
-		List<String> ps = Arrays.asList(names.split(","));
+		if (!names.contentEquals("")) {
+			List<String> ps = Arrays.asList(names.split(","));
 		
-		PassengerType pt = PassengerType.valueOf(type.toUpperCase());
-		for (String nm : ps ) {
-			booking.obPassengers.addPassenger(nm, pt);
-		}	
-		log.info("And they also had Passengers.....");
+			PassengerType pt = PassengerType.valueOf(type.toUpperCase());
+			for (String nm : ps ) {
+				numPassengersOut++;
+				booking.obPassengers.addPassenger(nm, pt);
+				booking.rtPassengers.addPassenger(nm, pt);
+			}
+		
+			// Note - setting up the passengers - all legs ASSUMED the same at the moment
+			booking.obPassengers.setNumberPassengers(numPassengersOut);
+			booking.rtPassengers.setNumberPassengers(numPassengersOut);
+			booking.setRTNumberOfPassengers(numPassengersOut.toString());
+			booking.setOBNumberOfPassengers(numPassengersOut.toString());
+			log.info("And they also had Passengers.....SET UP");
+		}
 	}
 
 	@And("^require a ([^\"]*) offering$")
@@ -137,8 +154,8 @@ public class ComplexPurchaseWithCabins {
 		log.info("Vouchers set up.....");
 	}
 
-	@Then("^They Will will succeed$")
-	public void they_Will_will_succeed() throws Throwable {
+	@Then("^They will succeed$")
+	public void theyWillSucceed() throws Throwable {
 		
 		log.info("Attempting to purchase Ticket");
 		 
@@ -159,27 +176,35 @@ public class ComplexPurchaseWithCabins {
 				  booking.outboundJ.getVehicleLength(),
 				  booking.outboundJ.getVehicleHeight(),
 				  // this will need to change
-				  booking.outboundJ.getNumberOfPassgengers(),
+				  //booking.outboundJ.getNumberOfPassengers(),
+				  this.adults,
 				  booking.outboundJ.getTimeOfTravel(),
 				  booking.outboundJ.getCabin(),
 				  booking.getPromo());
 		
-		// now need to populate the kids box - this needs to come from booking data stored
-		david.addInfants1("1");
+		// TODO: now need to populate the kids box - this needs to come from booking data stored - currently using OB
+		Integer numbabies = Integer.valueOf(booking.getNumberOBPassengerOfType(PassengerType.BABY)); 
+		if (numbabies > 0) {
+			log.info("We have Children");
+			david.addInfants1(numbabies.toString());
+		}
 		
 		david.askForQuote();
 		david.selectTheQuote(booking.outboundJ.getTimeOfTravel(), 
 				  booking.outboundJ.getShip(), 
 				  booking.outboundJ.getOffer());
 		david.handleExtras();
-		  // if number of passengers > 2 then 
-		  // for n passengers
-		  // do something - Adults will be first then child will be last ones
-		david.selectAdditionalPassengerN(booking.obPassengers.getPassengerName(1), 2);	  
-		david.selectPassengersAndCar(booking.obPassengers.getPassengerName(0), 
-				  booking.outboundJ.getVehicleReg());
+		  
+		// Note this works for upto 4 passengers including a mix of adults and children
+		for (int i = 1; i < numPassengersOut; i++) {
+			log.info("Selecting passenger " + i + " name of " +  booking.obPassengers.getPassengerName(i-1));
+			david.selectAdditionalPassengerN(booking.obPassengers.getPassengerName(i-1), i);
+		}
+			
+		david.selectVehicle(booking.outboundJ.getVehicleReg());
 		log.info("Vehicle is " + booking.outboundJ.getVehicleReg());
-		 
+		david.travellerContinue(); 
+		
 		david.tickTnc();
 		david.selectEVoucher(booking.getVoucher());
 		david.checkBookingSummary();
@@ -188,10 +213,10 @@ public class ComplexPurchaseWithCabins {
 		david.completePurchase(booking.payment.getPaymentType(), 
 				  booking.payment.getAccount(), 
 				  booking.payment.getCVV());
-		  // TBD verify purchase should do some assert checking
+		// TBD verify purchase should do some assert checking
 		david.verifyPurchase(); 
 		  
-		  // little bit of storing
+		  // little bit of storing for later
 		booking.setPrice(david.getfinalPrice());
 		booking.setReferencePrice(david.getOfferPrice());
 		booking.setBookingSummary(david.getBookingID());

@@ -41,7 +41,7 @@ public class OrderDetails extends PageObject {
 	
 	public String getHeading() {
 		String ret = "";
-		if (findIframe()) {
+		if (findIframe("SOLVEPANDO")) {
 			ret = heading.getText();
 			resetIframe();
 		}	
@@ -49,7 +49,7 @@ public class OrderDetails extends PageObject {
 	}
 	public void selectVisaPayment() {
 		log.info("selectVisaPayment");		
-		if (findIframe()) {
+		if (findIframe("SOLVEPANDO")) {
 			card.click();
 			resetIframe();
 		}			
@@ -57,7 +57,7 @@ public class OrderDetails extends PageObject {
 	
 	public void selectPayPalPayment() {
 		log.info("selectPayPalPayment");		
-		if (findIframe()) {
+		if (findIframe("SOLVEPANDO")) {
 			payPal.click();
 			payNow.click();
 			resetIframe();
@@ -67,7 +67,7 @@ public class OrderDetails extends PageObject {
 	public String getProduct() {
 		String ret = "";
 		log.info("searching for goods");
-		if (findIframe()) {
+		if (findIframe("SOLVEPANDO")) {
 			ret = product.getText();
 			resetIframe();
 		}
@@ -77,7 +77,7 @@ public class OrderDetails extends PageObject {
 	public String getAmount() {
 		String ret = "";
 		log.info("searching for goods");
-		if (findIframe()) {
+		if (findIframe("SOLVEPANDO")) {
 			ret = amount.getText();
 			resetIframe();
 		}	
@@ -86,16 +86,16 @@ public class OrderDetails extends PageObject {
 	
 	public String getAddress() {
 		// this is complex each row is different
-		log.info("getAddress not implemented");
+		log.info("NOT IMPLEMENTED");
 		return "";
 	}
 	
-	private boolean findIframe() {	
+	private boolean findIframe(String param) {	
 		List<WebElement> allFrameElements = this.getDriver().findElements(By.tagName("iframe"));
 		for(WebElement nitem : allFrameElements )
 		{
            String tmp = nitem.getAttribute("src");
-           if (tmp.contains("SOLVEPANDO")) {
+           if (tmp.contains(param)) {
         	   this.getDriver().switchTo().frame(nitem);  
         	   return true;
            }

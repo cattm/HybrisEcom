@@ -1,6 +1,8 @@
 package gratetech.bdd.steps;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import gratetech.bdd.commons.DateStamp;
@@ -20,8 +22,11 @@ public class LoginQuoteSelectPurchaseSteps {
 	
 	@Steps
 	private UserPurchaseSteps clive;
-	private String numPassengers;	
 	private TouristBooking booking = new TouristBooking();
+	
+	//TODO Lose this variable!
+	private String numPassengers;	
+	
 	
 	@Given("^([^\"]*) are able to select an outbound ferry ([^\"]*) ([^\"]*) with a ([^\"]*) of ([^\"]*) and ([^\"]*) with a ([^\"]*) sailing ([^\"]*) and ([^\"]*)$")
 	public void ableToSelectOutbound(String adults, String from, String ondate, String vehicle, String length, String height, String ship, String time, String offer) throws Throwable {
@@ -60,23 +65,30 @@ public class LoginQuoteSelectPurchaseSteps {
 	}
 
 	@And("^Have ([^\"]*) and passenger details ([^\"]*) and car details ([^\"]*) and ([^\"]*)$")
-	public void havePassengerDetails(String promo, String passenger, String registration, String voucher) throws Throwable {
+	public void havePassengerDetails(String promo, String passengers, String registration, String voucher) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		  log.info("Passenger and promo");	  
 		  booking.outboundJ.setUpVehicleRegistration(registration);
 		  booking.setPromo(promo);
 		  booking.setVoucher(voucher);
 	  
+		 
 		  // TODO: currently assumes we are only taking adults
-		  booking.setOBNumberOfPassengers(numPassengers);		  
+		  booking.setOBNumberOfPassengers(numPassengers);		
+		  List<String> adults = Arrays.asList(passengers.split(","));	
+		  // now add each passenger
 		  Map<String, PassengerType> pp = new HashMap<String, PassengerType>();
-		  String mp = passenger;
-		  pp.put(mp, TouristBooking.PassengerType.ADULT);		  
+		  for (String mp : adults) {
+				pp.put(mp, TouristBooking.PassengerType.ADULT);	
+		  }
+		  	
+		  
 		  booking.setObPassengers(TouristBooking.onJourney.OUTBOUND, Integer.parseInt(numPassengers), pp);
 		  
 		  // currently assumes those who leave will return
 		  // and that all journeys are return
 		  booking.setRTNumberOfPassengers(numPassengers);
+		  
 		  booking.setRtPassengers(TouristBooking.onJourney.RETURN, Integer.parseInt(numPassengers), pp);
 	}
 
@@ -123,7 +135,7 @@ public class LoginQuoteSelectPurchaseSteps {
 				  booking.outboundJ.getVehicleLength(),
 				  booking.outboundJ.getVehicleHeight(),
 				  // this will need to change
-				  booking.outboundJ.getNumberOfPassgengers(),
+				  booking.outboundJ.getNumberOfPassengers(),
 				  booking.outboundJ.getTimeOfTravel(),
 				  booking.outboundJ.getCabin(),
 				  booking.getPromo());

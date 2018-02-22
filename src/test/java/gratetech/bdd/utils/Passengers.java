@@ -33,7 +33,7 @@ public class Passengers {
 		
 	}
 	private onJourney leg;
-	private int numPassengers;
+	private int numPassengers; // this is the total in this model -- we could model by leg or by type!!!!
 	private ArrayList<Passenger> passengers = new ArrayList<Passenger>(); 
 	
 	public void setUpPassengers(onJourney theleg, int number) {
@@ -41,6 +41,10 @@ public class Passengers {
 		numPassengers = number;
 		
 	}	
+	
+	public void setNumberPassengers(int number){
+		numPassengers = number;
+	}
 	
 	public void addPassenger(String name, PassengerType pclass ) {
 		passengers.add(new Passenger(name, pclass));
@@ -60,6 +64,30 @@ public class Passengers {
 	
 	public int getPassengerListSize() {
 		return passengers.size();
+	}
+	
+	public String getPassengersOfType(PassengerType pt) {
+		String result = null;
+		for (Passenger p : passengers) {
+			String v = p.getName();
+			if (pt == p.getPassengerType()) {
+				result += v + ",";
+			}
+		}
+		// now remove last ","
+		result = result.replaceAll(", $", "");
+		return result;
+	}
+	
+	public int getNumberOfPassengersOfType(PassengerType pt) {
+		int result = 0;
+		for (Passenger p : passengers) {
+			String v = p.getName();
+			if (pt == p.getPassengerType()) {
+				result++;
+			}
+		}
+		return result;
 	}
 	
 	public void dumpPassenger() {

@@ -112,7 +112,7 @@ public static Logger log = Logger.getLogger(PurchaseSteps.class);
 			  Map<String, PassengerType> pp = new HashMap<String, PassengerType>();
 			  String mp = map.get("person").toString();
 			  pp.put(mp, TouristBooking.PassengerType.ADULT);
-			  int np  = Integer.parseInt(booking.outboundJ.getNumberOfPassgengers());
+			  int np  = Integer.parseInt(booking.outboundJ.getNumberOfPassengers());
 			  booking.setObPassengers(TouristBooking.onJourney.OUTBOUND, np, pp);
 			  
 			  // currently assumes those who leave will return

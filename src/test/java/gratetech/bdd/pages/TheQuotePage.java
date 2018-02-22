@@ -1,5 +1,6 @@
 package gratetech.bdd.pages;
 
+import gratetech.bdd.commons.CommonConstants;
 import gratetech.bdd.steps.serenity.UserPurchaseSteps;
 
 import java.util.Iterator;
@@ -13,7 +14,7 @@ import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.pages.PageObject;
 
-public class TheQuotePage extends PageObject  {
+public class TheQuotePage extends PageBase  {
 	public static Logger log = Logger.getLogger(TheQuotePage.class);
 	
 	@FindBy(id="continue-button")
@@ -61,21 +62,15 @@ public class TheQuotePage extends PageObject  {
 			// click the class....bronze/silver/gold/platinum
 			switch (classoffare) {
 			case "bronze" :
-				//table[class='table outbound-results-table'] tbody tr:nth-of-type(1) input[name='outboundCrossingBundleRadio']
-				//table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(4) div"
-				// table[class='table outbound-results-table'] tbody tr:nth-of-type(1) input[value*='bronze']
 				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='bronze']";
 				break;
 			case "silver" :
-				//selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(5)";
 				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='silver']";
 				break;
 			case "gold"   :
-				//selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(6)";
 				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='gold']";
 				break;
 			case "platinum" :
-				//selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(7)";
 				selectfarecss = "table[class='table outbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='platinum']";
 			default :
 				break;
@@ -84,10 +79,11 @@ public class TheQuotePage extends PageObject  {
 			// TODO: there is an occasional issue finding this - this is just a hack for now
 			try {
 				// TODO: ok we have another async - page ready thing going on to fix - need to check the page has reloaded!!!!
-				Thread.sleep(10000);
+				pageIsReady(CommonConstants.FAST);
+				Thread.sleep(5000); // TODO: This really must go!!!!!
 				this.getDriver().findElement(By.cssSelector(selectfarecss)).click();
 				log.info("click");
-				Thread.sleep(10000);
+				pageIsReady(CommonConstants.FAST);
 			} 
 			catch (Exception e ) {
 				log.error("OUCH We did not Click the fare class");
@@ -101,7 +97,6 @@ public class TheQuotePage extends PageObject  {
 	}
 	
 	public boolean selectReturn(String departime, String boat, String classoffare) {
-
 		log.info("selectReturn time " + departime + " on " + boat + " fare class " + classoffare);
 		List<WebElement> timeelements = this.getDriver().findElements(By.cssSelector("table[class='table inbound-results-table'] tbody tr td[class*='col-one']"));
 		int size = timeelements.size();
@@ -129,29 +124,28 @@ public class TheQuotePage extends PageObject  {
 		String selectfarecss = "";
 		if (boatname.contentEquals(boat)) {
 			// TODO click the class....bronze/silver/gold/platinum
-			// This code is wrong - see above
 			switch (classoffare) {
 			case "bronze" :
-				selectfarecss = "table[class='table inbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(4)";
+				selectfarecss = "table[class='table inbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='bronze']";
 				break;
 			case "silver" :
-				selectfarecss = "table[class='table inbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(5)";
+				selectfarecss = "table[class='table inbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='silver']";
 				break;
 			case "gold"   :
-				selectfarecss = "table[class='table inbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(6)";
+				selectfarecss = "table[class='table inbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='gold']";
 				break;
 			case "platinum" :
-				selectfarecss = "table[class='table inbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(7)";
+				selectfarecss = "table[class='table inbound-results-table'] tbody tr:nth-of-type(" + offset + ") input[value*='platinum']";
 			default :
 				break;
 			}
 			log.info(selectfarecss);
+			pageIsReady(CommonConstants.FAST);
 			this.getDriver().findElement(By.cssSelector(selectfarecss)).click();
+			pageIsReady(CommonConstants.FAST);
 			return true;
 		}
-
-		return false;
-	
+		return false;	
 	}
 	
 	public void continueToNextPage() {

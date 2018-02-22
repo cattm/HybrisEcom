@@ -19,10 +19,10 @@ import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.pages.PageObject;
 
-public class PassengerAndCar extends PageObject {
+public class PassengerAndCar extends PageBase {
 	public static Logger log = Logger.getLogger(PassengerAndCar.class);
-	// use the original HTML listbox objects?
-	private boolean makeVisible = false;
+	
+	
 	
 	@FindBy(id="oldPassengers1SelectBoxIt")
 	private WebElementFacade oldPassenger1Enable;
@@ -51,7 +51,7 @@ public class PassengerAndCar extends PageObject {
 	public void selectPassenger1(String select) {
 		// need to use our custom find the js version of the box
 		log.info("selecting " + select);
-		if (makeVisible) {
+		if (getVisible()) {
 			evaluateJavascript("document.getElementById('oldPassengers1').style.display='block';");
 			Select dropdown = new Select(selectPassenger1);  
 			dropdown.selectByVisibleText(select);
@@ -73,7 +73,7 @@ public class PassengerAndCar extends PageObject {
 	public void selectPassenger2(String select) {
 		// need to use our custom find the js version of the box
 		log.info("selecting " + select);
-		if (makeVisible) {
+		if (getVisible()) {
 			evaluateJavascript("document.getElementById('oldPassengers2').style.display='block';");
 			Select dropdown = new Select(selectPassenger1);  
 			dropdown.selectByVisibleText(select);
@@ -95,7 +95,7 @@ public class PassengerAndCar extends PageObject {
 	public void selectPassenger3(String select) {
 		// need to use our custom find the js version of the box
 		log.info("selecting " + select);
-		if (makeVisible) {
+		if (getVisible()) {
 			evaluateJavascript("document.getElementById('oldPassengers3').style.display='block';");
 			Select dropdown = new Select(selectPassenger1);  
 			dropdown.selectByVisibleText(select);
@@ -117,9 +117,8 @@ public class PassengerAndCar extends PageObject {
 		// note the reg box is different if its a van!
 		// note also that if you save it and come back sometimes you cannot proceed
 		// get stuck on travel essentials
-		log.info("selecting " + carreg); 	
-		
-		if (makeVisible) {
+		log.info("selecting " + carreg); 		
+		if (getVisible()) {
 			evaluateJavascript("document.getElementById('vehiclesData0.existingCode').style.display='block';");
 			Select dropdown = new Select(selectVehicleDropSelect);    
 			dropdown.selectByVisibleText(carreg);
@@ -156,37 +155,11 @@ public class PassengerAndCar extends PageObject {
 			 TypeNewReg(vehicle);
 		 } else {
 			 selectFromExisting(vehicle);
-		 }
-		
+		 }	
 	}
 	
 	public void continueToNextPage() {
 		continueToNextPage.click();
 	}
 	
-	// TBD - this is duplicated code
-	private void pageIsReady(long slow) {
-		final int limit = 5;
-		int count = 0;
-		try {
-			Boolean isLoaded = false; // isPageLoaded();
-			while (!isLoaded && (count < limit)) {
-				isLoaded = isPageLoaded();
-			    Thread.sleep(slow);
-			    count++;
-			}
-			log.info("Exit pageIsReady");								
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	private Boolean isPageLoaded() {
-		String jsQuery = "function pageLoaded() "
-				+ "{var loadingStatus=(document.readyState=='complete');"
-				+ "return loadingStatus;};"
-				+ "return pageLoaded()";
-		return (Boolean) evaluateJavascript(jsQuery);
-	}	
 }

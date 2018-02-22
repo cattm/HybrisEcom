@@ -6,20 +6,14 @@ import gratetech.bdd.commons.CommonConstants;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-
-
 import org.openqa.selenium.WebElement;
-
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
-import net.thucydides.core.pages.PageObject;
 
-public class QuoteForm extends PageObject {
+public class QuoteForm extends PageBase {
 	public static Logger log = Logger.getLogger(QuoteForm.class);
-	// use the original HTML listbox objects?
-	private boolean makeVisible = false;
-
+	
 	@FindBy(id="cabinsOutboundSelectBoxIt")
 	private WebElementFacade outboundCabinEnable;
 			
@@ -34,7 +28,7 @@ public class QuoteForm extends PageObject {
 
 	public void setNumberOfCabins(String number) {
 		log.info(number);
-		if (makeVisible) {
+		if (getVisible()) {
 			log.info("makeVisible not coded yet");
 		} else {
 			pageIsReady(CommonConstants.FAST);
@@ -52,7 +46,7 @@ public class QuoteForm extends PageObject {
 	}
 	
 	public void tickSameOnReturn() {
-		
+		log.info("NOT IMPLEMENTED");
 	}
 	
 	public void setPromoCode(String code) {
@@ -61,8 +55,7 @@ public class QuoteForm extends PageObject {
 			pageIsReady(CommonConstants.FAST);
 			promoCode.clear();
 			promoCode.type(code);
-		}
-		
+		}		
 	}
 		
 	public void getAQuote() {
@@ -76,16 +69,13 @@ public class QuoteForm extends PageObject {
 		getDriver().switchTo().activeElement();
 		if (infoWarningContinue.isVisible()) {
 			infoWarningContinue.click();
-			log.info("CLICK");
-		}
+			log.info("Continue warning dealt with");
+		}		
 		getDriver().switchTo().defaultContent();
-
-
 		pageIsReady(CommonConstants.FAST);
 	}
 	
-	// TBD This code is duplicated in another page object
-	// We will need to extract and refactor
+/* BLOCK	
 	protected void pageIsReady(long slow) {
 		final int limit = CommonConstants.WAITLOOPCOUNT;
 		int count = 0;
@@ -121,27 +111,5 @@ public class QuoteForm extends PageObject {
 			}
 		}
 	}
-
+BLOCK */
 } // End Class
-/* 
- * This is a very interesting challenge - to control the farefinder quote form
- * This is because there are a number of controls using the JQuery based libary - selectBoxIt
- * This is particularly interesting with regards List boxes because there are all hidden and replaced by JS code
- * you can attempt to handle this in one of 3 ways
- * 1) interact with the element directly
- * 2) interact with the hidden element by enabling it and using js activity
- * 			executor.executeScript("document.getElementById('vehicleTypeOutboundComboBox').style.display='block';");
-			Select dropdown = new Select(selectVehicleType);
-			dropdown.selectByValue(type);
- * 3) locate the constituent parts of the selectboxit components and manage them 
- * luckily it looks like you only need to manage two parts 
- * class - selectboxit and selectboxit-options - a list of selectboxit-option
- * 	WebDriver dr = this.getDriver();
-	WebElement we = dr.findElement(By.id("singleJourneyTimeComboBoxSelectBoxIt"));
-	log.info(we.getText());
-	we.click();
-	we = dr.findElement(By.cssSelector("#singleJourneyTimeComboBoxSelectBoxItOptions li:nth-child(5) a"));
-	log.info(we.getText());
-	we.click();
- *  -- Note that we may need to "wait" between operations in order to ensure the JS has executed and rewritten the page
-*/

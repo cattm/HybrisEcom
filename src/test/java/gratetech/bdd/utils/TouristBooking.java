@@ -30,7 +30,7 @@ public class TouristBooking {
 	}
 	
 	public enum Vehicle {
-		NONE, CAR, MOTORCYCLE, VAN
+		NONE, CAR, MINIBUS, MOTORCYCLE, MOTORHOME, VAN
 	}
 	
 	public enum Offer {
@@ -179,6 +179,13 @@ public class TouristBooking {
 		return referencePrice;
 	}
 	
+	public String getOBPassengerOfType(PassengerType pt) {
+		return obPassengers.getPassengersOfType(pt);
+	}
+	
+	public int getNumberOBPassengerOfType(PassengerType pt) {
+		return obPassengers.getNumberOfPassengersOfType(pt);
+	}
 
 	public boolean buildCSV(String tofile) {
 		if (!fileOpen) {
