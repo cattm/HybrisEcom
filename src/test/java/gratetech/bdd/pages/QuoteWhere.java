@@ -76,7 +76,7 @@ public class QuoteWhere extends PageObject {
 		singleJourneyRadio.click();
 	}
 	
-	public void setRetunrRadio() {
+	public void setReturnRadio() {
 		returnJourneyRadio.click();
 	}
 	

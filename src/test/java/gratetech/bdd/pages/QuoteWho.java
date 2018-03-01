@@ -3,6 +3,7 @@ package gratetech.bdd.pages;
 import gratetech.bdd.commons.CommonConstants;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
@@ -13,26 +14,27 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class QuoteWho extends PageObject {
+public class QuoteWho extends PageBase {
 	public static Logger log = Logger.getLogger(QuoteWho.class);
 	// use the original HTML listbox objects?
 	private boolean makeVisible = false;
 	private String fromRoute = "";
 	private WebElement selectNumberAdultPassengers;
 	@FindBy(id="ou_AD_pass_comboBoxSelectBoxIt")
-	private WebElement selectNumberAdultPassengersEnable;
+	
+	private WebElementFacade selectNumberAdultPassengersEnable;
 	
 	@FindBy(id="ou_AD1_pass_comboBoxSelectBoxIt")
-	private WebElement selectAltNumberAdultPassengersEnable;
+	private WebElementFacade selectAltNumberAdultPassengersEnable;
 	
 	@FindBy(id="ou_IN_pass_comboBoxSelectBoxIt")
-	private WebElement selectNumberInfantPassengersEnable;
+	private WebElementFacade selectNumberInfantPassengersEnable;
 	
 	@FindBy(id="ou_IN1_pass_comboBoxSelectBoxIt")
-	private WebElement selectNumberInfant1PassengersEnable;
+	private WebElementFacade selectNumberInfant1PassengersEnable;
 	
 	@FindBy(id="ou_IN2_pass_comboBoxSelectBoxIt")
-	private WebElement selectNumberInfant2PassengersEnable;
+	private WebElementFacade selectNumberInfant2PassengersEnable;
 	
 	@FindBy(id="ou_CH_pass_comboBoxSelectBoxIt")
 	private WebElementFacade selectNumberChildrenEnable;
@@ -42,7 +44,10 @@ public class QuoteWho extends PageObject {
 	
 
 	
-	public void setFromRoute(String from) {this.fromRoute = from;}
+	public void setFromRoute(String from) {
+		this.fromRoute = from;
+	}
+	
 	public void setNumberOfAdults(String number) {
 		log.info(number);
 		if (makeVisible) {
@@ -65,7 +70,7 @@ public class QuoteWho extends PageObject {
 			pageIsReady(CommonConstants.FAST);
 			String selector = "";
 			if (fromRoute.contains("Dover") || fromRoute.contains("Hull")) {
-				selectNumberAdultPassengersEnable.click();
+				selectNumberAdultPassengersEnable.withTimeoutOf((int) CommonConstants.SLOWSECS, TimeUnit.SECONDS ).click();
 				selector = "#ou_AD_pass_comboBoxSelectBoxItOptions li";
 			} else if (fromRoute.contains("Larne")) {
 				selectAltNumberAdultPassengersEnable.click();
@@ -195,6 +200,7 @@ public class QuoteWho extends PageObject {
 	
 	// TBD This code is duplicated in another page object
 	// We will need to extract and refactor
+	/*
 	private void pageIsReady(long slow) {
 		final int limit = CommonConstants.WAITLOOPCOUNT;
 		int count = 0;
@@ -230,5 +236,5 @@ public class QuoteWho extends PageObject {
 			}
 		}
 	}
-
+*/
 }

@@ -13,7 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class QuoteHow extends PageObject {
+public class QuoteHow extends PageBase {
 	public static Logger log = Logger.getLogger(QuoteHow.class);
 	// use the original HTML listbox objects?
 	private boolean makeVisible = false;
@@ -34,6 +34,7 @@ public class QuoteHow extends PageObject {
 	private WebElementFacade outboundJourneyTrailerEnable;
 
 	public void setVehicleType(String type){
+		if (type == null ||  type.isEmpty()) return;	
 		log.info(type);
 		if (makeVisible) {
 			evaluateJavascript("document.getElementById('vehicleTypeOutboundComboBox').style.display='block';");
@@ -88,42 +89,5 @@ public class QuoteHow extends PageObject {
 		selectVehicleHeight.typeAndTab(height);
 	}
 	
-	// TBD This code is duplicated in another page object
-	// We will need to extract and refactor
-	private void pageIsReady(long slow) {
-		final int limit = 5;
-		int count = 0;
-		try {
-			Boolean isLoaded = false; 
-			while (!isLoaded && (count < limit)) {
-				isLoaded = isPageLoaded();
-			    Thread.sleep(slow);
-			    count++;
-			}
-			log.info("Exit pageIsReady");								
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	private Boolean isPageLoaded() {
-		String jsQuery = "function pageLoaded() "
-				+ "{var loadingStatus=(document.readyState=='complete');"
-				+ "return loadingStatus;};"
-				+ "return pageLoaded()";
-		return (Boolean) evaluateJavascript(jsQuery);
-	}
-	
-	public void jsListSelect(String selector, String setting) {
-		List<WebElement> wel = getDriver().findElements(By.cssSelector(selector));
-		for(WebElement e : wel) {				
-			if (e.getText().equalsIgnoreCase(setting)) {
-				log.info("Setting selector to " + setting);
-				e.click();
-				break;		
-			}
-		}
-	}
-	
+
 }

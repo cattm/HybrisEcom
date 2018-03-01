@@ -33,11 +33,7 @@ public class PayPalLogin extends PageObject {
 			email.clear();
 			email.type(str);
 			resetIframe();
-		}
-	
-
-		
-		
+		}	
 	}
 	
 	public void setPassword(String str) {
@@ -47,8 +43,7 @@ public class PayPalLogin extends PageObject {
 			password.clear();
 			password.type(str);	
 			resetIframe();
-		}
-		
+		}		
 	}
 	
 	public void submit() {
@@ -65,9 +60,7 @@ public class PayPalLogin extends PageObject {
 			 
         	log.info(handle1);
         }
-
-		return true;
-		
+		return true;	
 	}
 	
 	private boolean findIframe() {	

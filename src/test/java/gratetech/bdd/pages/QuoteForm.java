@@ -23,9 +23,32 @@ public class QuoteForm extends PageBase {
 	@FindBy(id="fareFindersubmitButton")
 	private WebElementFacade submitGetAQuote;
 	
+	@FindBy(id="getQuote")
+	private WebElementFacade submitMCGetAQuote;
+	
 	@FindBy(id="warning-continue-button")
 	private WebElementFacade infoWarningContinue;
-
+	
+	@FindBy(linkText = "MINICRUISE")
+	private WebElementFacade miniCruiseTab;
+	
+	@FindBy(linkText = "FERRY")
+	private WebElementFacade ferryTab;
+	
+	
+	public void selectMiniCruise() {
+		log.info("selecting MiniCruise");
+		pageIsReady(CommonConstants.FAST);
+		miniCruiseTab.click();
+		pageIsReady(CommonConstants.FAST);
+	}
+	
+	public void selectFerry() {
+		log.info("selecting MiniCruise");
+		pageIsReady(CommonConstants.FAST);
+		ferryTab.click();
+		pageIsReady(CommonConstants.FAST);
+	}
 	public void setNumberOfCabins(String number) {
 		log.info(number);
 		if (getVisible()) {
@@ -63,6 +86,10 @@ public class QuoteForm extends PageBase {
 		log.info("Getting Quote:");
 	}
 	
+	public void getAMCQuote() {
+		submitMCGetAQuote.submit(); 
+		log.info("Getting MC Quote:");
+	}
 	public void continueWarningMessage() {
 		//#warning-continue-button
 		pageIsReady(CommonConstants.FAST);
@@ -75,41 +102,5 @@ public class QuoteForm extends PageBase {
 		pageIsReady(CommonConstants.FAST);
 	}
 	
-/* BLOCK	
-	protected void pageIsReady(long slow) {
-		final int limit = CommonConstants.WAITLOOPCOUNT;
-		int count = 0;
-		try {
-			Boolean isLoaded = false; 
-			while (!isLoaded && (count < limit)) {
-				isLoaded = isPageLoaded();
-			    Thread.sleep(slow);
-			    count++;
-			}
-			log.info("Exit pageIsReady");								
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	protected Boolean isPageLoaded() {
-		String jsQuery = "function pageLoaded() "
-				+ "{var loadingStatus=(document.readyState=='complete');"
-				+ "return loadingStatus;};"
-				+ "return pageLoaded()";
-		return (Boolean) evaluateJavascript(jsQuery);
-	}
-	
-	protected void jsListSelect(String selector, String setting) {
-		List<WebElement> wel = getDriver().findElements(By.cssSelector(selector));
-		for(WebElement e : wel) {				
-			if (e.getText().equalsIgnoreCase(setting)) {
-				log.info("Setting selector to " + setting);
-				e.click();
-				break;		
-			}
-		}
-	}
-BLOCK */
+
 } // End Class

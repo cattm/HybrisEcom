@@ -33,6 +33,10 @@ public class PassengerAndCar extends PageBase {
 	@FindBy(id="oldPassengers3SelectBoxIt")
 	private WebElementFacade oldPassenger3Enable;
 	
+	@FindBy(id="oldPassengers4SelectBoxItText")
+	private WebElementFacade oldPassenger4Enable;
+	
+	
 	@FindBy(id="vehiclesData0.existingCodeSelectBoxIt")
 	private WebElementFacade existingVehicleEnable;
 	
@@ -113,6 +117,29 @@ public class PassengerAndCar extends PageBase {
 			}	
 		}
 	}
+	
+	public void selectPassenger4(String select) {
+		// need to use our custom find the js version of the box
+		log.info("selecting " + select);
+		if (getVisible()) {
+			evaluateJavascript("document.getElementById('oldPassengers4').style.display='block';");
+			Select dropdown = new Select(selectPassenger1);  
+			dropdown.selectByVisibleText(select);
+		} else {
+			pageIsReady(CommonConstants.FAST);
+			oldPassenger4Enable.click();	
+			pageIsReady(CommonConstants.FAST);
+			List<WebElement> wel = getDriver().findElements(By.cssSelector("#oldPassengers4SelectBoxItOptions li"));
+			for(WebElement e : wel) {				
+				if (e.getText().equalsIgnoreCase(select)) {
+					log.info("selecting passenger " + select);
+					e.click();
+					break;
+				}
+			}	
+		}
+	}
+	
 	private void selectFromExisting(String carreg) {
 		// note the reg box is different if its a van!
 		// note also that if you save it and come back sometimes you cannot proceed

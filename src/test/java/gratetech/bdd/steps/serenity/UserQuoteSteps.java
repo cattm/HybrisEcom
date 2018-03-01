@@ -24,6 +24,7 @@ public class UserQuoteSteps {
 	protected PandOHomePage homePage;
 	protected PandOLogin login;
 	protected LoggedIn liMessage;
+	
 	// TODO: replace qForm with simpler models
 	protected QuoteForm qForm;
 	protected QuoteWhere qWhere;
@@ -50,6 +51,62 @@ public class UserQuoteSteps {
 		}
 		log.info("logged in");
 		assertThat(liMessage.getConfirmMessage(),equalToIgnoringCase(greeting));
+	}
+	
+	@Step
+	public void hasFilledInMiniCruise(String from, String to, String vehicle, String height, String length, String when, String adults) {
+		qForm.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
+		qWho.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
+		qWhere.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
+		qWhen.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
+		qHow.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
+		
+		// select minicruise first!
+		qForm.selectMiniCruise();
+		
+		// Populate form
+		// need to do FROM -> HOW -> TO in order to use a car
+		
+		// FROM 
+		qWhere.setDeparturePort(from);
+		
+		// HOW
+		qHow.setVehicleType(vehicle);
+		if (vehicle.contentEquals("van") || vehicle.contentEquals("motorhome")) { vehicleIsVan=true;}
+		if (vehicleIsVan) {
+				qHow.setVehicleLength(length);
+				qHow.setVehicleHeight(height);
+		}
+
+		
+		// TO
+		qWhere.setReturnPort(to);
+		
+		// WHEN
+		qWhen.setMCWhenDate(when);
+				
+		// WHO
+		qWho.setNumberOfAdults(adults);
+		
+		qHow.resetImplicitTimeout();
+		qWhen.resetImplicitTimeout();
+		qWhere.resetImplicitTimeout();
+		qWho.resetImplicitTimeout();
+		qForm.resetImplicitTimeout();
+	}
+	
+	@Step
+	public void addCabins(String cabins) {
+		if (!cabins.contentEquals("")) {
+			qForm.setNumberOfCabins(cabins);
+		}
+	}
+	
+	@Step
+	public void setPromo(String promocode) {
+		if (!promocode.contentEquals("")) {
+			qForm.setPromoCode(promocode);
+		}
 	}
 	
 	@Step
@@ -82,14 +139,7 @@ public class UserQuoteSteps {
 		// WHO
 		// TODO: not dealing with Trailer/Caravan currently
 		// TODO: Or anybody apart from Adults
-		// TODO Remove this code
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+			
 		// save for later use in working out which id to use
 		qWho.setFromRoute(qWhere.getFromRoute());
 		qWho.setNumberOfAdults(adults);
@@ -121,6 +171,15 @@ public class UserQuoteSteps {
 		log.info("submitting quote form");
 		qForm.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		qForm.getAQuote();
+		qForm.continueWarningMessage();
+		qForm.resetImplicitTimeout();
+	}
+	
+	@Step
+	public void askForMCQuote() {
+		log.info("submitting quote form");
+		qForm.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
+		qForm.getAMCQuote();
 		qForm.continueWarningMessage();
 		qForm.resetImplicitTimeout();
 	}

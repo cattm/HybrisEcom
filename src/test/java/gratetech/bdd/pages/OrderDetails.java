@@ -1,6 +1,9 @@
 package gratetech.bdd.pages;
 
+import gratetech.bdd.commons.CommonConstants;
+
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -91,6 +94,7 @@ public class OrderDetails extends PageObject {
 	}
 	
 	private boolean findIframe(String param) {	
+		withTimeoutOf((int) CommonConstants.SLOWSECS, TimeUnit.SECONDS).waitForPresenceOf(By.tagName("iframe"));
 		List<WebElement> allFrameElements = this.getDriver().findElements(By.tagName("iframe"));
 		for(WebElement nitem : allFrameElements )
 		{

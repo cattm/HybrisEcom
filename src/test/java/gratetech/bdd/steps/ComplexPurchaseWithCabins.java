@@ -135,7 +135,7 @@ public class ComplexPurchaseWithCabins {
 	public void haveAVehicle(String vehicle, String length, String height) throws Throwable {
 		booking.outboundJ.setUpVehicleType(vehicle);
 	    booking.outboundJ.setUpVehicleHeight(height);
-	    booking.outboundJ.setUpVehicleLength(length);;
+	    booking.outboundJ.setUpVehicleLength(length);
 	    log.info("Vehicle set up......");
 	}
 	

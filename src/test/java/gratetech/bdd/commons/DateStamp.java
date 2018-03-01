@@ -1,5 +1,6 @@
 package gratetech.bdd.commons;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -33,6 +34,22 @@ public class DateStamp {
 	
 	public String getFileTimeFormat() {
 		return new SimpleDateFormat("HHmmss", theLocaleToUse).format(new Date());
+	}
+	
+	public String getDateFormatFromString (String inputpattern, String outputpattern, String somedatearg ) {
+		
+		SimpleDateFormat myf = new SimpleDateFormat(inputpattern);
+		SimpleDateFormat mym = new SimpleDateFormat(outputpattern);
+		Date dtx;
+		try {
+			dtx = myf.parse(somedatearg);
+			return mym.format(dtx);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+		
 	}
 
 }

@@ -1,4 +1,6 @@
 package gratetech.bdd.commons;
+// TODO - we will use this file at some point to load some standard environment based properties
+
 
 import java.io.FileInputStream;
 import java.io.IOException;

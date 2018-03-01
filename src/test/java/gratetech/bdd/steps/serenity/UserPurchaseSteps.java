@@ -86,9 +86,11 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	@Step
 	public void selectVehicle(String vehicle) {
 		log.info("select Vehicle " + vehicle);
+		traveller.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		if (!vehicle.contentEquals("")) {
 			traveller.selectVehicle(vehicle);
 		}
+		traveller.resetImplicitTimeout();
 	}
 	
 	@Step
@@ -157,13 +159,13 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		// TBD remove these horrible wait loops
 		// get some data for verification
 		order.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
-		try {
+		/*try {
 			Thread.sleep(5000);
 			log.info("waiting....");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} */
 		log.info(order.getHeading());
 		product = order.getProduct();
 		offerPrice = cleanNumericalString(order.getAmount());

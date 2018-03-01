@@ -5,6 +5,7 @@ import gratetech.bdd.steps.serenity.UserPurchaseSteps;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -80,7 +81,7 @@ public class TheQuotePage extends PageBase  {
 			try {
 				// TODO: ok we have another async - page ready thing going on to fix - need to check the page has reloaded!!!!
 				pageIsReady(CommonConstants.FAST);
-				Thread.sleep(5000); // TODO: This really must go!!!!!
+				withTimeoutOf((int) CommonConstants.SLOWSECS, TimeUnit.SECONDS).waitForPresenceOf(By.cssSelector(selectfarecss));
 				this.getDriver().findElement(By.cssSelector(selectfarecss)).click();
 				log.info("click");
 				pageIsReady(CommonConstants.FAST);
@@ -111,8 +112,6 @@ public class TheQuotePage extends PageBase  {
 				log.info("found departure time - offset is " + offset);
 				break;
 			}
-			
-	
 		}
 		String findboatcss = "table[class='table inbound-results-table'] tbody tr:nth-of-type(" + offset + ") td:nth-child(3)";
 		log.info(findboatcss);
