@@ -16,14 +16,14 @@ public class BookingConfirm extends PageObject{
 	private WebElementFacade theTotalCostIncVAT;
 	
 	public String getBooking() {
-		return theBooking.getText();
+		return theBooking.waitUntilVisible().getText();
 	}
 	
 	public String getTotalCost () {
-		return theTotalCostIncVAT.getText();
+		return theTotalCostIncVAT.waitUntilVisible().getText();
 	}
 	
 	public String getTotalCostCharged () {
-		return theTotalCostCharged.getText();
+		return theTotalCostCharged.waitUntilVisible().getText();
 	}
 }

@@ -1,4 +1,4 @@
-package gratetech.bdd.pages;
+package gratetech.bdd.pages.quote;
 
 
 

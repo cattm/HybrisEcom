@@ -1,6 +1,7 @@
-package gratetech.bdd.pages;
+package gratetech.bdd.pages.quote;
 
 import gratetech.bdd.commons.CommonConstants;
+import gratetech.bdd.pages.PageBase;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -195,46 +196,5 @@ public class QuoteWho extends PageBase {
 			}
 		}
 	}
-	
 
-	
-	// TBD This code is duplicated in another page object
-	// We will need to extract and refactor
-	/*
-	private void pageIsReady(long slow) {
-		final int limit = CommonConstants.WAITLOOPCOUNT;
-		int count = 0;
-		try {
-			Boolean isLoaded = false; 
-			while (!isLoaded && (count < limit)) {
-				isLoaded = isPageLoaded();
-			    Thread.sleep(slow);
-			    count++;
-			}
-			log.info("Exit pageIsReady");								
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	private Boolean isPageLoaded() {
-		String jsQuery = "function pageLoaded() "
-				+ "{var loadingStatus=(document.readyState=='complete');"
-				+ "return loadingStatus;};"
-				+ "return pageLoaded()";
-		return (Boolean) evaluateJavascript(jsQuery);
-	}
-	
-	public void jsListSelect(String selector, String setting) {
-		List<WebElement> wel = getDriver().findElements(By.cssSelector(selector));
-		for(WebElement e : wel) {				
-			if (e.getText().equalsIgnoreCase(setting)) {
-				log.info("Setting selector to " + setting);
-				e.click();
-				break;		
-			}
-		}
-	}
-*/
 }

@@ -12,12 +12,12 @@ import gratetech.bdd.pages.BookingConfirm;
 import gratetech.bdd.pages.BookingSummary;
 import gratetech.bdd.pages.OrderDetails;
 import gratetech.bdd.pages.PassengerAndCar;
-import gratetech.bdd.pages.PayNowForm;
-import gratetech.bdd.pages.PayPalLogin;
-import gratetech.bdd.pages.PayPalPurchaseConfirm;
 import gratetech.bdd.pages.TheExtras;
-import gratetech.bdd.pages.TheQuotePage;
-import gratetech.bdd.pages.VisaForm;
+import gratetech.bdd.pages.payment.PayNowForm;
+import gratetech.bdd.pages.payment.PayPalLogin;
+import gratetech.bdd.pages.payment.PayPalPurchaseConfirm;
+import gratetech.bdd.pages.payment.VisaForm;
+import gratetech.bdd.pages.quote.TheQuotePage;
 import net.thucydides.core.annotations.Step;
 
 import org.apache.log4j.Logger;
@@ -159,13 +159,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		// TBD remove these horrible wait loops
 		// get some data for verification
 		order.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
-		/*try {
-			Thread.sleep(5000);
-			log.info("waiting....");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} */
+
 		log.info(order.getHeading());
 		product = order.getProduct();
 		offerPrice = cleanNumericalString(order.getAmount());
@@ -208,15 +202,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 
 	@Step
 	public void verifyPurchase() {
-		log.info("verifyPurchase");
-		// TODO: remove this code
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			
+		log.info("verifyPurchase");		
 		confirmationPage.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		booking = cleanTheBooking();
 		log.info(booking);

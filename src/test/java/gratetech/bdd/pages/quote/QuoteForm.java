@@ -1,8 +1,9 @@
-package gratetech.bdd.pages;
+package gratetech.bdd.pages.quote;
 
 import java.util.List;
 
 import gratetech.bdd.commons.CommonConstants;
+import gratetech.bdd.pages.PageBase;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;

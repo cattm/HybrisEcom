@@ -1,6 +1,7 @@
-package gratetech.bdd.pages;
+package gratetech.bdd.pages.quote;
 
 import gratetech.bdd.commons.CommonConstants;
+import gratetech.bdd.pages.PageBase;
 import gratetech.bdd.steps.serenity.UserPurchaseSteps;
 
 import java.util.Iterator;

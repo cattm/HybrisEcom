@@ -20,7 +20,7 @@ import net.thucydides.core.pages.PageObject;
  * Once I have certainty of behaviour I will revert
  * I will use long winded debug code to check the iframes
  */
-public class OrderDetails extends PageObject {
+public class OrderDetails extends PageBase {
 	public static Logger log = Logger.getLogger(OrderDetails.class);
 
 	@FindBy(id="goods")
@@ -93,21 +93,4 @@ public class OrderDetails extends PageObject {
 		return "";
 	}
 	
-	private boolean findIframe(String param) {	
-		withTimeoutOf((int) CommonConstants.SLOWSECS, TimeUnit.SECONDS).waitForPresenceOf(By.tagName("iframe"));
-		List<WebElement> allFrameElements = this.getDriver().findElements(By.tagName("iframe"));
-		for(WebElement nitem : allFrameElements )
-		{
-           String tmp = nitem.getAttribute("src");
-           if (tmp.contains(param)) {
-        	   this.getDriver().switchTo().frame(nitem);  
-        	   return true;
-           }
-		}
-		return false;
-	}
-	
-	private void resetIframe() {
-		this.getDriver().switchTo().defaultContent();
-	}
 }

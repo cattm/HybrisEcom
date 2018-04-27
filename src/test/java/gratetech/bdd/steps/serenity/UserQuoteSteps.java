@@ -11,12 +11,12 @@ import net.thucydides.core.annotations.Step;
 import gratetech.bdd.pages.LoggedIn;
 import gratetech.bdd.pages.PandOHomePage;
 import gratetech.bdd.pages.PandOLogin;
-import gratetech.bdd.pages.QuoteForm;
-import gratetech.bdd.pages.QuoteHow;
-import gratetech.bdd.pages.QuoteResponseInfo;
-import gratetech.bdd.pages.QuoteWhen;
-import gratetech.bdd.pages.QuoteWhere;
-import gratetech.bdd.pages.QuoteWho;
+import gratetech.bdd.pages.quote.QuoteForm;
+import gratetech.bdd.pages.quote.QuoteHow;
+import gratetech.bdd.pages.quote.QuoteResponseInfo;
+import gratetech.bdd.pages.quote.QuoteWhen;
+import gratetech.bdd.pages.quote.QuoteWhere;
+import gratetech.bdd.pages.quote.QuoteWho;
 import gratetech.bdd.commons.CommonConstants;
 
 public class UserQuoteSteps {

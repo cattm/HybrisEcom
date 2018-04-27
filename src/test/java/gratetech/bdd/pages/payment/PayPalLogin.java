@@ -1,4 +1,4 @@
-package gratetech.bdd.pages;
+package gratetech.bdd.pages.payment;
 
 import gratetech.bdd.commons.CommonConstants;
 
@@ -28,29 +28,29 @@ public class PayPalLogin extends PageObject {
 	
 	public void setEmail(String str) {
 		log.info(str);
-		if (findIframe()) {
+		if (findPPLIframe()) {
 			log.info("in iframe");
 			email.clear();
 			email.type(str);
-			resetIframe();
+			resetPPLIframe();
 		}	
 	}
 	
 	public void setPassword(String str) {
 		log.info(str);
-		if (findIframe()) {
+		if (findPPLIframe()) {
 			log.info("in iframe");
 			password.clear();
 			password.type(str);	
-			resetIframe();
+			resetPPLIframe();
 		}		
 	}
 	
 	public void submit() {
-		if (findIframe()) {
+		if (findPPLIframe()) {
 			log.info("in iframe");
 			login.click();	
-			resetIframe();
+			resetPPLIframe();
 		}		
 	}
 	
@@ -63,7 +63,7 @@ public class PayPalLogin extends PageObject {
 		return true;	
 	}
 	
-	private boolean findIframe() {	
+	private boolean findPPLIframe() {	
 		// this needs a dodgy timeout check 
 		int count = 0;
 		
@@ -74,7 +74,6 @@ public class PayPalLogin extends PageObject {
 				String tmp = nitem.getAttribute("name");
 				if (tmp.contains("injectedUl")) {
 					this.getDriver().switchTo().frame(nitem);
-					//log.info("found required iframe ");
 					return true;
 				}
 			}
@@ -90,8 +89,7 @@ public class PayPalLogin extends PageObject {
 		return false;
 	}
 	
-	private void resetIframe() {
-		//log.info("reset iframe");
+	private void resetPPLIframe() {
 		this.getDriver().switchTo().defaultContent();
 	}
 }

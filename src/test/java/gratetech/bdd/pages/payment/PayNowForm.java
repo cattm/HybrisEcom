@@ -1,4 +1,4 @@
-package gratetech.bdd.pages;
+package gratetech.bdd.pages.payment;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;

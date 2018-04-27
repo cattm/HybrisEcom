@@ -1,4 +1,4 @@
-package gratetech.bdd.pages;
+package gratetech.bdd.pages.payment;
 
 import gratetech.bdd.commons.CommonConstants;
 
@@ -20,7 +20,7 @@ public class PayPalPurchaseConfirm extends PageObject {
 		// do I need to pause here?
 		log.info("Before Click");
 		confirm.click();
-		log.info("Before Click");
+		log.info("After Click");
 	}
 	
 	private void switchToWindow() {

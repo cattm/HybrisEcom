@@ -26,6 +26,23 @@ public class TravelLeg {
 	 */
 	Map<String, String> leg = new HashMap<String, String>();
 	
+	public void initEmptyTravelLeg () {
+		leg.put("day", "");
+		leg.put("time", "");
+		leg.put("from", "");
+		leg.put("to", "");
+		leg.put("ship", "");
+		leg.put("offer", "");
+		leg.put("vehicle", "");
+		leg.put("length", "");
+		leg.put("height", "");
+		leg.put("registration", "");
+		leg.put("passengers", "");
+		leg.put("rac", "");
+		leg.put("wifi", "");
+		leg.put("club", "");
+	}
+	
 	public void setUpLeg(String day, String time, String from, String to, String ship, String offer,
 			              String vehicle, String length, String height, String registration, String passengers,
 			              String rac, String wifi, String club) {
