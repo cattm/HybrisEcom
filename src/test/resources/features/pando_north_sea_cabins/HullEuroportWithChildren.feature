@@ -1,10 +1,10 @@
-@cabin
+
 Feature: User Login and Purchase a Ticket for Hull Zebrugge Route With Cabins
- I will login and fill in the basic quote form and specify a number of cabins
+  I will login and fill in the basic quote form and specify a number of cabins
   I will then retrieve the Quote, select a fare class, make a purchase, check the purchase
   Extras on North sea are: WIFI/MEAL/CABIN UPGRADE/RAC
-  Small people(0...1 years) and more passengers to check allocation 
-  
+  Small people(0...1 years) and more passengers to check allocation
+
   Background: 
     Given user has logged in:
       | username                     | pw        | greeting      |
@@ -23,8 +23,34 @@ Feature: User Login and Purchase a Ticket for Hull Zebrugge Route With Cabins
     Given They have a <vehicle> with a size of <length> by <height>
     And identification <registration>
     Then if they have  <promo code> and <voucher>
-    Then They Will will succeed
+    Then They will succeed
 
     Examples: 
-      | from              | return            | on date    | back date  | vehicle   | length | height | cabins | promo code | time | ship               | back time | back ship | class  | adults | names              | other passengers    | type | registration | voucher |
-      | Hull to Europoort | Europoort to Hull | 17/04/2018 | 22/04/2018 | motorhome | 6      | 2      | 1      |            |      | Pride of Rotterdam |           |           | bronze | 2      | Mr first passenger | Mr second passenger | baby | FD61 VWO     |         |
+      | from              | return            | on date    | back date  | vehicle   | length | height | cabins | promo code | time | ship          | back time | back ship | class | adults | names                                                       | other passengers | type | registration | voucher |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |
+      | Hull to Europoort | Europoort to Hull | 30/05/2018 | 03/06/2018 | small_car | 0      | 0      | 1      |            |      | Pride of Hull |           |           | silver  | 4      | Mr first passenger,Miss third passenger,Mr second passenger |                  |      | LC02 TJZ     |         |

@@ -1,9 +1,7 @@
-@cabin
 Feature: User Login and Purchase a Ticket for Hull Zebrugge Route With Cabins
   I will login and fill in the basic quote form and specify a number of cabins
   I will then retrieve the Quote, select a fare class, make a purchase, check the purchase
   Extras on North sea are: WIFI/MEAL/CABIN UPGRADE/RAC
-
 
   Background: 
     Given user has logged in:
@@ -19,8 +17,20 @@ Feature: User Login and Purchase a Ticket for Hull Zebrugge Route With Cabins
     Then My Purchase will succeed
 
     Examples: 
-      | from              | return            | on date    | back date  | vehicle   | length | height | adults | cabins | promo code | time | ship               | back time | back ship | offer    | person             | registration | voucher | card | account          | cvv |
-      | Hull to Europoort | Europoort to Hull | 15/04/2018 | 20/04/2018 | motorhome | 6      | 2      | 2      | 1      |            |      | Pride of Rotterdam |           |           | bronze   | Mr first passenger | FD61 VWO     | 5GBP    | visa | 4111111111111111 | 345 |
-      | Hull to Europoort | Europoort to Hull | 15/04/2018 | 20/04/2018 | motorhome | 6      | 2      | 2      | 1      |            |      | Pride of Rotterdam |           |           | silver   | Mr first passenger | FD61 VWO     | 5GBP    | visa | 4111111111111111 | 345 |
-      | Hull to Europoort | Europoort to Hull | 15/04/2018 | 20/04/2018 | motorhome | 6      | 2      | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold     | Mr first passenger | FD61 VWO     | 5GBP    | visa | 4111111111111111 | 345 |
-      | Hull to Europoort | Europoort to Hull | 15/04/2018 | 20/04/2018 | motorhome | 6      | 2      | 2      | 1      |            |      | Pride of Rotterdam |           |           | platinum | Mr first passenger | FD61 VWO     | 5GBP    | visa | 4111111111111111 | 345 |
+      | from              | return            | on date    | back date  | vehicle   | length | height | adults | cabins | promo code | time | ship               | back time | back ship | offer  | person             | registration | voucher | card | account          | cvv |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+      | Hull to Europoort | Europoort to Hull | 25/05/2018 | 26/05/2018 | small_car |        |        | 2      | 1      |            |      | Pride of Rotterdam |           |           | gold | Mr first passenger | LC02 TJZ     |         | visa | 4111111111111111 | 345 |
+  
