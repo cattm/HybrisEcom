@@ -1,4 +1,0 @@
-User Login and Purchase a Ticket
-In Order to Make a Purchase
-I will login and fill in the basic quote form
-And retrieve the Quote in order to make a purchase

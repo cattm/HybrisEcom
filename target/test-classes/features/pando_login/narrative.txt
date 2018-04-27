@@ -1,3 +1,0 @@
-User Login to P&O Web Site
-In order to access the booking features
-As an English customer I will need to Log In
