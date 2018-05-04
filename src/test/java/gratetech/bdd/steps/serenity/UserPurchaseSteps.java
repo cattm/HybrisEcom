@@ -3,21 +3,22 @@ package gratetech.bdd.steps.serenity;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
-import static org.hamcrest.Matchers.containsString;
 
 import java.util.concurrent.TimeUnit;
 
 import gratetech.bdd.commons.CommonConstants;
+import gratetech.bdd.interfaces.IBookingValidationStrategy;
 import gratetech.bdd.pages.BookingConfirm;
 import gratetech.bdd.pages.BookingSummary;
 import gratetech.bdd.pages.OrderDetails;
 import gratetech.bdd.pages.PassengerAndCar;
 import gratetech.bdd.pages.TheExtras;
 import gratetech.bdd.pages.payment.PayNowForm;
-import gratetech.bdd.pages.payment.PayPalLogin;
-import gratetech.bdd.pages.payment.PayPalPurchaseConfirm;
+import gratetech.bdd.pages.payment.PayPalNoIframeLogin;
+import gratetech.bdd.pages.payment.PayPalNoIframePurchaseConfirm;
 import gratetech.bdd.pages.payment.VisaForm;
 import gratetech.bdd.pages.quote.TheQuotePage;
+import gratetech.bdd.utils.TouristBooking;
 import net.thucydides.core.annotations.Step;
 
 import org.apache.log4j.Logger;
@@ -26,6 +27,7 @@ import org.junit.Assert;
 public class UserPurchaseSteps extends UserQuoteSteps {
 	public static Logger log = Logger.getLogger(UserPurchaseSteps.class);
 
+	// pages to operate
 	private TheQuotePage quote;
 	private TheExtras extras;
 	private PassengerAndCar traveller;
@@ -33,15 +35,17 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 	private PayNowForm paynow;
 	private OrderDetails order;
 	private VisaForm visa;
-	private PayPalLogin ppLogin;
-	private BookingConfirm confirmationPage;
-	private PayPalPurchaseConfirm ppConfirm;
+	private PayPalNoIframeLogin ppLogin;
+	private BookingConfirm confirmationPage;	
+	private PayPalNoIframePurchaseConfirm ppConfirm;
 	
+	// variables we need to be able to interrogate - TODO encapsulate in a model please
 	private String checkRef = "";
 	private String product = "";
 	private String offerPrice = "";
 	private String booking = "";
 	private String finalPrice = "";
+	
 	
 	@Step
 	public void selectTheQuote(String time, String ship, String offer) {
@@ -122,13 +126,14 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		traveller.resetImplicitTimeout();
 	}
 	
+
 	@Step 
-	public void checkBookingSummary() {
-		//REF: <47587110>
-		
+	public void checkBookingSummary(TouristBooking booking, IBookingValidationStrategy strategy) {
+		//REF: <47587110>	
 		checkRef = summary.getBookingReference().replace("REF: <", "");
 		checkRef = checkRef.replace(">", "");
 		log.info("checkBookingSummary " + checkRef);
+		strategy.PerformBookingValidation(booking, summary);
 	}
 	
 	@Step
@@ -184,19 +189,27 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 			order.selectPayPalPayment();
 			order.resetImplicitTimeout();
 			
-			// log in to paypal
+			// log in to paypal - we will use account as email and cvv as password if populated
 			ppLogin.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
-			ppLogin.setEmail("marcus.catt@poferries.com");
-			ppLogin.setPassword("Password1");
-			ppLogin.submit();
-			//log.info("SUBMIT PRESSED");
+			if (!account.contentEquals("")) {
+				ppLogin.setEmail(account);
+			} else ppLogin.setEmail("marcus.catt@poferries.com");
 			
+			if (!cvv.contentEquals("")) {
+				ppLogin.setPassword(cvv);
+			} else ppLogin.setPassword("Password1");
+			
+			ppLogin.submit();
+		
 			ppConfirm.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 			ppConfirm.confirmPurchase();
 			ppLogin.resetImplicitTimeout();
 			ppConfirm.resetImplicitTimeout();
 			
-		} // else ?
+		} else {
+			log.error("No valid payment method selected in test");
+			Assert.fail();
+		}
 		
 	}
 
@@ -210,6 +223,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		log.info(confirmationPage.getTotalCost());
 		finalPrice = cleanNumericalString(confirmationPage.getTotalCostCharged());
 		log.info(finalPrice);
+		
 		// assertThat(booking, containsString(checkRef));
 		assertThat(finalPrice,equalToIgnoringCase(offerPrice));
 		confirmationPage.resetImplicitTimeout();
@@ -245,5 +259,7 @@ public class UserPurchaseSteps extends UserQuoteSteps {
 		String tmp = confirmationPage.getBooking();
 		return tmp.replaceAll("[^0-9]", "");
 	}
+
+	
 
 }

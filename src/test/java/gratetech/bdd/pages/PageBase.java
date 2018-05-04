@@ -36,7 +36,7 @@ public class PageBase extends PageObject {
 			}
 			log.info("Exit pageIsReady on loop " + count);								
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			log.error("Sleep exception while waiting for page to load");
 			e.printStackTrace();
 		}
 	}

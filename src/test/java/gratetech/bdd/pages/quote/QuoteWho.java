@@ -52,8 +52,7 @@ public class QuoteWho extends PageBase {
 	public void setNumberOfAdults(String number) {
 		log.info(number);
 		if (makeVisible) {
-			// TODO: this is ou_AD1 on Larne route just to be brilliant!
-			// this is HACK will tidy once proven
+			// This is ou_AD1 on Larne route just to be brilliant!
 			if (fromRoute.contains("Dover") || fromRoute.contains("Hull")) {
 				evaluateJavascript("document.getElementById('ou_AD_pass_comboBox').style.display='block';");
 				selectNumberAdultPassengers = this.getDriver().findElement(By.id("ou_AD_pass_comboBox"));

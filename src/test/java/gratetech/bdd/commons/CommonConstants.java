@@ -16,5 +16,6 @@ public class CommonConstants {
 	public static final int PAGETIMEOUT = 30;
 	
 	public static final int WAITLOOPCOUNT = 10;
+	public static final int DEFAULTPAGELOOP = 10;
 
 }

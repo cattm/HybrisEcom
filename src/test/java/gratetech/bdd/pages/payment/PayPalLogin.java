@@ -82,7 +82,7 @@ public class PayPalLogin extends PageObject {
 				Thread.sleep(CommonConstants.SLOW);
 				count++;
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				log.error("Sleep interrupted while waiting for iframe");
 				e.printStackTrace();
 			}
 		}

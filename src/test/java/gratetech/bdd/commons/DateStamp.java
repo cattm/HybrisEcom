@@ -1,11 +1,18 @@
 package gratetech.bdd.commons;
 
+import gratetech.bdd.steps.CancelBookings;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.log4j.Logger;
+
+import jline.internal.Log;
+
 public class DateStamp {
+	public static Logger log = Logger.getLogger(DateStamp.class);
 	private Locale theLocaleToUse = Locale.UK;
 	
 	public void setLocaleToUse(Locale locale) {
@@ -45,7 +52,7 @@ public class DateStamp {
 			dtx = myf.parse(somedatearg);
 			return mym.format(dtx);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			Log.error("Date format parsing error");
 			e.printStackTrace();
 		}
 		return "";

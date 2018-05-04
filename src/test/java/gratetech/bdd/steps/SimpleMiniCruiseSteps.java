@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gratetech.bdd.interfaces.IBookingValidationStrategy;
 import gratetech.bdd.steps.serenity.UserMiniCruiseSteps;
 import gratetech.bdd.steps.serenity.UserPurchaseSteps;
 import gratetech.bdd.utils.TouristBooking;
 import gratetech.bdd.utils.TouristBooking.PassengerType;
+import gratetech.bdd.verifications.MiniCruiseStrategy;
+import gratetech.bdd.verifications.TouristBookingStrategy;
 import net.thucydides.core.annotations.Steps;
 
 import org.apache.log4j.Logger;
@@ -29,6 +32,9 @@ public class SimpleMiniCruiseSteps {
 	// and implement an interface to manipulate it
 	// there should also be a test policy model on the booking and the workflow
 	private TouristBooking booking = new TouristBooking();
+	
+	// verification object
+	private IBookingValidationStrategy strategy = new MiniCruiseStrategy();
 	
 	// TODO - need to factor out these two temporary variables
 	private Integer numPassengersOut;	
@@ -185,7 +191,7 @@ public class SimpleMiniCruiseSteps {
 		
 		jalna.tickTnc();
 		jalna.selectEVoucher(booking.getVoucher());
-		jalna.checkBookingSummary();
+		jalna.checkBookingSummary(booking, strategy);
 		  
 		jalna.selectPurchaseNow();
 		jalna.completePurchase(booking.payment.getPaymentType(), 

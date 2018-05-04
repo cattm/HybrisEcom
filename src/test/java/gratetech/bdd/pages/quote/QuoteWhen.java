@@ -110,10 +110,7 @@ public class QuoteWhen extends PageBase {
 		selectGoingOutDate.click();
 		pageIsReady(CommonConstants.FAST);
 		
-		// TODO JS frig - scroll onto view
-		//evaluateJavascript("document.getElementById('firstname').focus()");
-		//JavascriptExecutor jse2 = (JavascriptExecutor)this.getDriver();
-		//jse2.executeScript("arguments[0].scrollIntoView()", datePickerYear); 
+		// scroll onto view
 		scrollToElement(datePickerYear);
 		
 		String oMonth=datePickerMonth.getText(); 		
@@ -130,13 +127,7 @@ public class QuoteWhen extends PageBase {
 		log.info("found correct year and month " + oYear + " " + oMonth);
 		pageIsReady(CommonConstants.FAST);
 		
-		// need to strip any leading zero and locate the exact cell to pick
-		// //td[not(contains(@class,'ui-datepicker-other-month'))]/a[text()=27]
-		
-		// TODO there is a problem here with the stupid popups - scrolling into view
-		// we need to iconise and also scroll correctly
 		By dayxpath = By.xpath("//td[not(contains(@class,'ui-datepicker-other-month'))]/a[text()='" + eDay + "']");
-		//By daylink = By.linkText(eDay);
 		log.info("Path is " + dayxpath);
 		WebElement dayElement = getDriver().findElement(dayxpath);
 		
@@ -159,7 +150,7 @@ public class QuoteWhen extends PageBase {
 	// TBD need methods to set the TIME also
 	public void setDepartureTime(String t) {
 		log.info(t);
-		// TODO: fix this horrible check
+		
 		if (t.isEmpty()) return;
 		
 		if (makeVisible) {
@@ -167,11 +158,6 @@ public class QuoteWhen extends PageBase {
 			Select dropdown = new Select(selectOutTime);
 			dropdown.selectByValue(t);
 		} else {
-		
-			// #singleJourneyTimeComboBoxSelectBoxIt.selectboxit - click()? or open()
-			// #singleJourneyTimeComboBoxSelectBoxItOptions.selectboxit-option li:nth-child(#{4}) doesnt work
-			// but #singleJourneyTimeComboBoxSelectBoxItOptions li:nth-child(5) a does work and returns
-			// 	
 			pageIsReady(CommonConstants.FAST);
 			singleJourneyTimeEnable.click();
 			pageIsReady(CommonConstants.FAST);
@@ -181,8 +167,9 @@ public class QuoteWhen extends PageBase {
 	
 	public void setReturnTime(String t) {
 		log.info(t);
-		// TODO: fix this horrible check
+		
 		if (t.isEmpty()) return;
+		
 		if (makeVisible) {
 			log.info("makeVisible not coded yet");
 		} else {

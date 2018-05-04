@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import gratetech.bdd.commons.DateStamp;
+import gratetech.bdd.interfaces.IBookingValidationStrategy;
 import gratetech.bdd.steps.serenity.UserPurchaseSteps;
 import gratetech.bdd.utils.TouristBooking;
 import gratetech.bdd.utils.TouristBooking.PassengerType;
+import gratetech.bdd.verifications.TouristBookingStrategy;
 import net.thucydides.core.annotations.Steps;
 
 import org.apache.log4j.Logger;
@@ -23,6 +25,9 @@ public class LoginQuoteSelectPurchaseSteps {
 	@Steps
 	private UserPurchaseSteps clive;
 	private TouristBooking booking = new TouristBooking();
+	
+	// verification object
+	private IBookingValidationStrategy strategy = new TouristBookingStrategy();
 	
 	//TODO Lose this variable!
 	private String numPassengers;	
@@ -150,7 +155,7 @@ public class LoginQuoteSelectPurchaseSteps {
 		 
 		  clive.tickTnc();
 		  clive.selectEVoucher(booking.getVoucher());
-		  clive.checkBookingSummary();
+		  clive.checkBookingSummary(booking, strategy);
 		  
 		  clive.selectPurchaseNow();
 		  clive.completePurchase(booking.payment.getPaymentType(), 

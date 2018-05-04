@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gratetech.bdd.interfaces.IBookingValidationStrategy;
 import gratetech.bdd.steps.serenity.UserPurchaseSteps;
 import gratetech.bdd.utils.TouristBooking;
 import gratetech.bdd.utils.TouristBooking.PassengerType;
+import gratetech.bdd.verifications.TouristBookingStrategy;
 import net.thucydides.core.annotations.Steps;
 
 import org.apache.log4j.Logger;
@@ -23,6 +25,9 @@ public class ComplexPurchaseWithCabins {
 	@Steps
 	private UserPurchaseSteps david;
 	private TouristBooking booking = new TouristBooking();
+	
+	// verification object
+	private IBookingValidationStrategy strategy = new TouristBookingStrategy();
 	
 	// TODO - need to factor out these two temporary variables
 	private Integer numPassengersOut;	
@@ -207,7 +212,7 @@ public class ComplexPurchaseWithCabins {
 		
 		david.tickTnc();
 		david.selectEVoucher(booking.getVoucher());
-		david.checkBookingSummary();
+		david.checkBookingSummary(booking, strategy);
 		  
 		david.selectPurchaseNow();
 		david.completePurchase(booking.payment.getPaymentType(), 

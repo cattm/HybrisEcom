@@ -38,7 +38,7 @@ public class PayPalPurchaseConfirm extends PageObject {
 					log.info(this.getTitle());
 					log.info("not on correct window - checking again");
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					log.error("Sleep interrupted while waiting for window to change");
 					e.printStackTrace();
 				}
 				check++;
@@ -48,7 +48,7 @@ public class PayPalPurchaseConfirm extends PageObject {
 		try {
 			Thread.sleep(CommonConstants.SLOW);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			log.error("Sleep interrupted while waiting for slow Paypal page");
 			e.printStackTrace();
 		}
 		WebDriver wd = this.getDriver();

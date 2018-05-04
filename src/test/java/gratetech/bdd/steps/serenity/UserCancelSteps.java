@@ -1,5 +1,7 @@
 package gratetech.bdd.steps.serenity;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,7 @@ import net.thucydides.core.annotations.Step;
 public class UserCancelSteps {
 	public static Logger log = Logger.getLogger(UserCancelSteps.class);
 	
+	// pages to control
 	private LoggedIn lgIn;
 	private BookingHistory bkh;
 	private MyJourneyDetails myj;
@@ -98,21 +101,21 @@ public class UserCancelSteps {
 	}
 	
 	@Step
-	public boolean cancelBooking(String booking) {
+	public String cancelBooking(String booking) {
 		for (int x = 0; x < bookingsToRemove.size(); x++) {
 			String status = ticketActive.get(bookingsToRemove.get(x));
 			WebElement ele = amendLink.get(bookingsToRemove.get(x));
 			if (status.contains("ACTIVE") && bookingsToRemove.get(x).contains(booking)) {
 				log.info("attempting to Amend/Cancel " + bookingsToRemove.get(x));
 				bkh.openAmend(ele);
-				return true;
+				return booking;
 			}
 		}
-		return false;
+		return "";
 	}
 	
 	@Step
-	public boolean cancelFirstValid() {
+	public String cancelFirstValid() {
 		// amend/cancel link --> Cancel --> pop up confirm
 		for (int x = 0; x < bookingsToRemove.size(); x++) {
 			String status = ticketActive.get(bookingsToRemove.get(x));
@@ -120,10 +123,10 @@ public class UserCancelSteps {
 			if (status.contains("ACTIVE")) {
 				log.info("attempting to Amend/Cancel " + bookingsToRemove.get(x));
 				bkh.openAmend(ele);
-				return true;
+				return bookingsToRemove.get(x);
 			}
 		}
-		return false;
+		return "";
 	}
 	
 	@Step
@@ -136,13 +139,17 @@ public class UserCancelSteps {
 	}
 	
 	@Step
-	public String checkCancelSuccess() {
+	public String checkCancelSuccess(String booking) {
 		mycancel.setImplicitTimeout(CommonConstants.PAGETIMEOUT, TimeUnit.SECONDS);
 		String cancelString = mycancel.getCancelledBooking();
 		log.info(cancelString);
 		mycancel.clickReturnToBookings();
 		mycancel.resetImplicitTimeout();
-		return cancelString.replaceAll("[^0-9]", "");
+		String bkcancelled = cancelString.replaceAll("[^0-9]", "");
+		if (!booking.contentEquals("")) { 
+			assertThat(bkcancelled, equalToIgnoringCase(booking)); 
+		}
+		return bkcancelled;
 	}
 	
 	

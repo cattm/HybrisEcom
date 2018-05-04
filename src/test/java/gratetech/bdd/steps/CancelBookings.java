@@ -1,10 +1,15 @@
 package gratetech.bdd.steps;
 
+import java.util.List;
+import java.util.Map;
+
+import gratetech.bdd.commons.CommonConstants;
 import gratetech.bdd.steps.serenity.UserCancelSteps;
 import net.thucydides.core.annotations.Steps;
 
 import org.apache.log4j.Logger;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -31,7 +36,7 @@ public class CancelBookings {
 		log.info("select booking");
 		// there may be many pages to scroll through - this should be a while loop?
 		int loopc = 0;
-		while (!marcus.findBookingsOnPage() && (loopc < 4)) {
+		while (!marcus.findBookingsOnPage() && (loopc < CommonConstants.DEFAULTPAGELOOP)) {
 			 log.info("Processing Bookings On Page " + loopc);
 			 //move to next page
 			 marcus.moveToNextPage();
@@ -47,7 +52,7 @@ public class CancelBookings {
 	    booking = arg1;
 	 // there may be many pages to scroll through - this should be a while loop?
 	 		int loopc = 0;
-	 		while (!marcus.findBookingsOnPage(booking) && (loopc < 4)) {
+	 		while (!marcus.findBookingsOnPage(booking) && (loopc < CommonConstants.DEFAULTPAGELOOP)) {
 	 			 log.info("Processing Bookings On Page " + loopc + "moving to next page");
 	 			 //move to next page
 	 			 marcus.moveToNextPage();
@@ -56,21 +61,36 @@ public class CancelBookings {
 	 		log.info("Required Booking Not found");
 	}
 
+	@And("^I select from ([^\"]*)$")
+	public void selectFromRequiredBooking(String book) {
+		log.info ("select booking " + book);
+		booking = book;
+		int loopc = 0;
+ 		while (!marcus.findBookingsOnPage(booking) && (loopc < CommonConstants.DEFAULTPAGELOOP)) {
+ 			 log.info("Processing Bookings On Page " + loopc + "moving to next page");
+ 			 //move to next page
+ 			 marcus.moveToNextPage();
+ 			 loopc++;
+ 		} 
+ 		log.info("Required Booking Not found");
+		
+	}
 	
 	@When("^I hit cancel and accept the cancelation pop up$")
 	public void hitCancel() throws Throwable {
 		log.info("Now Cancel it");
-		boolean cancelled = false;
+		String c = "";
 
 		// lets cancel the first one only for now
 		if (booking.contentEquals("")) {		
-			cancelled = marcus.cancelFirstValid();
+			c = marcus.cancelFirstValid();
+			booking = c;
 			
 		} else {
-			cancelled = marcus.cancelBooking(booking);
+			c = marcus.cancelBooking(booking);
 		}
 		
-		if (cancelled) {marcus.completeTheCancel();}
+		if (!c.contentEquals("")) {marcus.completeTheCancel();}
 		else {log.info("Nothing Cancelled");}
 	}
 
@@ -79,7 +99,7 @@ public class CancelBookings {
 		
 		log.info("See the confirmation page");
 		// it should identify which item has been cancelled
-		String thecancelledbooking = marcus.checkCancelSuccess();
+		String thecancelledbooking = marcus.checkCancelSuccess(booking);
 		log.info("we cancelled " + thecancelledbooking);
 	}
 }

@@ -4,10 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gratetech.bdd.interfaces.IBookingValidationStrategy;
+import gratetech.bdd.pages.BookingSummary;
 import gratetech.bdd.steps.serenity.UserPurchaseSteps;
 import gratetech.bdd.steps.serenity.UserQuoteSteps;
 import gratetech.bdd.utils.TouristBooking;
 import gratetech.bdd.utils.TouristBooking.PassengerType;
+import gratetech.bdd.verifications.MiniCruiseStrategy;
+import gratetech.bdd.verifications.TouristBookingStrategy;
 import net.thucydides.core.annotations.Steps;
 
 import org.apache.log4j.Logger;
@@ -26,6 +30,9 @@ public static Logger log = Logger.getLogger(PurchaseSteps.class);
 	@Steps
 	private UserPurchaseSteps David;
 	private TouristBooking booking = new TouristBooking();
+	
+	// verification object
+	private IBookingValidationStrategy strategy = new TouristBookingStrategy();
 	
 	@Given("^I have obtained a quote for:$")
 	public void obtainAQuote(DataTable quotefeeddata) throws Throwable {
@@ -130,14 +137,22 @@ public static Logger log = Logger.getLogger(PurchaseSteps.class);
 			David.selectPassengersAndCar(
 					map.get("person").toString(),
 					map.get("vehicle").toString());
-			David.checkBookingSummary();
+			
+			// TODO: this is the approximate point we should be applying a verification strategy
+			// many things that can be verified.
+			//outbound/inbound:
+			// ship/time/passengers/vehicle/ticket type/ extras and price
+			
+			David.checkBookingSummary(booking, strategy);
 			David.tickTnc();
+			
+			// now complete the purchase
 			David.selectEVoucher(map.get("voucher").toString());
 			David.selectPurchaseNow();
 			David.completePurchase(
 					map.get("card").toString(),
 					map.get("account").toString(), 
-					map.get("cvv").toString() );		
+					map.get("cvv").toString());		
 		}
 		log.info("ticket Purchased - now check it");
 		// now check the answer....

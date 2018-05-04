@@ -9,50 +9,50 @@ public class WriteCsv {
 
 	 private static final char DEFAULT_SEPARATOR = ',';
     
-     	static FileWriter writer = null;
+     static FileWriter writer = null;
 
-     	public static void configureWriter(String file) { 
-     		if (writer == null) {
-     			try {
-     				writer =  new FileWriter(file);
-     			} catch (IOException e) {
-     				// TODO Auto-generated catch block
-     				e.printStackTrace();
-     			} 
-     		}
+     public static void configureWriter(String file) { 
+     	if (writer == null) {
+     		try {
+     			writer =  new FileWriter(file);
+     		} catch (IOException e) {
+     			// TODO Auto-generated catch block
+     			e.printStackTrace();
+     		} 
      	}
+     }
      	
-     	public static void closeWriter() {
-     		 try {
-				writer.flush();
-				writer.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+     public static void closeWriter() {
+     	try {
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
              
-     	}
+     }
      	
-     	public static void writeRawLine(String value) {
-     		try {
-				writer.append(value);
-				writer.append("\r\n");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+     public static void writeRawLine(String value) {
+     	try {
+			writer.append(value);
+			writer.append("\r\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
      		
-     	}
+     }
      	
-     	public static void writeRawString(String value) {
-     		try {
-				writer.append(value);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+     public static void writeRawString(String value) {
+    	 try {
+			writer.append(value);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
      		
-     	}
+     }
      	public static void writeLine(List<String> values)  {
 	        try {
 				writeLine(writer, values, DEFAULT_SEPARATOR, ' ');
