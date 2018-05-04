@@ -1,7 +1,7 @@
 package gratetech.bdd.interfaces;
 
+import gratetech.bdd.models.TouristBooking;
 import gratetech.bdd.pages.BookingSummary;
-import gratetech.bdd.utils.TouristBooking;
 
 public interface IBookingValidationStrategy {
 

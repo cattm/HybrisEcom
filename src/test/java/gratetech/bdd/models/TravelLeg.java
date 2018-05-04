@@ -1,4 +1,4 @@
-package gratetech.bdd.utils;
+package gratetech.bdd.models;
 
 import java.util.HashMap;
 import java.util.Map;

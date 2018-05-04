@@ -3,8 +3,8 @@ package gratetech.bdd.verifications;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringCase;
 import gratetech.bdd.interfaces.IBookingValidationStrategy;
+import gratetech.bdd.models.TouristBooking;
 import gratetech.bdd.pages.BookingSummary;
-import gratetech.bdd.utils.TouristBooking;
 
 public class TouristBookingStrategy implements IBookingValidationStrategy {
 	

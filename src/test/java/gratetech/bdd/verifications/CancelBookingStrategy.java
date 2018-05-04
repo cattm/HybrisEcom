@@ -1,8 +1,8 @@
 package gratetech.bdd.verifications;
 
 import gratetech.bdd.interfaces.IBookingValidationStrategy;
+import gratetech.bdd.models.TouristBooking;
 import gratetech.bdd.pages.BookingSummary;
-import gratetech.bdd.utils.TouristBooking;
 
 public class CancelBookingStrategy implements IBookingValidationStrategy {
 	

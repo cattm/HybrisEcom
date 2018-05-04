@@ -1,6 +1,7 @@
-package gratetech.bdd.utils;
+package gratetech.bdd.models;
 // model of a Tourist Booking - with options to read and write to CSV file
 import gratetech.bdd.interfaces.IWriteCSV;
+import gratetech.bdd.utils.WriteCsv;
 
 import java.io.Writer;
 import java.util.ArrayList;

@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import gratetech.bdd.commons.CommonConstants;
 import gratetech.bdd.interfaces.IBookingValidationStrategy;
+import gratetech.bdd.models.TouristBooking;
 import gratetech.bdd.pages.BookingConfirm;
 import gratetech.bdd.pages.BookingSummary;
 import gratetech.bdd.pages.OrderDetails;
@@ -18,7 +19,6 @@ import gratetech.bdd.pages.payment.PayPalNoIframeLogin;
 import gratetech.bdd.pages.payment.PayPalNoIframePurchaseConfirm;
 import gratetech.bdd.pages.payment.VisaForm;
 import gratetech.bdd.pages.quote.TheQuotePage;
-import gratetech.bdd.utils.TouristBooking;
 import net.thucydides.core.annotations.Step;
 
 import org.apache.log4j.Logger;

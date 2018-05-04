@@ -1,7 +1,7 @@
-package gratetech.bdd.utils;
+package gratetech.bdd.models;
 
-import gratetech.bdd.utils.TouristBooking.PassengerType;
-import gratetech.bdd.utils.TouristBooking.onJourney;
+import gratetech.bdd.models.TouristBooking.PassengerType;
+import gratetech.bdd.models.TouristBooking.onJourney;
 
 import java.util.ArrayList;
 import java.util.HashMap;

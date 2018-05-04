@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import gratetech.bdd.interfaces.IBookingValidationStrategy;
+import gratetech.bdd.models.TouristBooking;
+import gratetech.bdd.models.TouristBooking.PassengerType;
 import gratetech.bdd.steps.serenity.UserPurchaseSteps;
-import gratetech.bdd.utils.TouristBooking;
-import gratetech.bdd.utils.TouristBooking.PassengerType;
 import gratetech.bdd.verifications.TouristBookingStrategy;
 import net.thucydides.core.annotations.Steps;
 
