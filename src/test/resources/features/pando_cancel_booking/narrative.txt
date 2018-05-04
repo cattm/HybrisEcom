@@ -1,0 +1,2 @@
+User Login and access my list of Live Tickets
+And delete the booking
