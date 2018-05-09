@@ -18,5 +18,5 @@ Feature: User Login and Purchase a Ticket for Larne Cairnryan Route
 
     Examples: 
       | from               | return             | on date    | back date  | vehicle    | length | height | adults | promo code | time  | ship                | back time | back ship | offer | RAC | WIFI | Club Lounge | person             | registration | voucher | card | account          | cvv |
-      | Larne to Cairnryan | Cairnryan to Larne | 10/02/2018 | 18/02/2018 | motorhome  | 6      | 2      | 2      |            | 13:30 | European Causeway   |           |           | gold  | no  | no   | maybe       | Mr first passenger | FD61 VWO     | 5GBP    | visa | 4111111111111111 | 345 |
+      | Larne to Cairnryan | Cairnryan to Larne | 10/06/2018 | 18/06/2018 | motorhome  | 6      | 2      | 2      |            | 13:30 | European Causeway   |           |           | gold  | no  | no   | maybe       | Mr first passenger | FD61 VWO     | 5GBP    | visa | 4111111111111111 | 345 |
  #     | Cairnryan to Larne | Larne to Cairnryan | 21/10/2017 | 18/11/2017 | motorcycle |        |        | 1      |            | 13:55 | European Highlander |           |           | gold  | no  | no   | maybe       |                    | FD61 VWO     | 5GBP    | visa | 4111111111111111 | 345 |

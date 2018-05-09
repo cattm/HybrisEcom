@@ -20,19 +20,19 @@ Feature: User Login and Purchase a Ticket for Hull Zebrugge Route With Cabins
 
     Examples: 
       | from | to              | on date    | vehicle   | length | height | adults | cabins | class  | promo code | person             | passengers | type | registration | voucher |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
-      | Hull | RotterdamCentre |13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |
+      | Hull | RotterdamCentre | 13/05/2018 | novehicle |        |        | 2      | 1      | bronze |            | Mr first passenger |            |      |              |         |

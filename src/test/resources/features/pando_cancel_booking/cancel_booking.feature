@@ -1,5 +1,4 @@
-Feature: cancel a booking based on poisition in list
-  or booking id?
+Feature: cancel a booking based on position in list
      Background: 
     Given user has logged in:
       | username                     | pw        | greeting      |
@@ -8,7 +7,6 @@ Feature: cancel a booking based on poisition in list
     
   Scenario:   
   Given I have bookings to delete
-  #And I can select the required booking
-  And I can select "58220845" booking
+  And I can select the required booking
   When I hit cancel and accept the cancelation pop up
   Then I will see a confirmation page

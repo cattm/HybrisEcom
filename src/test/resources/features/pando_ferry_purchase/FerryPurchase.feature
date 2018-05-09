@@ -10,8 +10,8 @@ Feature: User Login and Purchase a Ticket
 
   Scenario: From Quote to Purchase
     Given I have obtained a quote for:
-      | from            | return          | on date    | coming back | vehicle | length | height | adults | promo code |
-      | Dover to Calais | Calais to Dover | 29/09/2017 | 03/10/2017  | van     | 2      | 1.8    | 2      | EXPRESS    |
+      | from            | return          | on date    | coming back | vehicle | length | height | adults | cabin | promo code |
+      | Dover to Calais | Calais to Dover | 29/06/2018 | 03/08/2018  | van     | 2      | 1.8    | 2      |       | EXPRESS    |
     When I select a quote:
       | time  | ship              | offer |
       | 13:55 | Spririt of France | gold  |
