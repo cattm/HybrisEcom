@@ -12,9 +12,13 @@ public class MiniCruiseStrategy implements IBookingValidationStrategy {
 	public void PerformBookingValidation(TouristBooking booking, BookingSummary summary) {
 		// should check return date
 		verifyReturnDate(booking, summary);
+		
 		// outbound and inbound accommodation are the same
 		verifyAccomodation(booking, summary);
+		
 		// coach travel
+		verifyCoach(summary);
+		
 		// vat
 		verifyVAT(summary);	
 	
@@ -30,10 +34,32 @@ public class MiniCruiseStrategy implements IBookingValidationStrategy {
 	
 	private void verifyAccomodation(TouristBooking booking, BookingSummary summary) {
 		// depending upon class of ticket and assuming default choices
+		// out == in
+		// price out == price in
+		// Assumes ticket type out == ticket type in
 		
 	}
+	
+	private void verifyCoach(BookingSummary summary) {
+		// work out if there is a coach (its an Extra) and if there is
+		// check its INCLUDED
+		
+	}
+	
 	private void verifyVAT(BookingSummary summary) {
+		// this should be a constant of nothing - so a safe check
 		assertThat(summary.getTotalVat(),equalToIgnoringCase("£0.00"));	
 	}
+	
+	/*
+	 *  Ticket Type - Complex area poorly structured
+	 *  div class booking-outbound
+	 *  div class ticket-type dots amends extras-slot is the top of this area 
+	 *  
+	 *  eventually followed by
+	 *  div class booking return
+	 *  div class ticket-type dots amends extras-slot
+	 *  
+	 */
 
 }

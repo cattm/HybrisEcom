@@ -1,15 +1,11 @@
 package gratetech.bdd.steps;
 
-import java.util.List;
-import java.util.Map;
-
 import gratetech.bdd.commons.CommonConstants;
 import gratetech.bdd.steps.serenity.UserCancelSteps;
 import net.thucydides.core.annotations.Steps;
 
 import org.apache.log4j.Logger;
 
-import cucumber.api.DataTable;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
